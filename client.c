@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+
+#include <netdb.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int	main(int ac, char *av[])
+{
+	char				buffer[512];
+	struct sockaddr_in	serv_addr;
+	struct hostent		*server;
+	int					portno;
+	int					sockfd;
+
+	if (ac < 3)
+	{
+		printf("Usage: %s <address> <port>\n", av[0]);
+		exit(EXIT_FAILURE);
+	}
+	memset(buffer, 0, 512);
+	portno = atoi(av[2]);
+
+	printf("Opening connection to %s:%d\n", av[1], portno);
+
+	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	server = gethostbyname(av[1]);
+
+	memset(&serv_addr, 0, sizeof(serv_addr));
+	serv_addr.sin_family = AF_INET;
+	memcpy(server->h_addr, &serv_addr.sin_addr.s_addr,
+			server->h_length);
+	serv_addr.sin_port = htons(portno);
+
+	if (connect(sockfd, (struct sockaddr *)&serv_addr,
+				sizeof(serv_addr)) < 0) {
+		printf("Could not connect\n");
+		exit(1);
+	}
+
+	printf("Enter msg: ");
+	fgets(buffer, 510, stdin);
+	buffer[510] = 0x0d;
+	buffer[511] = 0x0a;
+
+	write(sockfd, buffer, 512);
+
+	close(sockfd);
+	return (0);
+}
