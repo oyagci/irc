@@ -22,7 +22,6 @@ int	main(int ac, char *av[])
 		printf("Usage: %s <address> <port>\n", av[0]);
 		exit(EXIT_FAILURE);
 	}
-	memset(buffer, 0, 512);
 	portno = atoi(av[2]);
 
 	printf("Opening connection to %s:%d\n", av[1], portno);
@@ -42,13 +41,27 @@ int	main(int ac, char *av[])
 		exit(1);
 	}
 
-	printf("Enter msg: ");
-	fgets(buffer, 510, stdin);
-	buffer[510] = 0x0d;
-	buffer[511] = 0x0a;
+	int run = 1;
+	while (run) {
+		memset(buffer, 0, 512);
+		printf("> ");
 
-	write(sockfd, buffer, 512);
+		fgets(buffer, 510, stdin);
 
+		// End the string with CR-LF
+		buffer[510] = 0x0d;
+		buffer[511] = 0x0a;
+
+		char *c = strchr(buffer, '\n');
+		if (c) {
+			*c = '\0';
+		}
+
+		if (write(sockfd, buffer, strlen(buffer)) < 0) {
+			printf("Connection lost!\n");
+			run = 0;
+		}
+	}
 	close(sockfd);
 	return (0);
 }
