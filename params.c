@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 15:53:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/01 16:21:34 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/01 16:42:26 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,25 @@ char				*extract_param(char const *input)
 	return (ft_strndup((char *)input, i));
 }
 
+char				*extract_trailing(char const *input)
+{
+	int	i;
+
+	i = 0;
+	while (is_nospcrlfcl(input[i]) || input[i] == ':' || input[i] == ' ')
+		i++;
+	printf("Last param: %.*s\n", i, input);
+	return (ft_strndup((char *)input, i));
+}
+
+/*
+** params     =  *14( SPACE middle ) [ SPACE ":" trailing ]
+**		      =/ 14( SPACE middle ) [ SPACE [ ":" ] trailing ]
+** middle     =  nospcrlfcl *( ":" / nospcrlfcl )
+** nospcrlfcl =  %x01-09 / %x0B-0C / %x0E-1F / %x21-39 / %x3B-FF
+**				; any octet except NUL, CR, LF, " " and ":"
+** trailing   =  *( ":" / " " / nospcrlfcl )
+*/
 struct s_params		*params(char const *input)
 {
 	struct s_params *p;
@@ -51,12 +70,22 @@ struct s_params		*params(char const *input)
 	i = 0;
 	if (p)
 	{
-		if (input[i] == ' ')
+		while (j < 14 && input[i] == ' ')
 		{
 			i += 1;
 			p->param[j] = extract_param(input + i);
 			i += ft_strlen(p->param[j]);
 			j += 1;
+		}
+		if (input[i] == ' ')
+		{
+			i += 1;
+			if (input[i] == ':')
+			{
+				i += 1;
+				p->param[j] = extract_trailing(input + i);
+				i += ft_strlen(p->param[j]);
+			}
 		}
 	}
 	p->len = i;
