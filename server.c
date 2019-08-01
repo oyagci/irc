@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
+/*   Updated: 2019/08/01 10:17:28 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -7,10 +19,12 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 
+#include "irc.h"
+
 #define MAX_CONN			10
 #define COMMAND_LENGTH		512
-//#define CRLF				"\x0d\x0a"
-#define CRLF				"EOF"
+#define CRLF				"\x0d\x0a"
+//#define CRLF				"EOF"
 #define CLIENT_BUFFER_SIZE	512
 
 struct s_client_buffer {
@@ -38,49 +52,12 @@ int	read_client_command(int cfd, struct s_client_buffer *buffer)
 	return (ret);
 }
 
-struct s_prefix {
-	struct s_servername	*servername;
-	struct s_nickname	*nickname;
-	struct s_user		*user;
-	struct s_host		*host;
-};
-
-struct s_message {
-	struct s_prefix		*prefix;
-};
-
-struct s_prefix		*parse_prefix(char *data) {
-	struct s_prefix *p;
-
-	p = malloc(sizeof(*p));
-	if (!p) {
-		return (NULL);
-	}
-	p->servername = parse_servername(data);
-	return (p);
-}
-
-struct s_message	*parse_message(char *data)
-{
-	struct s_message *m;
-
-	m = malloc(sizeof(struct s_message));
-	if (!m) {
-		return (NULL);
-	}
-	if (data[0] == ':')
-	{
-		data += 1;
-		m->prefix = parse_prefix(data);
-	}
-	return (m);
-}
-
 int	execute_command(char *data)
 {
-	struct s_message	*msg;
+	struct s_message *msg;
 
-	msg = parse_message(data);
+	msg = message(data);
+	printf("%s\n", data);
 	return (0);
 }
 
@@ -113,7 +90,7 @@ int	main(int ac, char *av[])
 	bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
 	listen(sockfd, MAX_CONN);
 
-	memset(clients, 0, MAX_CONN);
+	memset(clients, 0, sizeof(*clients) * MAX_CONN);
 	memset(clients_buffer, 0, sizeof(struct s_client_buffer) * MAX_CONN);
 
 	while (42) {

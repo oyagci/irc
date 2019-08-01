@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/08/01 10:08:25 by oyagci            #+#    #+#             */
+/*   Updated: 2019/08/01 10:08:28 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,6 +20,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
+
+#define CRLF	"\x0d\x0a"
 
 int	main(int ac, char *av[])
 {
@@ -56,6 +70,7 @@ int	main(int ac, char *av[])
 		if (c) {
 			*c = '\0';
 		}
+		strcat(buffer, CRLF);
 
 		if (write(sockfd, buffer, strlen(buffer)) < 0) {
 			printf("Connection lost!\n");
