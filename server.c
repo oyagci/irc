@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/01 10:17:28 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/01 15:43:55 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	execute_command(char *data)
 	struct s_message *msg;
 
 	msg = message(data);
-	printf("%s\n", data);
 	return (0);
 }
 
@@ -119,7 +118,7 @@ int	main(int ac, char *av[])
 		if (FD_ISSET(sockfd, &readfds)) {
 			confd = accept(sockfd, (struct sockaddr *)&cli_addr, &cli_len);
 
-			printf("[INFO] %s: connected\n", inet_ntoa(cli_addr.sin_addr));
+			printf("[  INFO ] %s: connected\n", inet_ntoa(cli_addr.sin_addr));
 
 			// Add connection to the clients list
 			for (int i = 0; i < MAX_CONN; i++) {
@@ -138,6 +137,9 @@ int	main(int ac, char *av[])
 				ret = read_client_command(clients[i], &clients_buffer[i]);
 				if (clients_buffer[i].is_complete) {
 					execute_command(clients_buffer[i].data);
+					clients_buffer[i].is_complete = 0;
+					ft_memset(clients_buffer[i].data, 0, CLIENT_BUFFER_SIZE);
+					clients_buffer[i].len = 0;
 				}
 			}
 		}

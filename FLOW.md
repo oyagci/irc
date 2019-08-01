@@ -81,3 +81,13 @@ chanstring =  %x01-07 / %x08-09 / %x0B-0C / %x0E-1F / %x21-2B
 chanstring =/ %x2D-39 / %x3B-FF
 			  ; any octet except NUL, BELL, CR, LF, " ", "," and ":"
 channelid  = 5( %x41-5A / digit )   ; 5( A-Z / 0-9 )
+user       =  1*( %x01-09 / %x0B-0C / %x0E-1F / %x21-3F / %x41-FF )
+			  ; any octet except NUL, CR, LF, " " and "@"
+key        =  1*23( %x01-05 / %x07-08 / %x0C / %x0E-1F / %x21-7F )
+			  ; any 7-bit US_ASCII character,
+			  ; except NUL, CR, LF, FF, h/v TABs, and " "
+letter     =  %x41-5A / %x61-7A       ; A-Z / a-z
+digit      =  %x30-39                 ; 0-9
+hexdigit   =  digit / "A" / "B" / "C" / "D" / "E" / "F"
+special    =  %x5B-60 / %x7B-7D
+			   ; "[", "]", "\", "`", "_", "^", "{", "|", "}"

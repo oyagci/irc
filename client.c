@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:25 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/01 10:08:28 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/01 13:55:13 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,13 @@ int	main(int ac, char *av[])
 
 		fgets(buffer, 510, stdin);
 
-		// End the string with CR-LF
-		buffer[510] = 0x0d;
-		buffer[511] = 0x0a;
-
 		char *c = strchr(buffer, '\n');
 		if (c) {
 			*c = '\0';
 		}
 		strcat(buffer, CRLF);
 
-		if (write(sockfd, buffer, strlen(buffer)) < 0) {
+		if (write(sockfd, buffer, 512) < 0) {
 			printf("Connection lost!\n");
 			run = 0;
 		}
