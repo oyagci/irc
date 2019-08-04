@@ -41,6 +41,10 @@ struct s_message	*message(char const *input)
 				msglog(LOGDEBUG, "Command found");
 				input += msg->cmd->len;
 				msg->params = params(input);
+				if (msg->params)
+					input += msg->params->len;
+				if (!crlf(input))
+					message_del(&msg);
 			}
 			else
 				message_del(&msg);
@@ -54,7 +58,8 @@ struct s_message	*message(char const *input)
 				input += msg->cmd->len;
 				msg->params = params(input);
 
-				input += msg->params->len;
+				if (msg->params)
+					input += msg->params->len;
 				if (!crlf(input))
 				{
 					msglog(LOGDEBUG, "Message is not terminated by CR-LF");

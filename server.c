@@ -57,6 +57,7 @@ int	execute_command(char *data)
 	struct s_message *msg;
 
 	msg = message(data);
+	(void)msg;
 	return (0);
 }
 
@@ -135,6 +136,7 @@ int	main(int ac, char *av[])
 			// Client is sending data
 			if (FD_ISSET(clients[i], &readfds)) {
 				ret = read_client_command(clients[i], &clients_buffer[i]);
+				(void)ret;
 				if (clients_buffer[i].is_complete) {
 					execute_command(clients_buffer[i].data);
 					clients_buffer[i].is_complete = 0;

@@ -25,7 +25,11 @@ struct s_message
 
 struct s_prefix
 {
-	size_t	len;
+	struct s_servername	*servername;
+	char				*nickname;
+	char				*user;
+	char				*host;
+	size_t				len;
 };
 
 struct s_command
@@ -36,6 +40,12 @@ struct s_command
 
 struct s_crlf
 {
+};
+
+struct s_servername
+{
+	char	*hostname;
+	size_t	len;
 };
 
 /*
@@ -53,9 +63,14 @@ struct s_prefix		*prefix(char const *input);
 struct s_command	*command(char const *input);
 struct s_crlf		*crlf(char const *input);
 struct s_params		*params(char const *input);
+int		servername(char const *input, struct s_servername **s);
+char				*host(char const *input);
+int				user(unsigned char const *input, char **buffer);
+int				nickname(char const *input, char **buffer);
 
 void				prefix_del(struct s_prefix **p);
 void				command_del(struct s_command **cmd);
 void				message_del(struct s_message **msg);
+void				servername_del(struct s_servername **sn);
 
 #endif
