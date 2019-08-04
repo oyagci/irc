@@ -46,7 +46,11 @@ char				*extract_trailing(char const *input)
 	i = 0;
 	while (is_nospcrlfcl(input[i]) || input[i] == ':' || input[i] == ' ')
 		i++;
+<<<<<<< HEAD
 	printf("Last param: %.*s (%d)\n", i, input, i);
+=======
+	printf("Last param: %.*s\n", i, input);
+>>>>>>> 7c0d32c25107e5c52af9b99ee03376c37b353098
 	return (ft_strndup((char *)input, i));
 }
 
