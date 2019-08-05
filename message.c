@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:21 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/01 16:29:04 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/05 13:25:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,50 +23,41 @@ struct s_message	*message(char const *input)
 	struct s_message	*msg;
 
 	msg = ft_memalloc(sizeof(struct s_message));
-	if (msg)
+	if (!msg)
+		return (NULL);
+	if (input[0] == ':')
 	{
-		if (input[0] == ':')
+		msglog(LOGDEBUG, "Prefix start found");
+		input += 1;
+		msg->prefix = prefix(input);
+		msglog(LOGDEBUG, msg->prefix->data);
+		if (!msg->prefix || input[msg->prefix->len] != ' ')
 		{
-			msglog(LOGDEBUG, "Prefix found");
-			input += 1;
-			msg->prefix = prefix(input);
-			if (!msg->prefix)
-				message_del(&msg);
-			if (input[msg->prefix->len] != ' ')
-				message_del(&msg);
-			input += msg->prefix->len + 1;
-			msg->cmd = command(input);
-			if (msg->cmd)
-			{
-				msglog(LOGDEBUG, "Command found");
-				input += msg->cmd->len;
-				msg->params = params(input);
-				if (msg->params)
-					input += msg->params->len;
-				if (!crlf(input))
-					message_del(&msg);
-			}
-			else
-				message_del(&msg);
+			msglog(LOGDEBUG, "Invalid prefix");
+			message_del(&msg);
+			return (NULL);
 		}
-		else
-		{
-			msglog(LOGDEBUG, "No prefix found");
-			msg->cmd = command(input);
-			if (msg->cmd)
-			{
-				input += msg->cmd->len;
-				msg->params = params(input);
+		input += msg->prefix->len + 1;
+	}
 
-				if (msg->params)
-					input += msg->params->len;
-				if (!crlf(input))
-				{
-					msglog(LOGDEBUG, "Message is not terminated by CR-LF");
-					message_del(&msg);
-				}
-			}
+	msg->cmd = command(input);
+	if (msg->cmd)
+	{
+		msglog(LOGDEBUG, "Command found");
+		input += msg->cmd->len;
+		msg->params = params(input);
+		if (msg->params)
+			input += msg->params->len;
+		if (!crlf(input))
+		{
+			msglog(LOGDEBUG, "Message is not terminated by CR-LF");
+			message_del(&msg);
 		}
+	}
+	else
+	{
+		msglog(LOGDEBUG, "No command found");
+		message_del(&msg);
 	}
 	return (msg);
 }

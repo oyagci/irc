@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 11:21:16 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/01 16:23:57 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/05 13:09:01 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,35 @@ struct s_command	*command(char const *input)
 
 	msglog(LOGDEBUG, "Parsing command");
 	cmd = ft_memalloc(sizeof(*cmd));
-	if (cmd)
+	if (!cmd)
+		return (NULL);
+	i = 0;
+	if (ft_isalpha(input[0]))
 	{
-		i = 0;
-		if (ft_isalpha(input[0]))
+		while (ft_isalpha(input[i]))
+			i += 1;
+		cmd->data = ft_strndup((char *)input, i);
+		cmd->len = ft_strlen(cmd->data);
+		msglog(LOGDEBUG, cmd->data);
+	}
+	else if (ft_isdigit(input[0]))
+	{
+		while (ft_isdigit(input[0]))
 		{
-			msglog(LOGDEBUG, "Parsing command verb");
-			while (ft_isalpha(input[i]))
-				i += 1;
-			cmd->data = ft_strndup((char *)input, i);
-			cmd->len = ft_strlen(cmd->data);
-			printf("Command: %s\n", cmd->data);
-		}
-		else if (ft_isdigit(input[0]))
-		{
-			while (ft_isdigit(input[0]))
+			i += 1;
+			if (i >= 3)
 			{
-				i += 1;
-				if (i >= 3)
-				{
-					command_del(&cmd);
-					return (NULL);
-				}
+				command_del(&cmd);
+				return (NULL);
 			}
-			cmd->data = ft_strndup((char *)input, i);
-			cmd->len = ft_strlen(cmd->data);
 		}
-		else
-		{
-			free(cmd);
-			cmd = NULL;
-		}
+		cmd->data = ft_strndup((char *)input, i);
+		cmd->len = ft_strlen(cmd->data);
+	}
+	else
+	{
+		free(cmd);
+		cmd = NULL;
 	}
 	return (cmd);
 }

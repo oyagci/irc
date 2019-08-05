@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 15:53:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/01 16:42:26 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/05 13:48:36 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char				*extract_param(char const *input)
 		while (is_nospcrlfcl(input[i]) || input[i] == ':')
 			i += 1;
 	}
-	printf("Param: %.*s\n", i, input);
 	return (ft_strndup((char *)input, i));
 }
 
@@ -46,11 +45,7 @@ char				*extract_trailing(char const *input)
 	i = 0;
 	while (is_nospcrlfcl(input[i]) || input[i] == ':' || input[i] == ' ')
 		i++;
-<<<<<<< HEAD
 	printf("Last param: %.*s (%d)\n", i, input, i);
-=======
-	printf("Last param: %.*s\n", i, input);
->>>>>>> 7c0d32c25107e5c52af9b99ee03376c37b353098
 	return (ft_strndup((char *)input, i));
 }
 
