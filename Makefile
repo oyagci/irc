@@ -5,7 +5,10 @@ SERVER_SOURCES := \
 	command.c \
 	crlf.c \
 	logger.c \
-	params.c
+	params.c \
+	set_fds.c \
+	handle_new_clients.c \
+	handle_io_clients.c
 
 CLIENT_SOURCES := client.c
 
@@ -32,4 +35,4 @@ $(CLIENT_NAME): $(CLIENT_OBJS)
 	$(CC) $(CLIENT_OBJS) -o $(CLIENT_NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $< -c -o $@ -I libft/includes
+	$(CC) $(CFLAGS) $< -c -o $@ -I libft/includes -g
