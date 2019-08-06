@@ -20,19 +20,24 @@ CLIENT_NAME := client
 
 CFLAGS := -Wall -Wextra -Werror
 
-.PHONY: all client server
+CC := gcc
+
+.PHONY: all clean fclean
 
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
-server: $(SERVER_NAME)
-
-client: $(CLIENT_NAME)
-
 $(SERVER_NAME): $(SERVER_OBJS)
-	$(CC) $(SERVER_OBJS) -o $(SERVER_NAME) -L libft -lft -g
+	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g
 
 $(CLIENT_NAME): $(CLIENT_OBJS)
-	$(CC) $(CLIENT_OBJS) -o $(CLIENT_NAME)
+	$(CC) $(CLIENT_OBJS) -o $@ -g
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -c -o $@ -I libft/includes -g
+
+clean:
+	rm -f $(SERVER_OBJS) $(CLIENT_OBJS)
+
+fclean: clean
+	rm -f $(SERVER_NAME) $(CLIENT_NAME)
+# DO NOT DELETE
