@@ -20,6 +20,7 @@
 #include <arpa/inet.h>
 
 #include "irc.h"
+#include "logger.h"
 
 int	read_client_command(int cfd, struct s_client_buffer *buffer)
 {
@@ -40,27 +41,80 @@ int	read_client_command(int cfd, struct s_client_buffer *buffer)
 	return (ret);
 }
 
-int	irc_pass(char **params)
+int	irc_pass(struct s_client *c, char **params, int nparams)
 {
 	(void)params;
-	return (1);
+	(void)nparams;
+	if (c->is_registered)
+		return (ERR_ALREADYREGISTRED);
+	if (nparams >= 1)
+	{
+		c->passbuf = ft_strdup(params[0]);
+	}
+	return (0);
 }
 
-int	execute_command(char *data)
+int	irc_nick(struct s_client *c, char **params, int nparams)
+{
+	(void)c;
+	(void)params;
+	(void)nparams;
+	return (0);
+}
+
+int	irc_user(struct s_client *c, char **params, int nparams)
+{
+	(void)c;
+	(void)params;
+	(void)nparams;
+	return (0);
+}
+
+int	irc_join(struct s_client *c, char **params, int nparams)
+{
+	(void)c;
+	(void)params;
+	(void)nparams;
+	return (0);
+}
+
+int	irc_privmsg(struct s_client *c, char **params, int nparams)
+{
+	(void)c;
+	(void)params;
+	(void)nparams;
+	return (0);
+}
+
+int	nparams(char **params)
+{
+	int ii;
+
+	ii = 0;
+	while (ii < 15 && params[ii] != 0)
+		ii++;
+	return (ii);
+}
+
+int	execute_command(struct s_client *c)
 {
 	const struct s_irc_cmds	cmds[] = {
-		{ .name = "PASS", .f = irc_pass }
+		{ .name = "PASS", .f = irc_pass },
+		{ .name = "NICK", .f = irc_nick },
+		{ .name = "USER", .f = irc_user },
+		{ .name = "JOIN", .f = irc_join },
+		{ .name = "PRIVMSG", .f = irc_privmsg },
 	};
 	size_t					ii;
 	struct s_message		*msg;
 
-	msg = message(data);
+	msg = message(c->buffer.data);
 	// Debug Log
 	if (msg)
 	{
 		printf("received command: ");
 		if (msg->prefix)
-			printf("%s ", msg->prefix->data);
+			printf(":%s ", msg->prefix->data);
 		if (msg->cmd)
 			printf("%s ", msg->cmd->data);
 		if (msg->params)
@@ -79,7 +133,7 @@ int	execute_command(char *data)
 	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))
 	{
 		if (ft_strequ(cmds[ii].name, msg->cmd->data))
-			cmds[ii].f(msg->params->param);
+			cmds[ii].f(c, msg->params->param, nparams(msg->params->param));
 		ii++;
 	}
 

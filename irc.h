@@ -20,8 +20,10 @@
 # define COMMAND_LENGTH		512
 # define CRLF				"\x0d\x0a"
 # define CLIENT_BUFFER_SIZE	COMMAND_LENGTH
-# define MAX_CONN			10
+# define MAX_CONN			1024
 # define NICK_SIZE			9
+
+# define ERR_ALREADYREGISTRED	462
 
 struct s_client_buffer {
 	char	data[CLIENT_BUFFER_SIZE];
@@ -33,8 +35,11 @@ struct s_client
 {
 	int						fd;
 	struct s_client_buffer	buffer;
-	char					nickname[NICK_SIZE];
-	char					old_nickname[NICK_SIZE];
+	char					nick[NICK_SIZE];
+	char					old_nick[NICK_SIZE];
+	int						umode;
+	char					*passbuf;
+	int						is_registered;
 };
 
 struct s_server
@@ -47,7 +52,7 @@ struct s_server
 /*
 ** Tuple-like structure
 */
-typedef int (*t_irc_func)(char **params);
+typedef int (*t_irc_func)(struct s_client *c, char **params, int nparams);
 struct s_irc_cmds
 {
 	char const	*name;
@@ -110,9 +115,18 @@ void				command_del(struct s_command **cmd);
 void				message_del(struct s_message **msg);
 
 int					set_fds(int max_sd, t_list *clients, fd_set *readfds, fd_set *writefds);
-int					execute_command(char *data);
+int					execute_command(struct s_client *c);
 int					read_client_command(int cfd, struct s_client_buffer *buffer);
 int					handle_io_clients(struct s_server const *const s, t_list *clients);
 int					handle_new_clients(int sockfd, t_list **clients, fd_set *readfds);
+int					reply_client(struct s_client *c, int retcode);
+
+/*
+** IRC server commands
+*/
+int		irc_pass(struct s_client *, char **, int);
+int		irc_nick(struct s_client *, char **, int);
+int		irc_user(struct s_client *, char **, int);
+int		irc_oper(struct s_client *, char **, int);
 
 #endif
