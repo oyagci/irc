@@ -22,17 +22,21 @@ CFLAGS := -Wall -Wextra -Werror
 
 CC := gcc
 
+HEADERS := \
+	irc.h \
+	logger.h
+
 .PHONY: all clean fclean
 
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
-$(SERVER_NAME): $(SERVER_OBJS)
+$(SERVER_NAME): $(SERVER_OBJS) $(HEADERS)
 	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g
 
-$(CLIENT_NAME): $(CLIENT_OBJS)
+$(CLIENT_NAME): $(CLIENT_OBJS) $(HEADERS)
 	$(CC) $(CLIENT_OBJS) -o $@ -g
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) $< -c -o $@ -I libft/includes -g
 
 clean:
@@ -40,4 +44,3 @@ clean:
 
 fclean: clean
 	rm -f $(SERVER_NAME) $(CLIENT_NAME)
-# DO NOT DELETE
