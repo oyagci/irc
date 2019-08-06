@@ -5,7 +5,7 @@
 #include <arpa/inet.h>
 #include <stdio.h>
 
-int		handle_new_clients(int sockfd, t_list **clients, fd_set *readfds)
+int		accept_new_clients(int sockfd, t_list **clients, fd_set *readfds)
 {
 	t_list					*elem;
 	struct s_client			*client;

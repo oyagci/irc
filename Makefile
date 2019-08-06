@@ -7,7 +7,7 @@ SERVER_SOURCES := \
 	logger.c \
 	params.c \
 	set_fds.c \
-	handle_new_clients.c \
+	accept_new_clients.c \
 	handle_io_clients.c
 
 CLIENT_SOURCES := client.c
