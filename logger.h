@@ -13,7 +13,7 @@
 ** 1: Warning
 ** 0: Debug
 */
-#define LOGLEVEL		2
+#define LOGLEVEL		0
 
 #define LOGDEBUG		0
 #define LOGWARN			1
@@ -24,4 +24,17 @@
 #define PREFIX_DEBUG	"[  DEBUG]"
 #define PREFIX_DEFAULT	"[    LOG]"
 
+# include <stdio.h>
+
+# define LOG(lvl, ...) \
+	do {\
+		if (lvl >= LOGLEVEL) {\
+			printprefix(lvl);\
+			printf(__VA_ARGS__);\
+			printf("\n");\
+		}\
+	} while (0);
+
 void	msglog(int level, char *s);
+
+void	printprefix(int level);

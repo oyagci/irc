@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 11:21:16 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/05 13:09:01 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/06 16:09:35 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ struct s_command	*command(char const *input)
 	struct s_command	*cmd;
 	int					i;
 
-	msglog(LOGDEBUG, "Parsing command");
 	cmd = ft_memalloc(sizeof(*cmd));
 	if (!cmd)
 		return (NULL);
@@ -35,7 +34,6 @@ struct s_command	*command(char const *input)
 			i += 1;
 		cmd->data = ft_strndup((char *)input, i);
 		cmd->len = ft_strlen(cmd->data);
-		msglog(LOGDEBUG, cmd->data);
 	}
 	else if (ft_isdigit(input[0]))
 	{

@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 15:53:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/05 13:48:36 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/06 16:07:53 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char				*extract_trailing(char const *input)
 	i = 0;
 	while (is_nospcrlfcl(input[i]) || input[i] == ':' || input[i] == ' ')
 		i++;
-	printf("Last param: %.*s (%d)\n", i, input, i);
 	return (ft_strndup((char *)input, i));
 }
 
@@ -63,7 +62,6 @@ struct s_params		*params(char const *input)
 	int	i;
 	int	j;
 
-	msglog(LOGDEBUG, "Parsing params");
 	p = ft_memalloc(sizeof(struct s_params));
 	j = 0;
 	i = 0;
@@ -87,7 +85,6 @@ struct s_params		*params(char const *input)
 			}
 			else if (j == 14)
 			{
-				msglog(LOGDEBUG, "Parsing trailing");
 				p->param[j] = extract_trailing(input + i);
 				i += ft_strlen(p->param[j]);
 			}

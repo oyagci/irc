@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <stdio.h>
+#include "logger.h"
 
 int		accept_new_clients(int sockfd, t_list **clients, fd_set *readfds)
 {
@@ -17,7 +18,7 @@ int		accept_new_clients(int sockfd, t_list **clients, fd_set *readfds)
 	if (FD_ISSET(sockfd, readfds)) {
 		confd = accept(sockfd, (struct sockaddr *)&cli_addr, &cli_len);
 
-		printf("%s: connected\n", inet_ntoa(cli_addr.sin_addr));
+		LOG(LOGDEBUG, "%s: connected", inet_ntoa(cli_addr.sin_addr));
 
 		// Add connection to the clients list
 		client = ft_memalloc(sizeof(*client));
@@ -25,7 +26,7 @@ int		accept_new_clients(int sockfd, t_list **clients, fd_set *readfds)
 		elem = ft_lstnew(NULL, 0);
 		elem->content = client;
 		ft_lstadd(clients, elem);
-		printf("new connection on fd %d\n", confd);
+		LOG(LOGDEBUG, "New connection on fd %d", confd);
 	}
 	return (0);
 }

@@ -8,7 +8,9 @@ SERVER_SOURCES := \
 	params.c \
 	set_fds.c \
 	accept_new_clients.c \
-	handle_io_clients.c
+	handle_io_clients.c \
+	nick.c \
+	set_usermode.c
 
 CLIENT_SOURCES := client.c
 

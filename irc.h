@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 13:51:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/05 16:44:01 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/06 15:45:27 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,19 @@
 # define MAX_CONN			1024
 # define NICK_SIZE			9
 
+# define ERR_NONICKNAMEGIVEN	431
+# define ERR_ERRONEUSNICKNAME	432
+# define ERR_NICKNAMEINUSE		433
+# define ERR_NEEDMOREPARAM		461
 # define ERR_ALREADYREGISTRED	462
+# define ERR_PASSWDMISMATCH		464
+
+/*
+** Connection password
+** Must be either `0' (zero) or
+** a valid c-string password
+*/
+# define SERVER_PASS			0
 
 struct s_client_buffer {
 	char	data[CLIENT_BUFFER_SIZE];
@@ -31,15 +43,26 @@ struct s_client_buffer {
 	short	is_complete;
 };
 
+enum e_umode
+{
+	UMODE_WALLOPS = 1 << 2,
+	UMODE_INVISIBLE = 1 << 3,
+};
+
 struct s_client
 {
 	int						fd;
+	int						lastret;
 	struct s_client_buffer	buffer;
-	char					nick[NICK_SIZE];
-	char					old_nick[NICK_SIZE];
-	int						umode;
-	char					*passbuf;
-	int						is_registered;
+
+	short					is_connected;
+	short					is_registered;
+
+	enum e_umode			umode;
+	char					nickname[NICK_SIZE + 1];
+	char					*username;
+	char					*realname;
+
 };
 
 struct s_server
@@ -47,16 +70,6 @@ struct s_server
 	fd_set	readfds;
 	fd_set	writefds;
 	int		sockfd;
-};
-
-/*
-** Tuple-like structure
-*/
-typedef int (*t_irc_func)(struct s_client *c, char **params, int nparams);
-struct s_irc_cmds
-{
-	char const	*name;
-	t_irc_func	f;
 };
 
 /*
@@ -124,9 +137,26 @@ int					reply_client(struct s_client *c, int retcode);
 /*
 ** IRC server commands
 */
+
+/*
+** Tuple-like structure
+*/
+typedef int (*t_irc_func)(struct s_client *c, char **params, int nparams);
+struct s_irc_cmds
+{
+	char const	*name;
+	t_irc_func	f;
+};
+
 int		irc_pass(struct s_client *, char **, int);
 int		irc_nick(struct s_client *, char **, int);
 int		irc_user(struct s_client *, char **, int);
 int		irc_oper(struct s_client *, char **, int);
+
+int		nickavail(char *nick);
+int		nickadd(char *nick);
+
+int		set_usermode(struct s_client *c, int mode);
+int		set_realname(struct s_client *c, char *rn);
 
 #endif

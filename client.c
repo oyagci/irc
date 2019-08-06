@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:25 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/01 13:55:13 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/06 15:10:57 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 
 #include <netdb.h>
 #include <string.h>
@@ -30,6 +31,7 @@ int	main(int ac, char *av[])
 	struct hostent		*server;
 	int					portno;
 	int					sockfd;
+	fd_set				readfds;
 
 	if (ac < 3)
 	{
@@ -55,6 +57,8 @@ int	main(int ac, char *av[])
 		exit(1);
 	}
 
+	struct timeval t;
+
 	int run = 1;
 	while (run) {
 		memset(buffer, 0, 512);
@@ -68,9 +72,24 @@ int	main(int ac, char *av[])
 		}
 		strcat(buffer, CRLF);
 
-		if (write(sockfd, buffer, 512) < 0) {
+		if (send(sockfd, buffer, 512, 0) < 0) {
 			printf("Connection lost!\n");
 			run = 0;
+		}
+		printf("data sent\n");
+
+		t.tv_usec = 1000;
+
+		FD_ZERO(&readfds);
+		FD_SET(sockfd, &readfds);
+		select(sockfd + 1, &readfds, NULL, NULL, &t);
+
+		printf("ok\n");
+		if (FD_ISSET(sockfd, &readfds))
+		{
+			printf("receiving data...\n");
+			recv(sockfd, buffer, 512, MSG_WAITALL);
+			printf("%.512s\n", buffer);
 		}
 	}
 	close(sockfd);

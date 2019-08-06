@@ -6,18 +6,18 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/05 16:45:24 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/06 16:18:19 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
 #include <sys/socket.h>
-#include <netdb.h>
+#include <sys/types.h>
+#include <arpa/inet.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <arpa/inet.h>
+#include <netdb.h>
+#include <stdio.h>
 
 #include "irc.h"
 #include "logger.h"
@@ -43,30 +43,67 @@ int	read_client_command(int cfd, struct s_client_buffer *buffer)
 
 int	irc_pass(struct s_client *c, char **params, int nparams)
 {
-	(void)params;
-	(void)nparams;
-	if (c->is_registered)
+	LOG(LOGDEBUG, "PASS from %d", c->fd);
+	if (c->is_connected)
 		return (ERR_ALREADYREGISTRED);
-	if (nparams >= 1)
+	if (SERVER_PASS)
 	{
-		c->passbuf = ft_strdup(params[0]);
+		if (nparams < 1)
+			return (ERR_NEEDMOREPARAM);
+		if (ft_strcmp(params[0], SERVER_PASS))
+			return (ERR_PASSWDMISMATCH);
 	}
+	c->is_connected = 1;
 	return (0);
 }
 
 int	irc_nick(struct s_client *c, char **params, int nparams)
 {
-	(void)c;
-	(void)params;
-	(void)nparams;
+	char	*nick;
+
+	LOG(LOGDEBUG, "[%d;%.9s] NICK", c->fd, c->nickname);
+
+	if (nparams < 1)
+		return (ERR_NONICKNAMEGIVEN);
+	nick = params[0];
+
+	LOG(LOGDEBUG, "Old nick: %.9s", c->nickname);
+	LOG(LOGDEBUG, "New nick: %.9s", nick);
+
+	if (!nickavail(nick))
+	{
+		LOG(LOGDEBUG, "Nickname %.9s is already in use", nick);
+		return (ERR_NICKNAMEINUSE);
+	}
+	if (ft_strlen(nick) > 9)
+	{
+		LOG(LOGDEBUG, "Nickname %.9s is too long (len > 9)", nick);
+		return (ERR_ERRONEUSNICKNAME);
+	}
+	strlcpy(c->nickname, nick, NICK_SIZE);
+	nickadd(nick);
+	LOG(LOGDEBUG, "Nickname set to %.9s", c->nickname);
 	return (0);
 }
 
+/*
+**    Command: USER
+** Parameters: <user> <mode> <unused> <realname>
+*/
 int	irc_user(struct s_client *c, char **params, int nparams)
 {
-	(void)c;
-	(void)params;
-	(void)nparams;
+	if (nparams < 4) {
+		LOG(LOGDEBUG, "[%d;%.9s] Not enough parameters", c->fd, c->nickname);
+		return (ERR_NEEDMOREPARAM);
+	}
+	if (c->is_registered) {
+		return (ERR_ALREADYREGISTRED);
+	}
+	c->username = ft_strdup(params[0]);
+	LOG(LOGDEBUG, "Username of %.9s set to %s\n", c->nickname, c->username);
+	set_usermode(c, ft_atoi(params[1]));
+	set_realname(c, params[3]);
+	LOG(LOGDEBUG, "Realname set to %s", c->realname);
 	return (0);
 }
 
@@ -109,26 +146,6 @@ int	execute_command(struct s_client *c)
 	struct s_message		*msg;
 
 	msg = message(c->buffer.data);
-	// Debug Log
-	if (msg)
-	{
-		printf("received command: ");
-		if (msg->prefix)
-			printf(":%s ", msg->prefix->data);
-		if (msg->cmd)
-			printf("%s ", msg->cmd->data);
-		if (msg->params)
-		{
-			int i = 0;
-			while (i < 14 && msg->params->param[i] != 0)
-			{
-				printf("%s ", msg->params->param[i]);
-				i++;
-			}
-		}
-		printf("\n");
-	}
-
 	ii = 0;
 	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))
 	{
@@ -153,7 +170,7 @@ int	main(int ac, char *av[])
 		exit(EXIT_FAILURE);
 	}
 
-	printf("Creating server on port %s\n", av[1]);
+	LOG(LOGDEBUG, "Creating server on port %s", av[1]);
 
 	server.sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
