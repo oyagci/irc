@@ -204,17 +204,18 @@ int	execute_command(struct s_client *c)
 	};
 	size_t					ii;
 	struct s_message		*msg;
+	int						ret;
 
 	msg = message(c->buffer.data);
 	ii = 0;
 	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))
 	{
 		if (ft_strequ(cmds[ii].name, msg->cmd->data))
-			cmds[ii].f(c, msg->params->param, nparams(msg->params->param));
+			ret = cmds[ii].f(c, msg->params->param,
+					nparams(msg->params->param));
 		ii++;
 	}
-
-	return (0);
+	return (ret);
 }
 
 int	main(int ac, char *av[])
