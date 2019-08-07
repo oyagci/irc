@@ -30,6 +30,8 @@
 # define ERR_ALREADYREGISTRED	462
 # define ERR_PASSWDMISMATCH		464
 
+# define RPL_WELCOME			1
+
 /*
 ** Connection password
 ** Must be either `0' (zero) or
