@@ -39,6 +39,15 @@
 */
 # define SERVER_PASS			0
 
+struct s_channel
+{
+	char	name[50];
+	char	*topic;
+	int		mode;
+	t_list	*clients;
+};
+
+
 struct s_client_buffer {
 	char	data[CLIENT_BUFFER_SIZE];
 	int		len;
@@ -65,6 +74,8 @@ struct s_client
 	char					*username;
 	char					*realname;
 
+	struct s_server			*server;
+
 };
 
 struct s_server
@@ -72,6 +83,7 @@ struct s_server
 	fd_set	readfds;
 	fd_set	writefds;
 	int		sockfd;
+	t_list	*channels;
 };
 
 /*
@@ -160,5 +172,7 @@ int		nickadd(char *nick);
 
 int		set_usermode(struct s_client *c, int mode);
 int		set_realname(struct s_client *c, char *rn);
+
+int		tell_client_topic(struct s_client *c, struct s_channel *chan);
 
 #endif

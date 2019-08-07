@@ -22,6 +22,59 @@
 #include "irc.h"
 #include "logger.h"
 
+int		channel(char const *inputc, char **buffer)
+{
+	unsigned char const	*input;
+	int					ii;
+
+	input = (unsigned char const *)inputc;
+	if (*input == '#' || *input == '+' || *input == '&')
+	{
+		ii = 1;
+		while (input[ii] != '\0' &&
+				((input[ii] >= 0x01 && input[ii] <= 0x07) ||
+				 (input[ii] >= 0x08 && input[ii] <= 0x09) ||
+				 (input[ii] >= 0x0b && input[ii] <= 0x0c) ||
+				 (input[ii] >= 0x0e && input[ii] <= 0x1f) ||
+				 (input[ii] >= 0x2d && input[ii] <= 0x39) ||
+				 (input[ii] >= 0x3b)))
+		{
+			ii++;
+		}
+		if (ii > 1)
+		{
+			*buffer = ft_strndup((char *)inputc, ii);
+			return (ii);
+		}
+	}
+	return (0);
+}
+
+t_list		*parse_param_channels(char *input)
+{
+	t_list	*chans;
+	t_list	*elem;
+	int		ret;
+	char	*chanbuf;
+
+	chans = NULL;
+	while ((ret = channel(input, &chanbuf)) > 0)
+	{
+		input += ret;
+		elem = ft_lstnew(0, 0);
+		elem->content = chanbuf;
+		ft_lstpush(&chans, elem);
+	}
+	return (chans);
+}
+
+/* TODO */
+int		tell_client_topic(struct s_client *c, struct s_channel *chan)
+{
+	send(c->fd, chan->topic, ft_strlen(chan->topic), 0);
+	return (0);
+}
+
 int	read_client_command(int cfd, struct s_client_buffer *buffer)
 {
 	int	ret;
@@ -104,14 +157,21 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 	set_usermode(c, ft_atoi(params[1]));
 	set_realname(c, params[3]);
 	LOG(LOGDEBUG, "Realname set to %s", c->realname);
-	return (0);
+	return (1);
 }
 
+/* TODO */
 int	irc_join(struct s_client *c, char **params, int nparams)
 {
-	(void)c;
-	(void)params;
-	(void)nparams;
+	t_list				*chans;
+	struct s_channel	*chan;
+
+	chan = NULL;
+	if (nparams < 1)
+		return (ERR_NEEDMOREPARAM);
+
+	chans = parse_param_channels(params[0]);
+	tell_client_topic(c, chan);
 	return (0);
 }
 
