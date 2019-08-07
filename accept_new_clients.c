@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "logger.h"
 
-int		accept_new_clients(int sockfd, t_list **clients, fd_set *readfds)
+int		accept_new_clients(struct s_server *server)
 {
 	t_list					*elem;
 	struct s_client			*client;
@@ -15,7 +15,7 @@ int		accept_new_clients(int sockfd, t_list **clients, fd_set *readfds)
 	int						confd;
 
 	cli_len = sizeof(cli_addr);
-	if (FD_ISSET(sockfd, readfds)) {
+	if (FD_ISSET(server->sockfd, &server->readfds)) {
 		confd = accept(sockfd, (struct sockaddr *)&cli_addr, &cli_len);
 
 		LOG(LOGDEBUG, "%s: connected", inet_ntoa(cli_addr.sin_addr));
@@ -25,7 +25,7 @@ int		accept_new_clients(int sockfd, t_list **clients, fd_set *readfds)
 		client->fd = confd;
 		elem = ft_lstnew(NULL, 0);
 		elem->content = client;
-		ft_lstadd(clients, elem);
+		ft_lstadd(&server->clients, elem);
 		LOG(LOGDEBUG, "New connection on fd %d", confd);
 	}
 	return (0);

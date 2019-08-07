@@ -131,7 +131,7 @@ int					set_fds(int max_sd, t_list *clients, fd_set *readfds, fd_set *writefds);
 int					execute_command(struct s_client *c);
 int					read_client_command(int cfd, struct s_client_buffer *buffer);
 int					handle_io_clients(struct s_server const *const s, t_list *clients);
-int					accept_new_clients(int sockfd, t_list **clients, fd_set *readfds);
+int					accept_new_clients(struct s_server *server);
 int					reply_client(struct s_client *c, int retcode);
 
 /*

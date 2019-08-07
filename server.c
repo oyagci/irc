@@ -185,7 +185,7 @@ int	main(int ac, char *av[])
 	while (42) {
 		max_sd = set_fds(server.sockfd, clients, &server.readfds, &server.writefds);
 		select(max_sd + 1, &server.readfds, &server.writefds, NULL, NULL);
-		accept_new_clients(server.sockfd, &clients, &server.readfds);
+		accept_new_clients(&server);
 		handle_io_clients(&server, clients);
 	}
 	return (0);
