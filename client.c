@@ -67,29 +67,26 @@ int	main(int ac, char *av[])
 		fgets(buffer, 510, stdin);
 
 		char *c = strchr(buffer, '\n');
-		if (c) {
+		if (c)
 			*c = '\0';
-		}
 		strcat(buffer, CRLF);
 
 		if (send(sockfd, buffer, 512, 0) < 0) {
 			printf("Connection lost!\n");
 			run = 0;
 		}
-		printf("data sent\n");
 
-		t.tv_usec = 1000;
+		t.tv_sec = 0;
+		t.tv_usec = 10000;
 
 		FD_ZERO(&readfds);
 		FD_SET(sockfd, &readfds);
 		select(sockfd + 1, &readfds, NULL, NULL, &t);
 
-		printf("ok\n");
 		if (FD_ISSET(sockfd, &readfds))
 		{
-			printf("receiving data...\n");
-			recv(sockfd, buffer, 512, MSG_WAITALL);
-			printf("%.512s\n", buffer);
+			int ret = recv(sockfd, buffer, 512, 0);
+			printf("%.*s\n", ret, buffer);
 		}
 	}
 	close(sockfd);
