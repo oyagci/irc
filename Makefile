@@ -46,3 +46,5 @@ clean:
 
 fclean: clean
 	rm -f $(SERVER_NAME) $(CLIENT_NAME)
+
+re: fclean all
