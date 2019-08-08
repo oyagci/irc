@@ -6,6 +6,25 @@
 #include "logger.h"
 #include <stdlib.h>
 
+char	*irc_repcode_itoa(unsigned int n)
+{
+	char	digits[10] = "0123456789";
+	char	*s;
+	int		i;
+
+	i = 0;
+	s = ft_strdup("000");
+	if (n > 999)
+		return (NULL);
+	while (n > 0)
+	{
+		s[2 - i] = digits[(n % 10)];
+		n /= 10;
+		i++;
+	}
+	return (s);
+}
+
 int		reply_client(struct s_client *c, int a)
 {
 	char	reply[512];
@@ -24,8 +43,7 @@ int		reply_client(struct s_client *c, int a)
 	{
 		if (retcode == RPL_WELCOME)
 		{
-			retstr = ft_itoa(retcode);
-
+			retstr = irc_repcode_itoa(retcode);
 			ft_strlcat(reply, ":irc.42.fr ", 512);
 			ft_strlcat(reply, retstr, 512);
 			ft_strlcat(reply, " ", 512);
@@ -34,7 +52,6 @@ int		reply_client(struct s_client *c, int a)
 			ft_strlcat(reply, "!", 512);
 			ft_strlcat(reply, CRLF, 512);
 			send(c->fd, reply, ft_strlen(reply), 0);
-
 			free(retstr);
 		}
 	}
