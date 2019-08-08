@@ -19,10 +19,10 @@
 #define LOGWARN			1
 #define LOGERR			2
 
-#define PREFIX_ERR		"[  ERROR]"
+#define PREFIX_ERR		"  [ERROR]"
 #define PREFIX_WARN		"[WARNING]"
-#define PREFIX_DEBUG	"[  DEBUG]"
-#define PREFIX_DEFAULT	"[    LOG]"
+#define PREFIX_DEBUG	"  [DEBUG]"
+#define PREFIX_DEFAULT	"    [LOG]"
 
 # include <stdio.h>
 

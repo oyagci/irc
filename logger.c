@@ -21,7 +21,7 @@ void	printprefix(int level)
 		prefix = PREFIX_DEBUG;
 	else if (level == 1)
 		prefix = PREFIX_WARN;
-	else if (level == 3)
+	else if (level == 2)
 		prefix = PREFIX_ERR;
 	else
 		prefix = PREFIX_DEFAULT;
