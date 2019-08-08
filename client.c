@@ -6,9 +6,11 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:25 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/06 15:10:57 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/08 15:56:24 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,31 +64,33 @@ int	main(int ac, char *av[])
 	int run = 1;
 	while (run) {
 		memset(buffer, 0, 512);
-		printf("> ");
-
-		fgets(buffer, 510, stdin);
-
-		char *c = strchr(buffer, '\n');
-		if (c)
-			*c = '\0';
-		strcat(buffer, CRLF);
-
-		if (send(sockfd, buffer, 512, 0) < 0) {
-			printf("Connection lost!\n");
-			run = 0;
-		}
 
 		t.tv_sec = 0;
 		t.tv_usec = 10000;
 
 		FD_ZERO(&readfds);
 		FD_SET(sockfd, &readfds);
+		FD_SET(0, &readfds);
 		select(sockfd + 1, &readfds, NULL, NULL, &t);
 
 		if (FD_ISSET(sockfd, &readfds))
 		{
 			int ret = recv(sockfd, buffer, 512, 0);
 			printf("%.*s\n", ret, buffer);
+		}
+		if (FD_ISSET(0, &readfds))
+		{
+			fgets(buffer, 510, stdin);
+
+			char *c = strchr(buffer, '\n');
+			if (c)
+				*c = '\0';
+			strcat(buffer, CRLF);
+
+			if (send(sockfd, buffer, ft_strlen(buffer), 0) < 0) {
+				printf("Connection lost!\n");
+				run = 0;
+			}
 		}
 	}
 	close(sockfd);

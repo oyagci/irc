@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 13:51:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/08 11:25:21 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/08 15:54:00 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ int		irc_pass(struct s_client *, char **, int);
 int		irc_nick(struct s_client *, char **, int);
 int		irc_user(struct s_client *, char **, int);
 int		irc_oper(struct s_client *, char **, int);
+int		irc_join(struct s_client *, char **, int);
 
 int		nickavail(char *nick);
 int		nickadd(char *nick);

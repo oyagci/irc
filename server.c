@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/08 11:30:39 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/08 15:49:06 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,60 +22,14 @@
 #include "irc.h"
 #include "logger.h"
 
-int		channel(char const *inputc, char **buffer)
-{
-	unsigned char const	*input;
-	int					ii;
-
-	input = (unsigned char const *)inputc;
-	if (*input == '#' || *input == '+' || *input == '&')
-	{
-		ii = 1;
-		while (input[ii] != '\0' &&
-				((input[ii] >= 0x01 && input[ii] <= 0x07) ||
-				 (input[ii] >= 0x08 && input[ii] <= 0x09) ||
-				 (input[ii] >= 0x0b && input[ii] <= 0x0c) ||
-				 (input[ii] >= 0x0e && input[ii] <= 0x1f) ||
-				 (input[ii] >= 0x2d && input[ii] <= 0x39) ||
-				 (input[ii] >= 0x3b)))
-		{
-			ii++;
-		}
-		if (ii > 1)
-		{
-			*buffer = ft_strndup((char *)inputc, ii);
-			return (ii);
-		}
-	}
-	return (0);
-}
-
-t_list		*parse_param_channels(char *input)
-{
-	t_list	*chans;
-	t_list	*elem;
-	int		ret;
-	char	*chanbuf;
-
-	chans = NULL;
-	while ((ret = channel(input, &chanbuf)) > 0)
-	{
-		input += ret;
-		elem = ft_lstnew(0, 0);
-		elem->content = chanbuf;
-		ft_lstpush(&chans, elem);
-	}
-	return (chans);
-}
-
+/*
+** Read data sent by on a file descriptor
+** Reads at most 512 bytes
+*/
 int	read_client_command(int cfd, struct s_client_buffer *buffer)
 {
 	int	ret;
 
-	/*
-	** RFC2812 limits the maximum length of a command sent by
-	** the client to 512 bytes at most.
-	*/
 	if ((ret = read(cfd, buffer->data + buffer->len,
 					COMMAND_LENGTH - buffer->len)) > 0)
 	{
@@ -138,34 +92,19 @@ int	irc_nick(struct s_client *c, char **params, int nparams)
 */
 int	irc_user(struct s_client *c, char **params, int nparams)
 {
-	if (nparams < 4) {
+	if (nparams < 4)
+	{
 		LOG(LOGDEBUG, "[%d;%.9s] Not enough parameters", c->fd, c->nickname);
 		return (ERR_NEEDMOREPARAM);
 	}
-	if (c->is_registered) {
+	if (c->is_registered)
 		return (ERR_ALREADYREGISTRED);
-	}
 	c->username = ft_strdup(params[0]);
 	LOG(LOGDEBUG, "Username of %.9s set to %s", c->nickname, c->username);
 	set_usermode(c, ft_atoi(params[1]));
 	set_realname(c, params[3]);
 	LOG(LOGDEBUG, "Realname set to %s", c->realname);
 	server_queue_reply(c->server, c, RPL_WELCOME);
-	return (0);
-}
-
-/* TODO */
-int	irc_join(struct s_client *c, char **params, int nparams)
-{
-	t_list				*chans;
-	struct s_channel	*chan;
-
-	(void)c;
-	chan = NULL;
-	if (nparams < 1)
-		return (ERR_NEEDMOREPARAM);
-
-	chans = parse_param_channels(params[0]);
 	return (0);
 }
 

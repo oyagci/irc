@@ -10,7 +10,8 @@ SERVER_SOURCES := \
 	accept_new_clients.c \
 	handle_io_clients.c \
 	nick.c \
-	set_usermode.c
+	set_usermode.c \
+	irc_join.c
 
 CLIENT_SOURCES := client.c
 
@@ -36,7 +37,7 @@ $(SERVER_NAME): $(SERVER_OBJS) $(HEADERS)
 	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g
 
 $(CLIENT_NAME): $(CLIENT_OBJS) $(HEADERS)
-	$(CC) $(CLIENT_OBJS) -o $@ -g
+	$(CC) $(CLIENT_OBJS) -o $@ -g -L libft -lft -g
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) $< -c -o $@ -I libft/includes -g
