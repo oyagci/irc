@@ -220,12 +220,12 @@ int	execute_command(struct s_client *c)
 
 int	main(int ac, char *av[])
 {
-	t_list				*clients;
 	struct sockaddr_in	serv_addr;
 	int					max_sd;
 	struct s_server		server;
 
-	clients = NULL;
+	server.clients = NULL;
+	ft_memset(&server, 0, sizeof(server));
 	if (ac < 2) {
 		printf("Usage: %s <port>\n", av[0]);
 		exit(EXIT_FAILURE);
@@ -244,10 +244,10 @@ int	main(int ac, char *av[])
 	listen(server.sockfd, MAX_CONN);
 
 	while (42) {
-		max_sd = set_fds(server.sockfd, clients, &server.readfds, &server.writefds);
+		max_sd = set_fds(server.sockfd, server.clients, &server.readfds, &server.writefds);
 		select(max_sd + 1, &server.readfds, &server.writefds, NULL, NULL);
 		accept_new_clients(&server);
-		handle_io_clients(&server, clients);
+		handle_io_clients(&server, server.clients);
 	}
 	return (0);
 }

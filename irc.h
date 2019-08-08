@@ -84,6 +84,7 @@ struct s_server
 	fd_set	writefds;
 	int		sockfd;
 	t_list	*channels;
+	t_list	*clients;
 };
 
 /*
