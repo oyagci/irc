@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 13:51:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/06 15:45:27 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/08 11:25:21 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define MAX_CONN			1024
 # define NICK_SIZE			9
 
+# define ERR_UNKNOWNCOMMAND		421
 # define ERR_NONICKNAMEGIVEN	431
 # define ERR_ERRONEUSNICKNAME	432
 # define ERR_NICKNAMEINUSE		433
@@ -46,7 +47,6 @@ struct s_channel
 	int		mode;
 	t_list	*clients;
 };
-
 
 struct s_client_buffer {
 	char	data[CLIENT_BUFFER_SIZE];
@@ -75,7 +75,6 @@ struct s_client
 	char					*realname;
 
 	struct s_server			*server;
-
 };
 
 struct s_server
@@ -85,6 +84,14 @@ struct s_server
 	int		sockfd;
 	t_list	*channels;
 	t_list	*clients;
+	t_list	*msgqueue;
+};
+
+struct s_server_msg
+{
+	struct s_client const	*dest;
+	char					*msg;
+	size_t					len;
 };
 
 /*
@@ -145,8 +152,8 @@ void				message_del(struct s_message **msg);
 int					set_fds(int max_sd, t_list *clients, fd_set *readfds, fd_set *writefds);
 int					execute_command(struct s_client *c);
 int					read_client_command(int cfd, struct s_client_buffer *buffer);
-int					handle_io_clients(struct s_server const *const s, t_list *clients);
-int					accept_new_clients(struct s_server *server);
+int					server_read_clients_command(struct s_server const *const server, t_list *clients);
+int					server_accept_new_clients(struct s_server *server);
 int					reply_client(struct s_client *c, int retcode);
 
 /*
@@ -174,6 +181,10 @@ int		nickadd(char *nick);
 int		set_usermode(struct s_client *c, int mode);
 int		set_realname(struct s_client *c, char *rn);
 
-int		tell_client_topic(struct s_client *c, struct s_channel *chan);
+int		server_send_queued_replies(struct s_server *const server);
+int		server_queue_reply(struct s_server *server, struct s_client const *const dest,
+	int reply_code);
+
+void	server_msg_del(void *msgp, size_t size);
 
 #endif

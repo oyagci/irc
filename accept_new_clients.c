@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "logger.h"
 
-int		accept_new_clients(struct s_server *server)
+int		server_accept_new_clients(struct s_server *server)
 {
 	t_list					*elem;
 	struct s_client			*client;
@@ -23,6 +23,7 @@ int		accept_new_clients(struct s_server *server)
 		// Add connection to the clients list
 		client = ft_memalloc(sizeof(*client));
 		client->fd = confd;
+		client->server = server;
 		elem = ft_lstnew(NULL, 0);
 		elem->content = client;
 		ft_lstadd(&server->clients, elem);

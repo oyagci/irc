@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/06 16:18:19 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/08 11:30:39 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,6 @@ t_list		*parse_param_channels(char *input)
 		ft_lstpush(&chans, elem);
 	}
 	return (chans);
-}
-
-/* TODO */
-int		tell_client_topic(struct s_client *c, struct s_channel *chan)
-{
-	send(c->fd, chan->topic, ft_strlen(chan->topic), 0);
-	return (0);
 }
 
 int	read_client_command(int cfd, struct s_client_buffer *buffer)
@@ -157,7 +150,8 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 	set_usermode(c, ft_atoi(params[1]));
 	set_realname(c, params[3]);
 	LOG(LOGDEBUG, "Realname set to %s", c->realname);
-	return (1);
+	server_queue_reply(c->server, c, RPL_WELCOME);
+	return (0);
 }
 
 /* TODO */
@@ -166,15 +160,16 @@ int	irc_join(struct s_client *c, char **params, int nparams)
 	t_list				*chans;
 	struct s_channel	*chan;
 
+	(void)c;
 	chan = NULL;
 	if (nparams < 1)
 		return (ERR_NEEDMOREPARAM);
 
 	chans = parse_param_channels(params[0]);
-	tell_client_topic(c, chan);
 	return (0);
 }
 
+/* TODO */
 int	irc_privmsg(struct s_client *c, char **params, int nparams)
 {
 	(void)c;
@@ -204,18 +199,24 @@ int	execute_command(struct s_client *c)
 	};
 	size_t					ii;
 	struct s_message		*msg;
-	int						ret;
+	int						validcmd;
 
 	msg = message(c->buffer.data);
 	ii = 0;
+	validcmd = 0;
 	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))
 	{
 		if (ft_strequ(cmds[ii].name, msg->cmd->data))
-			ret = cmds[ii].f(c, msg->params->param,
+		{
+			validcmd = 1;
+			cmds[ii].f(c, msg->params->param,
 					nparams(msg->params->param));
+		}
 		ii++;
 	}
-	return (ret);
+	if (!validcmd)
+		server_queue_reply(c->server, c, ERR_UNKNOWNCOMMAND);
+	return (0);
 }
 
 int	main(int ac, char *av[])
@@ -254,8 +255,9 @@ int	main(int ac, char *av[])
 	while (42) {
 		max_sd = set_fds(server.sockfd, server.clients, &server.readfds, &server.writefds);
 		select(max_sd + 1, &server.readfds, &server.writefds, NULL, NULL);
-		accept_new_clients(&server);
-		handle_io_clients(&server, server.clients);
+		server_accept_new_clients(&server);
+		server_read_clients_command(&server, server.clients);
+		server_send_queued_replies(&server);
 	}
 	return (0);
 }
