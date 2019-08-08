@@ -238,10 +238,18 @@ int	main(int ac, char *av[])
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
-	serv_addr.sin_port = htons(atoi(av[1]));
+	serv_addr.sin_port = htons(ft_atoi(av[1]));
 
-	bind(server.sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr));
-	listen(server.sockfd, MAX_CONN);
+	if (-1 == bind(server.sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)))
+	{
+		LOG(LOGERR, "Could not create server on port %d", ft_atoi(av[1]));
+		exit(EXIT_FAILURE);
+	}
+	if (-1 == listen(server.sockfd, MAX_CONN))
+	{
+		LOG(LOGERR, "Could not listen on port %d", ft_atoi(av[1]));
+		exit(EXIT_FAILURE);
+	}
 
 	while (42) {
 		max_sd = set_fds(server.sockfd, server.clients, &server.readfds, &server.writefds);
