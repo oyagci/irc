@@ -153,7 +153,7 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 		return (ERR_ALREADYREGISTRED);
 	}
 	c->username = ft_strdup(params[0]);
-	LOG(LOGDEBUG, "Username of %.9s set to %s\n", c->nickname, c->username);
+	LOG(LOGDEBUG, "Username of %.9s set to %s", c->nickname, c->username);
 	set_usermode(c, ft_atoi(params[1]));
 	set_realname(c, params[3]);
 	LOG(LOGDEBUG, "Realname set to %s", c->realname);
