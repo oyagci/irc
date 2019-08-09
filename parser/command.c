@@ -6,14 +6,13 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 11:21:16 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/06 16:09:35 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 11:54:14 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "../irc.h"
 #include <libft.h>
 #include <stdlib.h>
-#include "logger.h"
 #include <stdio.h>
 
 /*

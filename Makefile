@@ -1,14 +1,14 @@
 SERVER_SOURCES := \
 	server.c \
-	message.c \
-	prefix.c \
-	command.c \
-	crlf.c \
+	parser/message.c \
+	parser/prefix.c \
+	parser/command.c \
+	parser/crlf.c \
+	parser/params.c \
 	logger.c \
-	params.c \
 	set_fds.c \
 	accept_new_clients.c \
-	handle_io_clients.c \
+	server_queue.c \
 	nick.c \
 	set_usermode.c \
 	irc_join.c

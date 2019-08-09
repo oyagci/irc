@@ -6,11 +6,11 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 11:03:45 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/06 16:07:15 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 11:52:33 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "../irc.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "libft.h"

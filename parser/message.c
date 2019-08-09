@@ -6,13 +6,12 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:21 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/06 16:07:02 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 11:53:36 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "../irc.h"
 #include <stdlib.h>
-#include "logger.h"
 
 /*
 ** Augmented BNF:
@@ -29,10 +28,8 @@ struct s_message	*message(char const *input)
 	{
 		input += 1;
 		msg->prefix = prefix(input);
-		msglog(LOGDEBUG, msg->prefix->data);
 		if (!msg->prefix || input[msg->prefix->len] != ' ')
 		{
-			msglog(LOGDEBUG, "Invalid prefix");
 			message_del(&msg);
 			return (NULL);
 		}
@@ -42,22 +39,15 @@ struct s_message	*message(char const *input)
 	msg->cmd = command(input);
 	if (msg->cmd)
 	{
-		LOG(LOGDEBUG, "Command found: %s", msg->cmd->data);
 		input += msg->cmd->len;
 		msg->params = params(input);
 		if (msg->params)
 			input += msg->params->len;
 		if (!crlf(input))
-		{
-			LOG(LOGDEBUG, "Message is not terminated by CR-LF");
 			message_del(&msg);
-		}
 	}
 	else
-	{
-		LOG(LOGDEBUG, "No command found");
 		message_del(&msg);
-	}
 	return (msg);
 }
 

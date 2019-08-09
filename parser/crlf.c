@@ -6,11 +6,11 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 11:52:49 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/01 15:15:51 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 11:52:20 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "../irc.h"
 #include <stdlib.h>
 
 struct s_crlf	*crlf(char const *input)

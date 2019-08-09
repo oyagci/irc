@@ -6,14 +6,13 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 15:53:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/09 11:18:57 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 11:54:23 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.h"
+#include "../irc.h"
 #include "libft.h"
 #include <stdio.h>
-#include "logger.h"
 
 int					is_nospcrlfcl(unsigned char c)
 {
