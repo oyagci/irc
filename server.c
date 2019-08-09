@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/09 11:11:59 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 13:13:58 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,26 @@ int	irc_nick(struct s_client *c, char **params, int nparams)
 {
 	char	*nick;
 
-	LOG(LOGDEBUG, "[%d;%.9s] NICK", c->fd, c->nickname);
-
 	if (nparams < 1)
 		return (ERR_NONICKNAMEGIVEN);
 	nick = params[0];
 
-	LOG(LOGDEBUG, "Old nick: %.9s", c->nickname);
-	LOG(LOGDEBUG, "New nick: %.9s", nick);
 
 	if (!nickavail(nick))
 	{
 		LOG(LOGDEBUG, "Nickname %.9s is already in use", nick);
+		server_queue_code_reply(c->server, c, ERR_NICKNAMEINUSE);
 		return (ERR_NICKNAMEINUSE);
 	}
 	if (ft_strlen(nick) > 9)
 	{
 		LOG(LOGDEBUG, "Nickname %.9s is too long (len > 9)", nick);
+		server_queue_code_reply(c->server, c, ERR_ERRONEUSNICKNAME);
 		return (ERR_ERRONEUSNICKNAME);
 	}
+	LOG(LOGDEBUG, "NICK %.9s -> %.9s", c->nickname, nick);
 	strlcpy(c->nickname, nick, NICK_SIZE);
-	nickadd(nick);
-	LOG(LOGDEBUG, "Nickname set to %.9s", c->nickname);
+	nickadd(nick); /* TODO */
 	return (0);
 }
 

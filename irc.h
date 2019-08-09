@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 13:51:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/08 15:54:00 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 13:27:54 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ struct s_params		*params(char const *input);
 char				*host(char const *input);
 int					user(unsigned char const *input, char **buffer);
 int					nickname(char const *input, char **buffer);
+t_list				*channels(char *input);
 
 void				prefix_del(struct s_prefix **p);
 void				command_del(struct s_command **cmd);
@@ -187,7 +188,13 @@ int		server_queue_reply(struct s_server *server,
 	struct s_client const *const dest, char *reply);
 int			server_queue_code_reply(struct s_server *server,
 	struct s_client const *const dest, int reply_code);
+int		server_add_to_chan(struct s_server *server, struct s_client *client,
+	char const *const channame);
+int	server_tell_new_client(struct s_server *server, struct s_client *client,
+		struct s_channel *chan);
 
 void	server_msg_del(void *msgp, size_t size);
+
+int		channel_add_client(struct s_channel *channel, struct s_client *client);
 
 #endif

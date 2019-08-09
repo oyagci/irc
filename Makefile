@@ -5,13 +5,16 @@ SERVER_SOURCES := \
 	parser/command.c \
 	parser/crlf.c \
 	parser/params.c \
+	parser/channels.c \
 	logger.c \
 	set_fds.c \
 	accept_new_clients.c \
 	server_queue.c \
 	nick.c \
 	set_usermode.c \
-	irc_join.c
+	irc_join.c \
+	server_channel.c \
+	channel.c
 
 CLIENT_SOURCES := client.c
 
