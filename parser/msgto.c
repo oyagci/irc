@@ -17,13 +17,8 @@ int			msgto(char *input, t_list **listbuf)
 	*listbuf = NULL;
 	while (42)
 	{
-		if ((ret = chanstr(input, &buf)) > 0)
-		{
-			elem = ft_lstnew(0, 0);
-			elem->content = buf;
-			ft_lstpush(listbuf, elem);
-		}
-		else if ((ret = nickname(input, &buf)) > 0)
+		if ((ret = chanstr(input, &buf)) > 0 ||
+			(ret = nickname(input, &buf)) > 0)
 		{
 			elem = ft_lstnew(0, 0);
 			elem->content = buf;
