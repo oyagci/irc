@@ -183,8 +183,10 @@ int		set_usermode(struct s_client *c, int mode);
 int		set_realname(struct s_client *c, char *rn);
 
 int		server_send_queued_replies(struct s_server *const server);
-int		server_queue_reply(struct s_server *server, struct s_client const *const dest,
-	int reply_code);
+int		server_queue_reply(struct s_server *server,
+	struct s_client const *const dest, char *reply);
+int			server_queue_code_reply(struct s_server *server,
+	struct s_client const *const dest, int reply_code);
 
 void	server_msg_del(void *msgp, size_t size);
 

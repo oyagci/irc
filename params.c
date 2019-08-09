@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 15:53:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/06 16:07:53 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 11:18:57 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char				*extract_param(char const *input)
 	if (is_nospcrlfcl(input[i]))
 	{
 		i += 1;
-		while (is_nospcrlfcl(input[i]) || input[i] == ':')
+		while (input[i] != 0 && (is_nospcrlfcl(input[i]) || input[i] == ':'))
 			i += 1;
 	}
 	return (ft_strndup((char *)input, i));

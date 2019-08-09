@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/08 15:49:06 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 11:11:59 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 	set_usermode(c, ft_atoi(params[1]));
 	set_realname(c, params[3]);
 	LOG(LOGDEBUG, "Realname set to %s", c->realname);
-	server_queue_reply(c->server, c, RPL_WELCOME);
+	server_queue_code_reply(c->server, c, RPL_WELCOME);
 	return (0);
 }
 
@@ -154,7 +154,7 @@ int	execute_command(struct s_client *c)
 		ii++;
 	}
 	if (!validcmd)
-		server_queue_reply(c->server, c, ERR_UNKNOWNCOMMAND);
+		server_queue_code_reply(c->server, c, ERR_UNKNOWNCOMMAND);
 	return (0);
 }
 
@@ -164,7 +164,6 @@ int	main(int ac, char *av[])
 	int					max_sd;
 	struct s_server		server;
 
-	server.clients = NULL;
 	ft_memset(&server, 0, sizeof(server));
 	if (ac < 2) {
 		printf("Usage: %s <port>\n", av[0]);

@@ -130,23 +130,18 @@ static char	*server_format_reply(struct s_client const *const c, int reply_code)
 }
 
 int			server_queue_reply(struct s_server *server, struct s_client const *const dest,
-	int reply_code)
+	char *reply)
 {
 	t_list				*elem;
 	struct s_server_msg	*msg;
-	char				*replystr;
 
-
-	replystr = server_format_reply(dest, reply_code);
-	if (!replystr)
-		return (-1);
 
 	msg = NULL;
 	if (!(msg = ft_memalloc(sizeof(*msg))))
 		return (-1);
 	msg->dest = dest;
-	msg->msg = replystr;
-	msg->len = ft_strlen(replystr);
+	msg->msg = reply;
+	msg->len = ft_strlen(reply);
 
 	elem = ft_lstnew(0, 0);
 	elem->content = msg;
@@ -154,7 +149,19 @@ int			server_queue_reply(struct s_server *server, struct s_client const *const d
 	return (0);
 }
 
-void	server_msg_del(void *msgp, size_t size)
+int			server_queue_code_reply(struct s_server *server,
+	struct s_client const *const dest, int reply_code)
+{
+	char				*replystr;
+
+	replystr = server_format_reply(dest, reply_code);
+	if (!replystr)
+		return (-1);
+	server_queue_reply(server, dest, replystr);
+	return (0);
+}
+
+void		server_msg_del(void *msgp, size_t size)
 {
 	struct s_server_msg *msg;
 
