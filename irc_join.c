@@ -1,7 +1,6 @@
 #include "libft.h"
 #include "irc.h"
 #include "logger.h"
-#include <assert.h>
 
 int		channel_add_client(struct s_channel *channel, struct s_client *client)
 {
