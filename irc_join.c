@@ -82,7 +82,7 @@ int	server_add_to_chan(struct s_server *server, struct s_client *client,
 	return (0);
 }
 
-int		join_channel(struct s_client *client, char const *const chanstr)
+int		client_join_channel(struct s_client *client, char const *const chanstr)
 {
 	struct s_server *server;
 
@@ -153,7 +153,7 @@ int	irc_join(struct s_client *c, char **params, int nparams)
 	{
 		chan = l->content;
 		LOG(LOGDEBUG, "%s joins channel %s", c->nickname, chan);
-		join_channel(c, chan);
+		client_join_channel(c, chan);
 	}
 	return (0);
 }
