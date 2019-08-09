@@ -239,11 +239,12 @@ int	execute_command(struct s_client *c)
 		if (ft_strequ(cmds[ii].name, msg->cmd->data))
 		{
 			validcmd = 1;
-			cmds[ii].f(c, msg->params->param,
-					nparams(msg->params->param));
+			cmds[ii].f(c, msg->params->param, nparams(msg->params->param));
+			break ;
 		}
 		ii++;
 	}
+	message_del(&msg);
 	if (!validcmd)
 		server_queue_code_reply(c->server, c, ERR_UNKNOWNCOMMAND);
 	return (0);
