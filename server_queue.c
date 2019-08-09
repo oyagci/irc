@@ -146,6 +146,7 @@ int			server_queue_reply(struct s_server *server, struct s_client const *const d
 	elem = ft_lstnew(0, 0);
 	elem->content = msg;
 	ft_lstadd(&server->msgqueue, elem);
+	LOG(LOGDEBUG, "%s", reply);
 	return (0);
 }
 

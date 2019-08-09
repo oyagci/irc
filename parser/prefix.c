@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 11:03:45 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/09 11:52:33 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 14:36:47 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "libft.h"
-
-char				letter(char input)
-{
-	if ((input >= 0x41 && input <= 0x5a) ||
-		(input >= 0x61 && input <= 0x7a))
-		return (input);
-	else
-		return (0);
-}
-
-char				digit(char input)
-{
-	if (input >= 0x30 && input <= 0x39)
-		return (input);
-	else
-		return (0);
-}
-
-char				special(char input)
-{
-	if ((input >= 0x5b && input <= 0x60) ||
-		(input >= 0x7b && input <= 0x7d))
-		return (input);
-	return (0);
-}
 
 // char				*shortname(char const *input)
 // {

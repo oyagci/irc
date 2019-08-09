@@ -6,6 +6,12 @@ SERVER_SOURCES := \
 	parser/crlf.c \
 	parser/params.c \
 	parser/channels.c \
+	parser/digit.c \
+	parser/letter.c\
+	parser/special.c \
+	parser/msgto.c \
+	parser/chanstr.c \
+	parser/nickname.c \
 	logger.c \
 	set_fds.c \
 	accept_new_clients.c \

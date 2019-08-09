@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 13:51:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/09 13:27:54 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 15:42:18 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <string.h>
 #include <sys/select.h>
-#include "libft.h"
+#include "libft/includes/libft.h"
 
 # define COMMAND_LENGTH		512
 # define CRLF				"\x0d\x0a"
@@ -23,6 +23,7 @@
 # define MAX_CONN			1024
 # define NICK_SIZE			9
 
+# define ERR_NORECIPIENT		411
 # define ERR_UNKNOWNCOMMAND		421
 # define ERR_NONICKNAMEGIVEN	431
 # define ERR_ERRONEUSNICKNAME	432
@@ -145,6 +146,11 @@ char				*host(char const *input);
 int					user(unsigned char const *input, char **buffer);
 int					nickname(char const *input, char **buffer);
 t_list				*channels(char *input);
+char				special(char input);
+char				letter(char input);
+char				digit(char input);
+int					chanstr(char const *inputc, char **buffer);
+int					msgto(char *input, t_list **listbuf);
 
 void				prefix_del(struct s_prefix **p);
 void				command_del(struct s_command **cmd);
@@ -184,14 +190,17 @@ int		set_usermode(struct s_client *c, int mode);
 int		set_realname(struct s_client *c, char *rn);
 
 int		server_send_queued_replies(struct s_server *const server);
-int		server_queue_reply(struct s_server *server,
-	struct s_client const *const dest, char *reply);
+int			server_queue_reply(struct s_server *server, struct s_client const *const dest,
+	char *reply);
 int			server_queue_code_reply(struct s_server *server,
 	struct s_client const *const dest, int reply_code);
 int		server_add_to_chan(struct s_server *server, struct s_client *client,
 	char const *const channame);
 int	server_tell_new_client(struct s_server *server, struct s_client *client,
 		struct s_channel *chan);
+struct s_channel	*server_get_channel(struct s_server *server, char const *name);
+int	server_send_formated_message_to(struct s_server *server, char const *recipient,
+	char *msg);
 
 void	server_msg_del(void *msgp, size_t size);
 

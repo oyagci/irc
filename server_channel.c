@@ -1,5 +1,5 @@
 #include "irc.h"
-#include "libft.h"
+#include "libft/includes/libft.h"
 #include "logger.h"
 
 struct s_channel	*server_new_channel(struct s_server *server, char const *name, int mode)
@@ -19,7 +19,28 @@ struct s_channel	*server_new_channel(struct s_server *server, char const *name, 
 		return (NULL);
 	ft_strcpy(chan->name, name);
 	chan->mode = mode;
+	elem = ft_lstnew(0, 0);
+	elem->content = chan;
+	ft_lstpush(&server->channels, elem);
 	LOG(LOGDEBUG, "Channel %s has been created", chan->name);
+	return (chan);
+}
+
+struct s_channel	*server_get_channel(struct s_server *server, char const *name)
+{
+	t_list				*elem;
+	struct s_channel	*chan;
+
+	elem = server->channels;
+	chan = NULL;
+	while (elem)
+	{
+		chan = elem->content;
+		if (ft_strequ(chan->name, name))
+			break ;
+		chan = NULL;
+		elem = elem->next;
+	}
 	return (chan);
 }
 

@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/09 13:13:58 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 15:49:29 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,74 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 	return (0);
 }
 
+int	server_send_channel(struct s_server *server, struct s_channel *chan, char *msg)
+{
+	t_list			*client;
+	struct s_client	*recipient;
+
+	client = chan->clients;
+	while (client)
+	{
+		recipient = client->content;
+		server_queue_reply(server, recipient, msg);
+		client = client->next;
+	}
+	return (0);
+}
+
+int	server_send_formated_message_to(struct s_server *server, char const *recipient,
+	char *msg)
+{
+	struct s_channel	*chan;
+
+	if (*recipient == '#' || *recipient == '&' || *recipient == '!')
+	{
+		chan = server_get_channel(server, recipient);
+		if (chan)
+			server_send_channel(server, chan, msg);
+	}
+	return (0);
+}
+
+int	server_send_message(struct s_server *server, struct s_client *from, t_list *recipients,
+	char const *msg)
+{
+	t_list	*elem;
+	char	*formated;
+	char	*recipient;
+
+	elem = recipients;
+	while (elem)
+	{
+		recipient = elem->content;
+		formated = ft_strnew(512);
+		ft_strlcat(formated, ":", 512);
+		ft_strlcat(formated, from->nickname, 512);
+		ft_strlcat(formated, " PRIVMSG ", 512);
+		ft_strlcat(formated, recipient, 512);
+		ft_strlcat(formated, msg, 512);
+		server_send_formated_message_to(server, recipient, formated);
+		free(formated);
+		elem = elem->next;
+	}
+	return (0);
+}
+
 /* TODO */
 int	irc_privmsg(struct s_client *c, char **params, int nparams)
 {
-	(void)c;
-	(void)params;
-	(void)nparams;
+	t_list	*recipients;
+
+	if (nparams < 2)
+	{
+		server_queue_code_reply(c->server, c, ERR_NORECIPIENT);
+		return (0);
+	}
+	recipients = NULL;
+	msgto(params[0], &recipients);
+	if (recipients == NULL)
+		server_queue_code_reply(c->server, c, ERR_NORECIPIENT);
+	server_send_message(c->server, c, recipients, params[1]);
 	return (0);
 }
 
