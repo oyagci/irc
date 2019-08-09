@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 13:51:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/09 15:42:18 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/09 16:08:44 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define NICK_SIZE			9
 
 # define ERR_NORECIPIENT		411
+# define ERR_NOTEXTTOSEND		412
 # define ERR_UNKNOWNCOMMAND		421
 # define ERR_NONICKNAMEGIVEN	431
 # define ERR_ERRONEUSNICKNAME	432

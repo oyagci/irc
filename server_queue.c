@@ -156,8 +156,10 @@ int			server_queue_code_reply(struct s_server *server,
 	char				*replystr;
 
 	replystr = server_format_reply(dest, reply_code);
-	if (!replystr)
+	if (!replystr) {
+		LOG(LOGWARN, "Reply code %d not handled", reply_code);
 		return (-1);
+	}
 	server_queue_reply(server, dest, replystr);
 	return (0);
 }
@@ -168,6 +170,6 @@ void		server_msg_del(void *msgp, size_t size)
 
 	(void)size;
 	msg = msgp;
-	free(msg->msg);
+//	free(msg->msg); // TODO: Fix double-free PRIVMSG
 	free(msg);
 }

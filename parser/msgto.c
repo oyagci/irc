@@ -1,5 +1,6 @@
 #include "../libft/includes/libft.h"
 #include "../irc.h"
+#include "../logger.h"
 
 /*
 ** msgtarget  =  msgto *( "," msgto )
@@ -16,15 +17,11 @@ int			msgto(char *input, t_list **listbuf)
 	*listbuf = NULL;
 	while (42)
 	{
-		if (*input == '#')
+		if ((ret = chanstr(input, &buf)) > 0)
 		{
-			ret = chanstr(input + 1, &buf);
-			if (ret > 0)
-			{
-				elem = ft_lstnew(0, 0);
-				elem->content = buf;
-				ft_lstpush(listbuf, elem);
-			}
+			elem = ft_lstnew(0, 0);
+			elem->content = buf;
+			ft_lstpush(listbuf, elem);
 		}
 		else if ((ret = nickname(input, &buf)) > 0)
 		{
