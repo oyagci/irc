@@ -25,12 +25,12 @@ char	*irc_repcode_itoa(unsigned int n)
 	return (s);
 }
 
-int		server_read_clients_command(struct s_server const *const server, t_list *clients)
+int		server_read_clients_command(struct s_server const *const server)
 {
 	t_list			*cur;
 	struct s_client	*client;
 
-	cur = clients;
+	cur = server->clients;
 	while (cur)
 	{
 		client = cur->content;
@@ -129,24 +129,22 @@ static char	*server_format_reply(struct s_client const *const c, int reply_code)
 	return (reply);
 }
 
-int			server_queue_reply(struct s_server *server, struct s_client const *const dest,
-	char *reply)
+int			server_queue_reply(struct s_server *server,
+	struct s_client const *const dest, char *reply)
 {
 	t_list				*elem;
 	struct s_server_msg	*msg;
-
 
 	msg = NULL;
 	if (!(msg = ft_memalloc(sizeof(*msg))))
 		return (-1);
 	msg->dest = dest;
-	msg->msg = reply;
+	ft_strncpy(msg->msg, reply, 512);
 	msg->len = ft_strlen(reply);
 
 	elem = ft_lstnew(0, 0);
 	elem->content = msg;
 	ft_lstadd(&server->msgqueue, elem);
-	LOG(LOGDEBUG, "%s", reply);
 	return (0);
 }
 
@@ -170,6 +168,5 @@ void		server_msg_del(void *msgp, size_t size)
 
 	(void)size;
 	msg = msgp;
-//	free(msg->msg); // TODO: Fix double-free PRIVMSG
 	free(msg);
 }

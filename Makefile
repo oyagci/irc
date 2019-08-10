@@ -20,6 +20,7 @@ SERVER_SOURCES := \
 	set_usermode.c \
 	irc_join.c \
 	server_channel.c \
+	server_loop.c \
 	channel.c
 
 CLIENT_SOURCES := client.c

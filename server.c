@@ -43,15 +43,23 @@ int	read_client_command(int cfd, struct s_client_buffer *buffer)
 
 int	irc_pass(struct s_client *c, char **params, int nparams)
 {
-	LOG(LOGDEBUG, "PASS from %d", c->fd);
 	if (c->is_connected)
+	{
+		server_queue_code_reply(c->server, c, ERR_ALREADYREGISTRED);
 		return (ERR_ALREADYREGISTRED);
+	}
 	if (SERVER_PASS)
 	{
 		if (nparams < 1)
+		{
+			server_queue_code_reply(c->server, c, ERR_NEEDMOREPARAM);
 			return (ERR_NEEDMOREPARAM);
+		}
 		if (ft_strcmp(params[0], SERVER_PASS))
+		{
+			server_queue_code_reply(c->server, c, ERR_PASSWDMISMATCH);
 			return (ERR_PASSWDMISMATCH);
+		}
 	}
 	c->is_connected = 1;
 	return (0);
@@ -62,9 +70,11 @@ int	irc_nick(struct s_client *c, char **params, int nparams)
 	char	*nick;
 
 	if (nparams < 1)
+	{
+		server_queue_code_reply(c->server, c, ERR_NONICKNAMEGIVEN);
 		return (ERR_NONICKNAMEGIVEN);
+	}
 	nick = params[0];
-
 
 	if (!nickavail(nick))
 	{
@@ -92,7 +102,7 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 {
 	if (nparams < 4)
 	{
-		LOG(LOGDEBUG, "[%d;%.9s] Not enough parameters", c->fd, c->nickname);
+		server_queue_code_reply(c->server, c, ERR_NEEDMOREPARAM);
 		return (ERR_NEEDMOREPARAM);
 	}
 	if (c->is_registered)
@@ -122,7 +132,11 @@ struct s_client	*server_get_client(struct s_server *server, char const *nick)
 	return (NULL);
 }
 
-int	server_send_channel(struct s_server *server, struct s_channel *chan, char *msg)
+/*
+** Send a message to every member of a channel
+*/
+int	server_send_channel(struct s_server *server, struct s_channel *chan,
+	char *msg)
 {
 	t_list			*client;
 	struct s_client	*recipient;
@@ -137,6 +151,9 @@ int	server_send_channel(struct s_server *server, struct s_channel *chan, char *m
 	return (0);
 }
 
+/*
+** Send a message to a channel or a nickname
+*/
 int	server_send_formated_message_to(struct s_server *server, char const *name,
 	char *msg)
 {
@@ -149,7 +166,10 @@ int	server_send_formated_message_to(struct s_server *server, char const *name,
 		if (chan)
 			server_send_channel(server, chan, msg);
 		else
+		{
 			LOG(LOGDEBUG, "No channel named %s", name);
+			/* TODO: Send ERR_CANNOTSENDTOCHAN */
+		}
 	}
 	else
 	{
@@ -159,8 +179,8 @@ int	server_send_formated_message_to(struct s_server *server, char const *name,
 	return (0);
 }
 
-int	server_send_privmsg(struct s_server *server, struct s_client *from, t_list *recipients,
-	char const *msg)
+int	server_send_privmsg(struct s_server *server, struct s_client *from,
+		t_list *recipients, char const *msg)
 {
 	t_list	*elem;
 	char	*formated;
@@ -180,12 +200,12 @@ int	server_send_privmsg(struct s_server *server, struct s_client *from, t_list *
 		ft_strlcat(formated, CRLF, 512);
 		LOG(LOGDEBUG, "To %s: %s", recipient, msg);
 		server_send_formated_message_to(server, recipient, formated);
+		free(formated);
 		elem = elem->next;
 	}
 	return (0);
 }
 
-/* TODO */
 int	irc_privmsg(struct s_client *client, char **params, int nparams)
 {
 	t_list	*recipients;
@@ -205,6 +225,7 @@ int	irc_privmsg(struct s_client *client, char **params, int nparams)
 	if (recipients == NULL)
 		server_queue_code_reply(client->server, client, ERR_NORECIPIENT);
 	server_send_privmsg(client->server, client, recipients, params[1]);
+	msgto_del(&recipients);
 	return (0);
 }
 
@@ -253,7 +274,6 @@ int	execute_command(struct s_client *c)
 int	main(int ac, char *av[])
 {
 	struct sockaddr_in	serv_addr;
-	int					max_sd;
 	struct s_server		server;
 
 	ft_memset(&server, 0, sizeof(server));
@@ -271,7 +291,8 @@ int	main(int ac, char *av[])
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 	serv_addr.sin_port = htons(ft_atoi(av[1]));
 
-	if (-1 == bind(server.sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)))
+	if (-1 == bind(server.sockfd, (struct sockaddr *)&serv_addr,
+		sizeof(serv_addr)))
 	{
 		LOG(LOGERR, "Could not create server on port %d", ft_atoi(av[1]));
 		exit(EXIT_FAILURE);
@@ -281,13 +302,6 @@ int	main(int ac, char *av[])
 		LOG(LOGERR, "Could not listen on port %d", ft_atoi(av[1]));
 		exit(EXIT_FAILURE);
 	}
-
-	while (42) {
-		max_sd = set_fds(server.sockfd, server.clients, &server.readfds, &server.writefds);
-		select(max_sd + 1, &server.readfds, &server.writefds, NULL, NULL);
-		server_accept_new_clients(&server);
-		server_read_clients_command(&server, server.clients);
-		server_send_queued_replies(&server);
-	}
+	server_loop(&server);
 	return (0);
 }

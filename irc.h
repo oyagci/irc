@@ -92,7 +92,7 @@ struct s_server
 struct s_server_msg
 {
 	struct s_client const	*dest;
-	char					*msg;
+	char					msg[512];
 	size_t					len;
 };
 
@@ -156,11 +156,12 @@ int					msgto(char *input, t_list **listbuf);
 void				prefix_del(struct s_prefix **p);
 void				command_del(struct s_command **cmd);
 void				message_del(struct s_message **msg);
+void				msgto_del(t_list **lp);
 
-int					set_fds(int max_sd, t_list *clients, fd_set *readfds, fd_set *writefds);
+int					server_set_fds(struct s_server *server);
 int					execute_command(struct s_client *c);
 int					read_client_command(int cfd, struct s_client_buffer *buffer);
-int					server_read_clients_command(struct s_server const *const server, t_list *clients);
+int					server_read_clients_command(struct s_server const *const server);
 int					server_accept_new_clients(struct s_server *server);
 int					reply_client(struct s_client *c, int retcode);
 
@@ -190,6 +191,7 @@ int		nickadd(char *nick);
 int		set_usermode(struct s_client *c, int mode);
 int		set_realname(struct s_client *c, char *rn);
 
+int		server_loop(struct s_server *server);
 int		server_send_queued_replies(struct s_server *const server);
 int			server_queue_reply(struct s_server *server, struct s_client const *const dest,
 	char *reply);

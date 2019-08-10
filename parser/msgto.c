@@ -1,6 +1,7 @@
 #include "../libft/includes/libft.h"
 #include "../irc.h"
 #include "../logger.h"
+#include <stdlib.h>
 
 /*
 ** msgtarget  =  msgto *( "," msgto )
@@ -31,4 +32,20 @@ int			msgto(char *input, t_list **listbuf)
 			break ;
 	}
 	return (0);
+}
+
+void	msgto_del(t_list **lp)
+{
+	t_list	*l;
+	t_list	*next;
+
+	l = *lp;
+	next = NULL;
+	while (l)
+	{
+		next = l->next;
+		free(l->content);
+		free(l);
+		l = next;
+	}
 }
