@@ -1,0 +1,427 @@
+[
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "set_fds.o",
+            "set_fds.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "set_fds.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "set_usermode.o",
+            "set_usermode.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "set_usermode.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "server_channel.o",
+            "server_channel.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "server_channel.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "irc_join.o",
+            "irc_join.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "irc_join.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/special.o",
+            "parser/special.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/special.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/channels.o",
+            "parser/channels.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/channels.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/letter.o",
+            "parser/letter.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/letter.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/nickname.o",
+            "parser/nickname.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/nickname.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/prefix.o",
+            "parser/prefix.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/prefix.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "accept_new_clients.o",
+            "accept_new_clients.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "accept_new_clients.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "client.o",
+            "client.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "client.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/chanstr.o",
+            "parser/chanstr.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/chanstr.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "nick.o",
+            "nick.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "nick.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "server_init.o",
+            "server_init.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "server_init.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "server.o",
+            "server.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "server.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/digit.o",
+            "parser/digit.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/digit.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "logger.o",
+            "logger.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "logger.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "server_queue.o",
+            "server_queue.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "server_queue.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "channel.o",
+            "channel.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "channel.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/params.o",
+            "parser/params.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/params.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "server_loop.o",
+            "server_loop.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "server_loop.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/command.o",
+            "parser/command.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/command.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/msgto.o",
+            "parser/msgto.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/msgto.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/crlf.o",
+            "parser/crlf.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/crlf.c"
+    },
+    {
+        "arguments": [
+            "gcc",
+            "-c",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-I",
+            "libft/includes",
+            "-g",
+            "-o",
+            "parser/message.o",
+            "parser/message.c"
+        ],
+        "directory": "/home/oyagci/irc",
+        "file": "parser/message.c"
+    }
+]
