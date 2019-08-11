@@ -24,10 +24,13 @@ SERVER_SOURCES := \
 	server_init.c \
 	channel.c
 
-CLIENT_SOURCES := client.c
+CLIENT_SOURCES := \
+	client.c \
+	parse_input.c \
+	logger.c
 
 SERVER_OBJS := $(SERVER_SOURCES:.c=.o)
-CLIENT_OBJS := client.o
+CLIENT_OBJS := $(CLIENT_SOURCES:.c=.o)
 
 SERVER_NAME := server
 CLIENT_NAME := client

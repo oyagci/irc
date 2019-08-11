@@ -248,7 +248,10 @@ int	execute_command(struct s_client *c)
 	struct s_message		*msg;
 	int						validcmd;
 
+	LOG(LOGDEBUG, "-> %s", c->buffer.data);
 	msg = message(c->buffer.data);
+	if (!msg)
+		return (0);
 	ii = 0;
 	validcmd = 0;
 	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))

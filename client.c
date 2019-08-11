@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "client.h"
+#include "logger.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,8 +25,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
-
-#define CRLF	"\x0d\x0a"
 
 int	main(int ac, char *av[])
 {
@@ -60,8 +60,8 @@ int	main(int ac, char *av[])
 	}
 
 	struct timeval t;
-
 	int run = 1;
+
 	while (run) {
 		memset(buffer, 0, 512);
 
@@ -76,18 +76,21 @@ int	main(int ac, char *av[])
 		if (FD_ISSET(sockfd, &readfds))
 		{
 			int ret = recv(sockfd, buffer, 512, 0);
-			printf("%.*s\n", ret, buffer);
+			if (ret > 0)
+				printf("%.*s\n", ret, buffer);
 		}
 		if (FD_ISSET(0, &readfds))
 		{
+			struct s_client_msg *cmd;
+			char				*formatted;
+			char				*c;
+
 			fgets(buffer, 510, stdin);
-
-			char *c = strchr(buffer, '\n');
-			if (c)
+			if ((c = ft_strchr(buffer, '\n')))
 				*c = '\0';
-			strcat(buffer, CRLF);
-
-			if (send(sockfd, buffer, ft_strlen(buffer), 0) < 0) {
+			cmd = parse_input(buffer);
+			formatted = format_message(cmd);
+			if (send(sockfd, formatted, ft_strlen(formatted), 0) < 0) {
 				printf("Connection lost!\n");
 				run = 0;
 			}
