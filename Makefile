@@ -21,6 +21,7 @@ SERVER_SOURCES := \
 	irc_join.c \
 	server_channel.c \
 	server_loop.c \
+	server_init.c \
 	channel.c
 
 CLIENT_SOURCES := client.c

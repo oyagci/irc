@@ -4,7 +4,8 @@ int	server_loop(struct s_server *server)
 {
 	int	max_sd;
 
-	while (42)
+	server->is_running = 1;
+	while (server->is_running)
 	{
 		max_sd = server_set_fds(server);
 		select(max_sd + 1, &server->readfds, &server->writefds, NULL, NULL);

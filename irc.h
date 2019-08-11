@@ -81,6 +81,7 @@ struct s_client
 
 struct s_server
 {
+	short	is_running;
 	fd_set	readfds;
 	fd_set	writefds;
 	int		sockfd;
@@ -158,6 +159,7 @@ void				command_del(struct s_command **cmd);
 void				message_del(struct s_message **msg);
 void				msgto_del(t_list **lp);
 
+int					server_init(struct s_server *server, unsigned int port);
 int					server_set_fds(struct s_server *server);
 int					execute_command(struct s_client *c);
 int					read_client_command(int cfd, struct s_client_buffer *buffer);

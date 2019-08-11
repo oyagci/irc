@@ -10,14 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <arpa/inet.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <netdb.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <bsd/string.h>
 
 #include "irc.h"
 #include "logger.h"
@@ -273,35 +269,13 @@ int	execute_command(struct s_client *c)
 
 int	main(int ac, char *av[])
 {
-	struct sockaddr_in	serv_addr;
 	struct s_server		server;
 
-	ft_memset(&server, 0, sizeof(server));
 	if (ac < 2) {
 		printf("Usage: %s <port>\n", av[0]);
 		exit(EXIT_FAILURE);
 	}
-
-	LOG(LOGDEBUG, "Creating server on port %s", av[1]);
-
-	server.sockfd = socket(AF_INET, SOCK_STREAM, 0);
-
-	memset(&serv_addr, 0, sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_addr.s_addr = INADDR_ANY;
-	serv_addr.sin_port = htons(ft_atoi(av[1]));
-
-	if (-1 == bind(server.sockfd, (struct sockaddr *)&serv_addr,
-		sizeof(serv_addr)))
-	{
-		LOG(LOGERR, "Could not create server on port %d", ft_atoi(av[1]));
-		exit(EXIT_FAILURE);
-	}
-	if (-1 == listen(server.sockfd, MAX_CONN))
-	{
-		LOG(LOGERR, "Could not listen on port %d", ft_atoi(av[1]));
-		exit(EXIT_FAILURE);
-	}
+	server_init(&server, ft_atoi(av[1]));
 	server_loop(&server);
 	return (0);
 }
