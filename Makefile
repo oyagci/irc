@@ -27,7 +27,12 @@ SERVER_SOURCES := \
 CLIENT_SOURCES := \
 	client.c \
 	parse_input.c \
-	logger.c
+	logger.c \
+	parser/message.c \
+	parser/prefix.c \
+	parser/command.c \
+	parser/crlf.c \
+	parser/params.c \
 
 SERVER_OBJS := $(SERVER_SOURCES:.c=.o)
 CLIENT_OBJS := $(CLIENT_SOURCES:.c=.o)
@@ -42,22 +47,24 @@ CC := gcc
 SERVER_HEADERS := \
 	server.h \
 	logger.h \
-	reply_codes.h
+	reply_codes.h \
+	parser/parser.h
 
 CLIENT_HEADERS := \
 	client.h \
 	reply_codes.h \
-	logger.h
+	logger.h \
+	parser/parser.h
 
 .PHONY: all clean fclean
 
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
 $(SERVER_NAME): $(SERVER_OBJS) $(SERVER_HEADERS)
-	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g -lbsd
+	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g
 
 $(CLIENT_NAME): $(CLIENT_OBJS) $(CLIENT_HEADERS)
-	$(CC) $(CLIENT_OBJS) -o $@ -g -L libft -lft -g -lbsd
+	$(CC) $(CLIENT_OBJS) -o $@ -g -L libft -lft -g
 
 %.o: %.c $(SERVER_HEADERS) $(CLIENT_HEADERS)
 	$(CC) $(CFLAGS) $< -c -o $@ -I libft/includes -g

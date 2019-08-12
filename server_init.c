@@ -16,7 +16,7 @@ int			server_init(struct s_server *server, unsigned int port)
 		return (-1);
 	ft_memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_addr.s_addr = INADDR_ANY;
+	serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	serv_addr.sin_port = htons(port);
 	if (-1 == bind(server->sockfd, (struct sockaddr *)&serv_addr,
 		sizeof(serv_addr)))

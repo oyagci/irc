@@ -2,6 +2,11 @@
 # define CLIENT_H
 
 # include <string.h>
+# include <libft.h>
+# include <sys/types.h>
+#include "parser/parser.h"
+
+# define CRLF	"\x0d\x0a"
 
 enum e_client_cmd
 {
@@ -13,6 +18,7 @@ enum e_client_cmd
 	CMD_MSG,
 	CMD_NICK,
 	CMD_WHO,
+	CMD_USER,
 };
 
 struct s_client_cmds
@@ -35,7 +41,56 @@ struct s_client_msg
 	size_t				nparam;
 };
 
+struct s_channel
+{
+	char	name[50];
+	t_list	*clients;
+};
+
 struct s_client_msg	*parse_input(char *input);
 char				*format_message(struct s_client_msg *msg);
+
+struct s_client
+{
+	int		is_running;
+	int		servsock;
+	t_list	*msgs;
+	fd_set	readfds;
+	fd_set	writefds;
+	t_list	*channels;
+
+	/*
+	** Methods
+	*/
+	int (*run)(struct s_client *const);
+	int (*exec_cmd)(struct s_client *const , struct s_client_msg const *const);
+	int (*queuemsg)(struct s_client *const, char const *const msg);
+	int	(*sendmsgs)(struct s_client *const);
+	int	(*event)(struct s_client *const, char const *const event);
+
+	/*
+	** IRC Commands
+	*/
+	int (*connect)(struct s_client *const, struct s_client_msg const *const);
+	int (*message)(struct s_client *const, struct s_client_msg const *const);
+	int	(*nick)(struct s_client *const, struct s_client_msg const *const);
+	int	(*join)(struct s_client *const, struct s_client_msg const *const);
+	int	(*user)(struct s_client *const, struct s_client_msg const *const);
+
+	int	(*eventjoin)(struct s_client *const, struct s_message const *const);
+	int	(*addclient)(struct s_client *const, char const *const client, struct s_channel *);
+};
+
+struct s_tuple_cmds
+{
+	enum e_client_cmd cmd;
+	int (*f)(struct s_client *const, struct s_client_msg const *const);
+};
+
+struct s_event_list
+{
+	char	*s;
+	int		(*f)(struct s_client *const, struct s_message const *const);
+};
 
 #endif

@@ -6,14 +6,14 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/09 16:38:22 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/08/12 10:16:56 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <bsd/string.h>
+#include <string.h>
 
 #include "server.h"
 #include "logger.h"

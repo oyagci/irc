@@ -16,24 +16,14 @@
 #include <string.h>
 #include <sys/select.h>
 #include "libft/includes/libft.h"
+#include "parser/parser.h"
+#include "reply_codes.h"
 
 # define COMMAND_LENGTH		512
 # define CRLF				"\x0d\x0a"
 # define CLIENT_BUFFER_SIZE	COMMAND_LENGTH
 # define MAX_CONN			1024
 # define NICK_SIZE			9
-
-# define ERR_NORECIPIENT		411
-# define ERR_NOTEXTTOSEND		412
-# define ERR_UNKNOWNCOMMAND		421
-# define ERR_NONICKNAMEGIVEN	431
-# define ERR_ERRONEUSNICKNAME	432
-# define ERR_NICKNAMEINUSE		433
-# define ERR_NEEDMOREPARAM		461
-# define ERR_ALREADYREGISTRED	462
-# define ERR_PASSWDMISMATCH		464
-
-# define RPL_WELCOME			1
 
 /*
 ** Connection password
@@ -97,75 +87,13 @@ struct s_server_msg
 	size_t					len;
 };
 
-/*
-** Helper structs for parsing
-*/
-
-struct s_message
-{
-	struct s_prefix		*prefix;
-	struct s_command	*cmd;
-	struct s_params		*params;
-	size_t				len;
-};
-
-struct s_prefix
-{
-	char				*data;
-	size_t				len;
-};
-
-struct s_command
-{
-	char	*data;
-	size_t	len;
-};
-
-struct s_crlf
-{
-};
-
-/*
-** RFC2812 tells us that the maximum number of parameters
-** per message is 15 (fifteen)
-*/
-struct s_params
-{
-	char	*param[15];
-	size_t	len;
-};
-
-/*
-** End of helper structs
-*/
-
-struct s_message	*message(char const *input);
-struct s_prefix		*prefix(char const *input);
-struct s_command	*command(char const *input);
-struct s_crlf		*crlf(char const *input);
-struct s_params		*params(char const *input);
-char				*host(char const *input);
-int					user(unsigned char const *input, char **buffer);
-int					nickname(char const *input, char **buffer);
-t_list				*channels(char *input);
-char				special(char input);
-char				letter(char input);
-char				digit(char input);
-int					chanstr(char const *inputc, char **buffer);
-int					msgto(char *input, t_list **listbuf);
-
-void				prefix_del(struct s_prefix **p);
-void				command_del(struct s_command **cmd);
-void				message_del(struct s_message **msg);
-void				msgto_del(t_list **lp);
-
-int					server_init(struct s_server *server, unsigned int port);
-int					server_set_fds(struct s_server *server);
-int					execute_command(struct s_client *c);
-int					read_client_command(int cfd, struct s_client_buffer *buffer);
-int					server_read_clients_command(struct s_server const *const server);
-int					server_accept_new_clients(struct s_server *server);
-int					reply_client(struct s_client *c, int retcode);
+int		server_init(struct s_server *server, unsigned int port);
+int		server_set_fds(struct s_server *server);
+int		execute_command(struct s_client *c);
+int		read_client_command(int cfd, struct s_client_buffer *buffer);
+int		server_read_clients_command(struct s_server const *const server);
+int		server_accept_new_clients(struct s_server *server);
+int		reply_client(struct s_client *c, int retcode);
 
 /*
 ** IRC server commands
@@ -187,6 +115,7 @@ int		irc_user(struct s_client *, char **, int);
 int		irc_oper(struct s_client *, char **, int);
 int		irc_join(struct s_client *, char **, int);
 
+/* TODO: Handle nick collision */
 int		nickavail(char *nick);
 int		nickadd(char *nick);
 
@@ -195,20 +124,18 @@ int		set_realname(struct s_client *c, char *rn);
 
 int		server_loop(struct s_server *server);
 int		server_send_queued_replies(struct s_server *const server);
-int			server_queue_reply(struct s_server *server, struct s_client const *const dest,
-	char *reply);
-int			server_queue_code_reply(struct s_server *server,
-	struct s_client const *const dest, int reply_code);
+int		server_queue_reply(struct s_server *server, struct s_client const *const dest,
+						   char *reply);
+int		server_queue_code_reply(struct s_server *server,
+								struct s_client const *const dest, int reply_code);
 int		server_add_to_chan(struct s_server *server, struct s_client *client,
-	char const *const channame);
+						   char const *const channame);
 int	server_tell_new_client(struct s_server *server, struct s_client *client,
-		struct s_channel *chan);
+						   struct s_channel *chan);
 struct s_channel	*server_get_channel(struct s_server *server, char const *name);
-int	server_send_formated_message_to(struct s_server *server, char const *recipient,
-	char *msg);
-
+int		server_send_formated_message_to(struct s_server *server, char const *recipient,
+										char *msg);
 void	server_msg_del(void *msgp, size_t size);
-
 int		channel_add_client(struct s_channel *channel, struct s_client *client);
 
 #endif

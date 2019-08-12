@@ -13,6 +13,7 @@ struct s_channel	*server_new_channel(struct s_server *server, char const *name, 
 		chan = elem->content;
 		if (ft_strequ(chan->name, name))
 			return (NULL);
+		elem = elem->next;
 	}
 	chan = ft_memalloc(sizeof(*chan));
 	if (!chan)

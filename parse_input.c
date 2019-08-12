@@ -1,4 +1,3 @@
-#include "server.h"
 #include "client.h"
 #include <stdio.h>
 #include "logger.h"
@@ -50,7 +49,6 @@ int					set_params(char *input, struct s_client_msg *buf)
 	start = 0;
 	end = 0;
 	ii = 0;
-	LOG(LOGDEBUG, "buf->nparam %ld", buf->nparam);
 	if (buf->nparam > 0)
 	{
 		while (input[end] != '\0' && ii < buf->nparam - 1)
@@ -59,14 +57,12 @@ int					set_params(char *input, struct s_client_msg *buf)
 			while (input[end] != ' ' && input[end] != '\0')
 				end++;
 			buf->params[ii] = ft_strndup(input + start, end - start);
-			LOG(LOGDEBUG, "param: %s", buf->params[ii]);
 			if (input[end] == ' ')
 				end++;
 			start = end;
 			ii += 1;
 		}
 		buf->params[ii] = ft_strdup(input + start);
-		LOG(LOGDEBUG, "last param: %s", buf->params[ii]);
 	}
 	return (0);
 }
@@ -88,6 +84,13 @@ struct s_client_msg	*parse_input(char *input)
 		if (*input == ' ')
 			input++;
 		set_params(input, msg);
+	}
+	else
+	{
+		msg->cmd = CMD_NONE;
+		msg->nparam = 1;
+		msg->params = ft_memalloc(sizeof(char *));
+		msg->params[0] = ft_strdup(input);
 	}
 	return (msg);
 }
