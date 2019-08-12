@@ -27,6 +27,17 @@
 #include <stdio.h>
 #include <errno.h>
 
+int	rpl_welcome(struct s_client *const self, struct s_message const *const msg)
+{
+	LOG(LOGDEBUG, "rpl_welcome");
+	(void)self;
+	if (msg->params->param[0])
+	{
+		printf(" * %s\n", msg->params->param[0]);
+	}
+	return (0);
+}
+
 int		client_connect(struct s_client *const self, struct s_client_msg const *const cmd)
 {
 	int					portno;
@@ -125,7 +136,7 @@ int		client_message(struct s_client *const self, struct s_client_msg const *cons
 int		client_nick(struct s_client *const self, struct s_client_msg const *const cmd)
 {
 	char	*msg;
-	char	*params[] = { "e1r7p16.42.fr", "*", "*", "Oguzhan YAGCI" };
+	char	*params[] = { "TODO", "*", "*", "Todo TODO" };
 	struct s_client_msg	usercmd = {
 		.cmd = CMD_USER,
 		.nparam = 4,
@@ -195,6 +206,7 @@ int		client_event(struct s_client *self, char const *const data)
 {
 	struct s_event_list events[] = {
 		{ .s = "JOIN", .f = self->eventjoin },
+		{ .s = "001", .f = self->rpl_welcome },
 	};
 	size_t				ii;
 
@@ -311,6 +323,8 @@ void	client_init(struct s_client *self)
 	self->user = &client_user;
 
 	self->eventjoin = &eventjoin;
+
+	self->rpl_welcome = &rpl_welcome;
 }
 
 int	main(void)

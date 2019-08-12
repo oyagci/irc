@@ -73,6 +73,8 @@ struct s_client
 	int	(*user)(struct s_client *const, struct s_client_msg const *const);
 
 	int	(*eventjoin)(struct s_client *const, struct s_message const *const);
+
+	int	(*rpl_welcome)(struct s_client *const, struct s_message const *const);
 };
 
 struct s_tuple_cmds

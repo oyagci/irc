@@ -107,7 +107,7 @@ static char	*server_format_reply(struct s_client const *const c, int reply_code)
 				ft_strlcat(reply, ":irc.42.fr ", 512);
 				ft_strlcat(reply, retstr, 512);
 				ft_strlcat(reply, " ", 512);
-				ft_strlcat(reply, "Welcome to the Internet Relay Chat, ", 512);
+				ft_strlcat(reply, ":Welcome to the Internet Relay Chat, ", 512);
 				ft_strlcat(reply, c->nickname, 512);
 				ft_strlcat(reply, "!", 512);
 				ft_strlcat(reply, CRLF, 512);
