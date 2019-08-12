@@ -1,4 +1,4 @@
-#include "irc.h"
+#include "server.h"
 
 int	server_loop(struct s_server *server)
 {

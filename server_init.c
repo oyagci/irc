@@ -4,7 +4,7 @@
 #include <netdb.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "irc.h"
+#include "server.h"
 #include "logger.h"
 
 int			server_init(struct s_server *server, unsigned int port)

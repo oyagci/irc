@@ -1,5 +1,5 @@
 #include "../libft/includes/libft.h"
-#include "../irc.h"
+#include "../server.h"
 
 /*
 ** channels: <chanstr> *( "," <chanstr> )

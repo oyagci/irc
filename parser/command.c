@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../irc.h"
+#include "../server.h"
 #include <libft.h>
 #include <stdlib.h>
 #include <stdio.h>

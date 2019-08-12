@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "irc.h"
+#include "server.h"
 #include <sys/select.h>
 #include <stdio.h>
 

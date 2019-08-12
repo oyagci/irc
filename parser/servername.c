@@ -1,4 +1,4 @@
-#include "../irc.h"
+#include "../server.h"
 
 struct s_servername	*servername(char *input)
 {

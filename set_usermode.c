@@ -1,4 +1,4 @@
-#include "irc.h"
+#include "server.h"
 
 int		set_usermode(struct s_client *c, int mode)
 {

@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <bsd/string.h>
 
-#include "irc.h"
+#include "server.h"
 #include "logger.h"
 
 /*

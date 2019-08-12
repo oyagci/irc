@@ -1,4 +1,4 @@
-#include "irc.h"
+#include "server.h"
 #include "client.h"
 #include <stdio.h>
 #include "logger.h"

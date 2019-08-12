@@ -1,4 +1,4 @@
-#include "irc.h"
+#include "server.h"
 #include "libft/includes/libft.h"
 #include "logger.h"
 

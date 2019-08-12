@@ -1,5 +1,5 @@
 #include "libft.h"
-#include "irc.h"
+#include "server.h"
 #include <sys/socket.h>
 #include <unistd.h>
 #include <stdio.h>
