@@ -175,21 +175,31 @@ int		client_execute_command(struct s_client *const self, struct s_client_msg con
 	return (0);
 };
 
-int		addclient()
+int		addclient(struct s_client *self, char const *const client, struct s_chan *channel)
 {
+	(void)self;
+	(void)client;
+	(void)channel;
+	return (0);
 }
 
 int		eventjoin(struct s_client *const self, struct s_message const *const m)
 {
-	char	*nick;
-	int		ret;
+	char			*nick;
+	int				ret;
+	struct s_chan	*c;
 
 	nick = NULL;
 	ret = nickname(m->prefix->data, &nick);
 	if (nick)
 	{
 		if (m->params && m->params->param[0])
-			self->addclient(self, nick, m->params->param[0]);
+		{
+			c = self->channels.get(&self->channels, m->params->param[0]);
+			if (!c)
+				self->channels.create(&self->channels, m->params->param[0]);
+			self->addclient(self, nick, c);
+		}
 	}
 	return (0);
 }
@@ -300,7 +310,7 @@ void	client_init(struct s_client *self)
 		return ;
 	self->servsock = 0;
 	self->msgs = NULL;
-	self->channels = NULL;
+	channels_init(&self->channels);
 	self->run = &client_run;
 	self->exec_cmd = &client_execute_command;
 	self->queuemsg = &client_queuemsg;

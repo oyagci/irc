@@ -4,7 +4,8 @@
 # include <string.h>
 # include <libft.h>
 # include <sys/types.h>
-#include "parser/parser.h"
+# include "parser/parser.h"
+# include "channels.h"
 
 # define CRLF	"\x0d\x0a"
 
@@ -41,23 +42,17 @@ struct s_client_msg
 	size_t				nparam;
 };
 
-struct s_channel
-{
-	char	name[50];
-	t_list	*clients;
-};
-
 struct s_client_msg	*parse_input(char *input);
 char				*format_message(struct s_client_msg *msg);
 
 struct s_client
 {
-	int		is_running;
-	int		servsock;
-	t_list	*msgs;
-	fd_set	readfds;
-	fd_set	writefds;
-	t_list	*channels;
+	int					is_running;
+	int					servsock;
+	t_list				*msgs;
+	fd_set				readfds;
+	fd_set				writefds;
+	struct s_channels	channels;
 
 	/*
 	** Methods
@@ -78,7 +73,7 @@ struct s_client
 	int	(*user)(struct s_client *const, struct s_client_msg const *const);
 
 	int	(*eventjoin)(struct s_client *const, struct s_message const *const);
-	int	(*addclient)(struct s_client *const, char const *const client, struct s_channel *);
+	int	(*addclient)(struct s_client *const, char const *const client, struct s_chan *);
 };
 
 struct s_tuple_cmds

@@ -33,6 +33,11 @@ CLIENT_SOURCES := \
 	parser/command.c \
 	parser/crlf.c \
 	parser/params.c \
+	parser/nickname.c \
+	parser/digit.c \
+	parser/letter.c\
+	parser/special.c \
+	channels.c \
 
 SERVER_OBJS := $(SERVER_SOURCES:.c=.o)
 CLIENT_OBJS := $(CLIENT_SOURCES:.c=.o)
@@ -54,7 +59,8 @@ CLIENT_HEADERS := \
 	client.h \
 	reply_codes.h \
 	logger.h \
-	parser/parser.h
+	parser/parser.h \
+	channels.h
 
 .PHONY: all clean fclean
 
