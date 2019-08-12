@@ -2,6 +2,7 @@
 # define CHANNELS_H
 
 # include <libft.h>
+# include "logger.h"
 
 struct s_chan
 {
@@ -17,9 +18,15 @@ struct s_channels
 	** Methods
 	*/
 	struct s_chan	*(*get)(struct s_channels *const, char const *const);
-	int				(*create)(struct s_channels *const, char const *const name);
+	struct s_chan	*(*create)(char const *const name);
+	int				(*addnick)(struct s_channels *const,
+								 char const *const nick,
+								 char const *const channel);
+	int				(*add)(struct s_channels *const, struct s_chan *);
 };
 
-void				channels_init(struct s_channels *ptr);
+void	channels_init(struct s_channels *ptr);
+int		channels_addclient(struct s_channels *self, char const *const nick,
+						   char const *const chan);
 
 #endif

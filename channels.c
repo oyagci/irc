@@ -16,7 +16,54 @@ struct s_chan	*channels_get(struct s_channels *const self, char const *const nam
 	return (NULL);
 }
 
+int		channels_add(struct s_channels *self, struct s_chan *chan)
+{
+	t_list	*elem;
+
+	elem = ft_lstnew(0, 0);
+	if (!elem)
+		return (-1);
+	elem->content = chan;
+	elem->content_size = sizeof(*chan);
+	ft_lstpush(&self->list, elem);
+	return (0);
+}
+
+int		channels_addnick(struct s_channels *self, char const *const nick,
+						   char const *const chan)
+{
+	struct s_chan	*c;
+	t_list			*elem;
+
+	c = self->get(self, chan);
+	if (!c)
+	{
+		LOG(LOGDEBUG, "Creating channel %s", chan);
+		c = self->create(chan);
+		self->add(self, c);
+	}
+	elem = ft_lstnew(0, 0);
+	elem->content = ft_strdup(nick);
+	ft_lstpush(&c->clients, elem);
+	return (0);
+}
+
+struct s_chan	*channels_create(char const *const name)
+{
+	struct s_chan	*c;
+
+	if (ft_strlen(name) > 50)
+		return (NULL);
+	c = ft_memalloc(sizeof(*c));
+	ft_strncpy(c->name, name, 50);
+	return (c);
+}
+
 void	channels_init(struct s_channels *ptr)
 {
+	ptr->list = 0;
 	ptr->get = &channels_get;
+	ptr->addnick = &channels_addnick;
+	ptr->create = &channels_create;
+	ptr->add = &channels_add;
 }

@@ -59,7 +59,7 @@ struct s_client
 	*/
 	int (*run)(struct s_client *const);
 	int (*exec_cmd)(struct s_client *const , struct s_client_msg const *const);
-	int (*queuemsg)(struct s_client *const, char const *const msg);
+	int (*queuemsg)(struct s_client *const, char *msg);
 	int	(*sendmsgs)(struct s_client *const);
 	int	(*event)(struct s_client *const, char const *const event);
 
@@ -73,7 +73,6 @@ struct s_client
 	int	(*user)(struct s_client *const, struct s_client_msg const *const);
 
 	int	(*eventjoin)(struct s_client *const, struct s_message const *const);
-	int	(*addclient)(struct s_client *const, char const *const client, struct s_chan *);
 };
 
 struct s_tuple_cmds

@@ -93,14 +93,14 @@ int		client_sendmsgs(struct s_client *const self)
 	return (0);
 }
 
-int		client_queuemsg(struct s_client *const self, char const *const msg)
+int		client_queuemsg(struct s_client *const self, char *msg)
 {
 	t_list	*elem;
 
 	elem = ft_lstnew(0, 0);
 	if (!elem)
 		return (-1);
-	elem->content = (char *const)msg;
+	elem->content = msg;
 	elem->content_size = 0;
 	ft_lstpush(&self->msgs, elem);
 	return (0);
@@ -175,33 +175,20 @@ int		client_execute_command(struct s_client *const self, struct s_client_msg con
 	return (0);
 };
 
-int		addclient(struct s_client *self, char const *const client, struct s_chan *channel)
-{
-	(void)self;
-	(void)client;
-	(void)channel;
-	return (0);
-}
-
 int		eventjoin(struct s_client *const self, struct s_message const *const m)
 {
-	char			*nick;
-	int				ret;
-	struct s_chan	*c;
+	char				*nick;
+	int					ret;
+	char const *const	chan = m->params->param[0];
 
 	nick = NULL;
 	ret = nickname(m->prefix->data, &nick);
 	if (nick)
 	{
 		if (m->params && m->params->param[0])
-		{
-			c = self->channels.get(&self->channels, m->params->param[0]);
-			if (!c)
-				self->channels.create(&self->channels, m->params->param[0]);
-			self->addclient(self, nick, c);
-		}
+			self->channels.addnick(&self->channels, nick, chan);
 	}
-	return (0);
+	return (ret);
 }
 
 int		client_event(struct s_client *self, char const *const data)
@@ -214,8 +201,8 @@ int		client_event(struct s_client *self, char const *const data)
 	struct s_message	*msg;
 
 	msg = message(data);
-	if (msg <= 0)
-		return ((int)msg);
+	if (!msg)
+		return (0);
 	ii = 0;
 	while (ii < sizeof(events) / sizeof(*events))
 	{
@@ -315,6 +302,7 @@ void	client_init(struct s_client *self)
 	self->exec_cmd = &client_execute_command;
 	self->queuemsg = &client_queuemsg;
 	self->sendmsgs = &client_sendmsgs;
+	self->event = &client_event;
 
 	self->connect = &client_connect;
 	self->message = &client_message;
@@ -323,7 +311,6 @@ void	client_init(struct s_client *self)
 	self->user = &client_user;
 
 	self->eventjoin = &eventjoin;
-	self->addclient = &addclient;
 }
 
 int	main(void)
