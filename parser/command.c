@@ -36,14 +36,14 @@ struct s_command	*command(char const *input)
 	}
 	else if (ft_isdigit(input[0]))
 	{
-		while (ft_isdigit(input[0]))
+		while (ft_isdigit(input[i]))
 		{
-			i += 1;
 			if (i >= 3)
 			{
 				command_del(&cmd);
 				return (NULL);
 			}
+			i += 1;
 		}
 		cmd->data = ft_strndup((char *)input, i);
 		cmd->len = ft_strlen(cmd->data);
