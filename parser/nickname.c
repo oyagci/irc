@@ -1,4 +1,4 @@
-#include "../server.h"
+#include "server.h"
 
 int			nickname(char const *input, char **buf)
 {

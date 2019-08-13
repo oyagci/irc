@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../server.h"
+#include "server.h"
 #include <stdlib.h>
 
 struct s_crlf	*crlf(char const *input)

@@ -54,7 +54,8 @@ int	rpl_welcome(struct s_client *const self, struct s_message const *const msg)
 	return (0);
 }
 
-int		client_connect(struct s_client *const self, struct s_client_msg const *const cmd)
+int		client_connect(struct s_client *const self, 
+					   struct s_client_msg const *const cmd)
 {
 	int					portno;
 	struct sockaddr_in	serv_addr;
@@ -133,7 +134,8 @@ int		client_queuemsg(struct s_client *const self, char *msg)
 	return (0);
 }
 
-int		client_message(struct s_client *const self, struct s_client_msg const *const cmd)
+int		client_message(struct s_client *const self,
+					   struct s_client_msg const *const cmd)
 {
 	char	*msg;
 
@@ -149,7 +151,8 @@ int		client_message(struct s_client *const self, struct s_client_msg const *cons
 	return (self->queuemsg(self, msg));
 }
 
-int		client_nick(struct s_client *const self, struct s_client_msg const *const cmd)
+int		client_nick(struct s_client *const self,
+					struct s_client_msg const *const cmd)
 {
 	char	*msg;
 	char	*params[] = { "TODO", "*", "*", "Todo TODO" };
@@ -171,7 +174,8 @@ int		client_nick(struct s_client *const self, struct s_client_msg const *const c
 	return (0);
 }
 
-int		client_execute_command(struct s_client *const self, struct s_client_msg const *const cmd)
+int		client_execute_command(struct s_client *const self,
+							   struct s_client_msg const *const cmd)
 {
 	const struct s_tuple_cmds cmds[] = {
 		{ .cmd = CMD_CONNECT, .f = self->connect },
@@ -305,7 +309,8 @@ int		client_run(struct s_client *self)
 	return (0);
 }
 
-int		client_join(struct s_client *const self, struct s_client_msg const *const cmd)
+int		client_join(struct s_client *const self,
+					struct s_client_msg const *const cmd)
 {
 	char	*msg;
 
@@ -319,7 +324,8 @@ int		client_join(struct s_client *const self, struct s_client_msg const *const c
 	return (self->queuemsg(self, msg));
 }
 
-int		client_user(struct s_client *const self, struct s_client_msg const *const cmd)
+int		client_user(struct s_client *const self,
+					struct s_client_msg const *const cmd)
 {
 	char	*msg;
 
@@ -339,7 +345,8 @@ int		client_user(struct s_client *const self, struct s_client_msg const *const c
 	return (self->queuemsg(self, msg));
 }
 
-int		client_leave(struct s_client *const self, struct s_client_msg const *const cmd)
+int		client_leave(struct s_client *const self,
+					 struct s_client_msg const *const cmd)
 {
 	char	*msg;
 

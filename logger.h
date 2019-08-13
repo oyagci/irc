@@ -13,7 +13,7 @@
 ** 1: Warning
 ** 0: Debug
 */
-#define LOGLEVEL		2
+#define LOGLEVEL		0
 
 #define LOGDEBUG		0
 #define LOGWARN			1
