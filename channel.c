@@ -14,3 +14,26 @@ int		channel_add_client(struct s_channel *channel, struct s_client *client)
 	LOG(LOGDEBUG, "Client %s added to channel %.50s", client->nickname, channel->name);
 	return (0);
 }
+
+int		channel_rm_nick(struct s_channel *const channel, char const *const nick)
+{
+	t_list			*prev;
+	t_list			*clients;
+	struct s_client	*client;
+
+	clients = channel->clients;
+	while (clients)
+	{
+		client = clients->content;
+		if (ft_strnequ(client->nickname, nick, NICK_SIZE))
+		{
+			if (prev)
+				prev->next = clients->next;
+			else
+				channel->clients = clients->next;
+		}
+		prev = clients;
+		clients = clients->next;
+	}
+	return (0);
+}

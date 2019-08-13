@@ -1,4 +1,5 @@
 #include "channels.h"
+#include <stdlib.h>
 
 struct s_chan	*channels_get(struct s_channels *const self, char const *const name)
 {
@@ -59,6 +60,38 @@ struct s_chan	*channels_create(char const *const name)
 	return (c);
 }
 
+int		channels_rmnick(struct s_channels *self, char const *const nick,
+						char const *const channel)
+{
+	struct s_chan	*c;
+	t_list			*elem;
+	char			*n;
+	t_list			*prev;
+
+	c = self->get(self, channel);
+	if (c)
+	{
+		prev = 0;
+		elem = c->clients;
+		while (elem)
+		{
+			n = elem->content;
+			if (ft_strequ(nick, n))
+			{
+				free(n);
+				if (prev)
+					prev->next = elem->next;
+				else
+					c->clients = elem->next;
+				free(elem);
+			}
+			prev = elem;
+			elem = elem->next;
+		}
+	}
+	return (0);
+}
+
 void	channels_init(struct s_channels *ptr)
 {
 	ptr->list = 0;
@@ -66,4 +99,5 @@ void	channels_init(struct s_channels *ptr)
 	ptr->addnick = &channels_addnick;
 	ptr->create = &channels_create;
 	ptr->add = &channels_add;
+	ptr->rmnick = &channels_rmnick;
 }

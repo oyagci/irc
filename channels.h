@@ -19,10 +19,14 @@ struct s_channels
 	*/
 	struct s_chan	*(*get)(struct s_channels *const, char const *const);
 	struct s_chan	*(*create)(char const *const name);
-	int				(*addnick)(struct s_channels *const,
-								 char const *const nick,
-								 char const *const channel);
 	int				(*add)(struct s_channels *const, struct s_chan *);
+
+	int				(*addnick)(struct s_channels *const,
+							   char const *const nick,
+							   char const *const channel);
+	int				(*rmnick)(struct s_channels *const,
+							  char const *const nick,
+							  char const *const channel);
 };
 
 void	channels_init(struct s_channels *ptr);
