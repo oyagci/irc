@@ -13,16 +13,16 @@
 ** 1: Warning
 ** 0: Debug
 */
-#define LOGLEVEL		0
+#define LOGLEVEL		2
 
 #define LOGDEBUG		0
 #define LOGWARN			1
 #define LOGERR			2
 
-#define PREFIX_ERR		"  [ERROR]"
+#define PREFIX_ERR		"[ERROR]"
 #define PREFIX_WARN		"[WARNING]"
-#define PREFIX_DEBUG	"  [DEBUG]"
-#define PREFIX_DEFAULT	"    [LOG]"
+#define PREFIX_DEBUG	"[DEBUG]"
+#define PREFIX_DEFAULT	"[LOG]"
 
 # include <stdio.h>
 

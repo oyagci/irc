@@ -67,7 +67,7 @@ CLIENT_HEADERS := \
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
 $(SERVER_NAME): $(SERVER_OBJS) $(SERVER_HEADERS)
-	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g
+	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g -lbsd
 
 $(CLIENT_NAME): $(CLIENT_OBJS) $(CLIENT_HEADERS)
 	$(CC) $(CLIENT_OBJS) -o $@ -g -L libft -lft -g

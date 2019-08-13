@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <bsd/string.h>
 
 #include "server.h"
 #include "logger.h"
@@ -191,7 +192,7 @@ int	server_send_privmsg(struct s_server *server, struct s_client *from,
 		ft_strlcat(formated, from->nickname, 512);
 		ft_strlcat(formated, " PRIVMSG ", 512);
 		ft_strlcat(formated, recipient, 512);
-		ft_strlcat(formated, " ", 512);
+		ft_strlcat(formated, " :", 512);
 		ft_strlcat(formated, msg, 512);
 		ft_strlcat(formated, CRLF, 512);
 		LOG(LOGDEBUG, "To %s: %s", recipient, msg);

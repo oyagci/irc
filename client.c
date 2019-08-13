@@ -202,11 +202,26 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 	return (ret);
 }
 
+int		eventprivmsg(struct s_client *const self, struct s_message const *const m)
+{
+	char	*from;
+	char	*msg;
+	char	*channel;
+
+	(void)self;
+	from = m->prefix->data;
+	channel = m->params->param[0];
+	msg = m->params->param[1];
+	printf("[%s] %s: %s\n", channel, from, msg);
+	return (0);
+}
+
 int		client_event(struct s_client *self, char const *const data)
 {
 	struct s_event_list events[] = {
 		{ .s = "JOIN", .f = self->eventjoin },
 		{ .s = "001", .f = self->rpl_welcome },
+		{ .s = "PRIVMSG", .f = self->eventprivmsg },
 	};
 	size_t				ii;
 
@@ -216,10 +231,14 @@ int		client_event(struct s_client *self, char const *const data)
 	if (!msg)
 		return (0);
 	ii = 0;
+	LOG(LOGDEBUG, "OK");
 	while (ii < sizeof(events) / sizeof(*events))
 	{
 		if (ft_strequ(events[ii].s, msg->cmd->data))
+		{
+			LOG(LOGDEBUG, "%s", events[ii].s);
 			events[ii].f(self, msg);
+		}
 		ii += 1;
 	}
 	return (0);
@@ -325,6 +344,7 @@ void	client_init(struct s_client *self)
 	self->eventjoin = &eventjoin;
 
 	self->rpl_welcome = &rpl_welcome;
+	self->eventprivmsg = eventprivmsg;
 }
 
 int	main(void)
