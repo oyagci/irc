@@ -25,23 +25,23 @@ char	*irc_repcode_itoa(unsigned int n)
 	return (s);
 }
 
-int		server_read_clients_command(struct s_server *const server)
+int		server_read_clients_command(struct s_server *const self)
 {
 	t_list			*cur;
 	struct s_client	*client;
 
-	cur = server->clients;
+	cur = self->clients;
 	while (cur)
 	{
 		client = cur->content;
-		if (FD_ISSET(client->fd, &server->readfds))
+		if (FD_ISSET(client->fd, &self->readfds))
 		{
 			read_client_command(client->fd, &client->buffer);
 			if (client->buffer.is_complete)
 			{
 				client->buffer.is_complete = 0;
 				client->buffer.len = 0;
-				client->lastret = execute_command(client);
+				client->lastret = self->exec_cmd(client);
 				ft_memset(client->buffer.data, 0, CLIENT_BUFFER_SIZE);
 			}
 		}

@@ -82,7 +82,13 @@ struct s_server
 	int		(*run)(struct s_server *const self);
 	int		(*set_fds)(struct s_server *const self);
 	int		(*accept)(struct s_server *const self);
-	int		(*readcmd)(struct s_server *const self);
+	int		(*read)(struct s_server *const self);
+	int		(*send)(struct s_server *const self);
+
+	int		(*exec_cmd)(struct s_client *c);
+
+	int		(*queuecode)(struct s_server *self, struct s_client const *const dest,
+						 int code);
 };
 
 struct s_server_msg

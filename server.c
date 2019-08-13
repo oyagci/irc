@@ -41,19 +41,19 @@ int	irc_pass(struct s_client *c, char **params, int nparams)
 {
 	if (c->is_connected)
 	{
-		server_queue_code_reply(c->server, c, ERR_ALREADYREGISTRED);
+		c->server->queuecode(c->server, c, ERR_ALREADYREGISTRED);
 		return (ERR_ALREADYREGISTRED);
 	}
 	if (SERVER_PASS)
 	{
 		if (nparams < 1)
 		{
-			server_queue_code_reply(c->server, c, ERR_NEEDMOREPARAM);
+			c->server->queuecode(c->server, c, ERR_NEEDMOREPARAM);
 			return (ERR_NEEDMOREPARAM);
 		}
 		if (ft_strcmp(params[0], SERVER_PASS))
 		{
-			server_queue_code_reply(c->server, c, ERR_PASSWDMISMATCH);
+			c->server->queuecode(c->server, c, ERR_PASSWDMISMATCH);
 			return (ERR_PASSWDMISMATCH);
 		}
 	}
@@ -67,7 +67,7 @@ int	irc_nick(struct s_client *c, char **params, int nparams)
 
 	if (nparams < 1)
 	{
-		server_queue_code_reply(c->server, c, ERR_NONICKNAMEGIVEN);
+		c->server->queuecode(c->server, c, ERR_NONICKNAMEGIVEN);
 		return (ERR_NONICKNAMEGIVEN);
 	}
 	nick = params[0];
@@ -75,13 +75,13 @@ int	irc_nick(struct s_client *c, char **params, int nparams)
 	if (!nickavail(nick))
 	{
 		LOG(LOGDEBUG, "Nickname %.9s is already in use", nick);
-		server_queue_code_reply(c->server, c, ERR_NICKNAMEINUSE);
+		c->server->queuecode(c->server, c, ERR_NICKNAMEINUSE);
 		return (ERR_NICKNAMEINUSE);
 	}
 	if (ft_strlen(nick) > 9)
 	{
 		LOG(LOGDEBUG, "Nickname %.9s is too long (len > 9)", nick);
-		server_queue_code_reply(c->server, c, ERR_ERRONEUSNICKNAME);
+		c->server->queuecode(c->server, c, ERR_ERRONEUSNICKNAME);
 		return (ERR_ERRONEUSNICKNAME);
 	}
 	LOG(LOGDEBUG, "NICK %.9s -> %.9s", c->nickname, nick);
@@ -98,7 +98,7 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 {
 	if (nparams < 4)
 	{
-		server_queue_code_reply(c->server, c, ERR_NEEDMOREPARAM);
+		c->server->queuecode(c->server, c, ERR_NEEDMOREPARAM);
 		return (ERR_NEEDMOREPARAM);
 	}
 	if (c->is_registered)
@@ -108,7 +108,7 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 	set_usermode(c, ft_atoi(params[1]));
 	set_realname(c, params[3]);
 	LOG(LOGDEBUG, "Realname set to %s", c->realname);
-	server_queue_code_reply(c->server, c, RPL_WELCOME);
+	c->server->queuecode(c->server, c, RPL_WELCOME);
 	return (0);
 }
 
@@ -213,19 +213,19 @@ int	irc_privmsg(struct s_client *client, char **params, int nparams)
 
 	if (nparams < 1)
 	{
-		server_queue_code_reply(client->server, client, ERR_NORECIPIENT);
+		client->server->queuecode(client->server, client, ERR_NORECIPIENT);
 		return (0);
 	}
 	if (nparams < 2)
 	{
-		server_queue_code_reply(client->server, client, ERR_NOTEXTTOSEND);
+		client->server->queuecode(client->server, client, ERR_NOTEXTTOSEND);
 		return (0);
 	}
 	recipients = NULL;
 	msgto(params[0], &recipients);
 	if (recipients == NULL)
 	{
-		server_queue_code_reply(client->server, client, ERR_NORECIPIENT);
+		client->server->queuecode(client->server, client, ERR_NORECIPIENT);
 		return (1);
 	}
 	server_send_privmsg(client->server, client, recipients, params[1]);
@@ -289,7 +289,7 @@ int	execute_command(struct s_client *c)
 	}
 	message_del(&msg);
 	if (!validcmd)
-		server_queue_code_reply(c->server, c, ERR_UNKNOWNCOMMAND);
+		c->server->queuecode(c->server, c, ERR_UNKNOWNCOMMAND);
 	return (0);
 }
 

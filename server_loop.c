@@ -10,8 +10,8 @@ int	server_loop(struct s_server *self)
 		max_sd = self->set_fds(self);
 		select(max_sd + 1, &self->readfds, &self->writefds, NULL, NULL);
 		self->accept(self);
-		server_read_clients_command(self);
-		server_send_queued_replies(self);
+		self->read(self);
+		self->send(self);
 	}
 	return (0);
 }

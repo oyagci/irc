@@ -12,6 +12,10 @@ static int	server_init_methods(struct s_server *s)
 	s->run = &server_loop;
 	s->set_fds = &server_set_fds;
 	s->accept = &server_accept_new_clients;
+	s->read = &server_read_clients_command;
+	s->send = &server_send_queued_replies;
+	s->exec_cmd = &execute_command;
+	s->queuecode = &server_queue_code_reply;
 	return (0);
 }
 
