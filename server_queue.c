@@ -25,7 +25,7 @@ char	*irc_repcode_itoa(unsigned int n)
 	return (s);
 }
 
-int		server_read_clients_command(struct s_server const *const server)
+int		server_read_clients_command(struct s_server *const server)
 {
 	t_list			*cur;
 	struct s_client	*client;

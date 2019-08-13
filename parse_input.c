@@ -3,7 +3,7 @@
 #include "logger.h"
 #include "libft.h"
 
-enum e_client_cmd	set_command(char **inputp, struct s_client_msg *buf)
+enum e_client_cmd	set_command(char const **inputp, struct s_client_msg *buf)
 {
 	const struct s_client_cmds	cmds[] = {
 		{ .str = "connect", .cmd = CMD_CONNECT, .nparam = 2 },
@@ -14,7 +14,7 @@ enum e_client_cmd	set_command(char **inputp, struct s_client_msg *buf)
 		{ .str = "disconnect", .cmd = CMD_DISCONNECT, .nparam = 0 },
 		{ .str = "who", .cmd = CMD_WHO, .nparam = 1 },
 	};
-	char						*input;
+	char const					*input;
 	int							ii;
 	size_t						jj;
 
@@ -37,7 +37,7 @@ enum e_client_cmd	set_command(char **inputp, struct s_client_msg *buf)
 	return (CMD_NONE);
 }
 
-int					set_params(char *input, struct s_client_msg *buf)
+int					set_params(char const *input, struct s_client_msg *buf)
 {
 	int		start;
 	int		end;
@@ -67,7 +67,7 @@ int					set_params(char *input, struct s_client_msg *buf)
 	return (0);
 }
 
-struct s_client_msg	*parse_input(char *input)
+struct s_client_msg	*parse_input(char const *input)
 {
 	struct s_client_msg	*msg;
 
@@ -87,10 +87,11 @@ struct s_client_msg	*parse_input(char *input)
 	}
 	else
 	{
-		msg->cmd = CMD_NONE;
-		msg->nparam = 1;
-		msg->params = ft_memalloc(sizeof(char *));
-		msg->params[0] = ft_strdup(input);
+		msg->cmd = CMD_MSG;
+		msg->nparam = 2;
+		msg->params = ft_memalloc(sizeof(char *) * 2);
+		msg->params[0] = ft_strdup("#general");
+		msg->params[1] = ft_strdup(input);
 	}
 	return (msg);
 }

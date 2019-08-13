@@ -7,11 +7,22 @@
 #include "server.h"
 #include "logger.h"
 
+static int	server_init_methods(struct s_server *s)
+{
+	s->run = &server_loop;
+	s->set_fds = &server_set_fds;
+	s->accept = &server_accept_new_clients;
+	return (0);
+}
+
 int			server_init(struct s_server *server, unsigned int port)
 {
 	struct sockaddr_in	serv_addr;
 
 	ft_memset(server, 0, sizeof(*server));
+
+	server_init_methods(server);
+
 	if ((server->sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		return (-1);
 	ft_memset(&serv_addr, 0, sizeof(serv_addr));

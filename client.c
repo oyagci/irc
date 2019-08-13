@@ -214,7 +214,10 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 	if (nick)
 	{
 		if (m->params && m->params->param[0])
+		{
 			self->channels.addnick(&self->channels, nick, chan);
+			printf(" * %s joined channel %s\n", nick, chan);
+		}
 	}
 	return (ret);
 }
@@ -237,8 +240,9 @@ int		client_event(struct s_client *self, char const *const data)
 {
 	struct s_event_list events[] = {
 		{ .s = "JOIN", .f = self->eventjoin },
-		{ .s = "001", .f = self->rpl_welcome },
 		{ .s = "PRIVMSG", .f = self->eventprivmsg },
+		{ .s = "PART", .f = self->eventpart },
+		{ .s = "001", .f = self->rpl_welcome },
 	};
 	size_t				ii;
 
@@ -248,7 +252,7 @@ int		client_event(struct s_client *self, char const *const data)
 	if (!msg)
 		return (0);
 	ii = 0;
-	LOG(LOGDEBUG, "OK");
+	LOG(LOGDEBUG, "event: %s", msg->cmd->data);
 	while (ii < sizeof(events) / sizeof(*events))
 	{
 		if (ft_strequ(events[ii].s, msg->cmd->data))
@@ -297,7 +301,7 @@ int		client_run(struct s_client *self)
 			fgets(buf, 512, stdin);
 			if ((c = ft_strchr(buf, '\n')))
 				*c = '\0';
-			cmd = parse_input(buf);
+			cmd = self->parse_input(buf);
 			self->exec_cmd(self, cmd);
 		}
 		self->sendmsgs(self);
@@ -351,6 +355,7 @@ void	client_init(struct s_client *self)
 	self->queuemsg = &client_queuemsg;
 	self->sendmsgs = &client_sendmsgs;
 	self->event = &client_event;
+	self->parse_input = &parse_input;
 
 	self->connect = &client_connect;
 	self->message = &client_message;
@@ -361,7 +366,8 @@ void	client_init(struct s_client *self)
 	self->eventjoin = &eventjoin;
 
 	self->rpl_welcome = &rpl_welcome;
-	self->eventprivmsg = eventprivmsg;
+	self->eventprivmsg = &eventprivmsg;
+	self->eventpart = &eventpart;
 }
 
 int	main(void)

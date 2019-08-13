@@ -42,7 +42,7 @@ struct s_client_msg
 	size_t				nparam;
 };
 
-struct s_client_msg	*parse_input(char *input);
+struct s_client_msg	*parse_input(char const *input);
 char				*format_message(struct s_client_msg *msg);
 
 struct s_client
@@ -53,6 +53,8 @@ struct s_client
 	fd_set				readfds;
 	fd_set				writefds;
 	struct s_channels	channels;
+	struct s_chan		*channel;
+	char				nickname[9];
 
 	/*
 	** Methods
@@ -62,6 +64,7 @@ struct s_client
 	int (*queuemsg)(struct s_client *const, char *msg);
 	int	(*sendmsgs)(struct s_client *const);
 	int	(*event)(struct s_client *const, char const *const event);
+	struct s_client_msg	*(*parse_input)(char const *input);
 
 	/*
 	** IRC Commands
@@ -71,9 +74,12 @@ struct s_client
 	int	(*nick)(struct s_client *const, struct s_client_msg const *const);
 	int	(*join)(struct s_client *const, struct s_client_msg const *const);
 	int	(*user)(struct s_client *const, struct s_client_msg const *const);
+	int	(*leave)(struct s_client *const, struct s_client_msg const *const);
+	int	(*quit)(struct s_client *const, struct s_client_msg const *const);
 
 	int	(*eventjoin)(struct s_client *const, struct s_message const *const);
 	int	(*eventprivmsg)(struct s_client *const, struct s_message const *const);
+	int	(*eventpart)(struct s_client *const, struct s_message const *const);
 
 	int	(*rpl_welcome)(struct s_client *const, struct s_message const *const);
 };

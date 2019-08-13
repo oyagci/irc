@@ -20,8 +20,11 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 		msg = ft_memalloc(sizeof(char) * 513);
 		ft_strlcat(msg, ":", 513);
 		ft_strlcat(msg, client->nickname, 513);
-		ft_strlcat(msg, "!", 513);
-		ft_strlcat(msg, client->username, 513);
+		if (client->username)
+		{
+			ft_strlcat(msg, "!", 513);
+			ft_strlcat(msg, client->username, 513);
+		}
 		ft_strlcat(msg, "@irc.42.fr", 513);
 		ft_strlcat(msg, " JOIN ", 513);
 		ft_strlcat(msg, chan->name, 513);

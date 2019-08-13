@@ -78,6 +78,11 @@ struct s_server
 	t_list	*channels;
 	t_list	*clients;
 	t_list	*msgqueue;
+
+	int		(*run)(struct s_server *const self);
+	int		(*set_fds)(struct s_server *const self);
+	int		(*accept)(struct s_server *const self);
+	int		(*readcmd)(struct s_server *const self);
 };
 
 struct s_server_msg
@@ -91,7 +96,7 @@ int		server_init(struct s_server *server, unsigned int port);
 int		server_set_fds(struct s_server *server);
 int		execute_command(struct s_client *c);
 int		read_client_command(int cfd, struct s_client_buffer *buffer);
-int		server_read_clients_command(struct s_server const *const server);
+int		server_read_clients_command(struct s_server *const server);
 int		server_accept_new_clients(struct s_server *server);
 int		reply_client(struct s_client *c, int retcode);
 
@@ -136,6 +141,9 @@ struct s_channel	*server_get_channel(struct s_server *server, char const *name);
 int		server_send_formated_message_to(struct s_server *server, char const *recipient,
 										char *msg);
 void	server_msg_del(void *msgp, size_t size);
+
 int		channel_add_client(struct s_channel *channel, struct s_client *client);
+int		channel_rm_nick(struct s_channel *const channel, char const *const nick);
+int		server_rm_nick(struct s_server *server, char const *const nick, char const *const chan);
 
 #endif

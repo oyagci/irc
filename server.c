@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#include <bsd/string.h>
 
 #include "server.h"
 #include "logger.h"
@@ -183,6 +182,11 @@ int	server_send_privmsg(struct s_server *server, struct s_client *from,
 	char	*formated;
 	char	*recipient;
 
+	if (!msg)
+	{
+		LOG(LOGWARN, "%s", __FUNCTION__);
+		return (1);
+	}
 	elem = recipients;
 	while (elem)
 	{
@@ -220,7 +224,10 @@ int	irc_privmsg(struct s_client *client, char **params, int nparams)
 	recipients = NULL;
 	msgto(params[0], &recipients);
 	if (recipients == NULL)
+	{
 		server_queue_code_reply(client->server, client, ERR_NORECIPIENT);
+		return (1);
+	}
 	server_send_privmsg(client->server, client, recipients, params[1]);
 	msgto_del(&recipients);
 	return (0);
@@ -236,6 +243,20 @@ int	nparams(char **params)
 	return (ii);
 }
 
+int	irc_part(struct s_client *client, char **params, int nparam)
+{
+	char	*chan;
+	char	*nick;
+
+	nick = NULL;
+	chan = NULL;
+	if (nparam <= 0)
+		return (1);
+	chan = params[0];
+	server_rm_nick(client->server, nick, chan);
+	return (0);
+}
+
 int	execute_command(struct s_client *c)
 {
 	const struct s_irc_cmds	cmds[] = {
@@ -243,6 +264,7 @@ int	execute_command(struct s_client *c)
 		{ .name = "NICK", .f = irc_nick },
 		{ .name = "USER", .f = irc_user },
 		{ .name = "JOIN", .f = irc_join },
+		{ .name = "PART", .f = irc_part },
 		{ .name = "PRIVMSG", .f = irc_privmsg },
 	};
 	size_t					ii;
@@ -280,6 +302,6 @@ int	main(int ac, char *av[])
 		exit(EXIT_FAILURE);
 	}
 	server_init(&server, ft_atoi(av[1]));
-	server_loop(&server);
+	server.run(&server);
 	return (0);
 }

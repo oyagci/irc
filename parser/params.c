@@ -44,7 +44,7 @@ char				*extract_trailing(char const *input)
 	i = 0;
 	while (is_nospcrlfcl(input[i]) || input[i] == ':' || input[i] == ' ')
 		i++;
-	return (ft_strndup((char *)input, i));
+	return (ft_strndup(input, i));
 }
 
 /*
