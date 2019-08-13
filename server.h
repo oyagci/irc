@@ -89,6 +89,9 @@ struct s_server
 
 	int		(*queuecode)(struct s_server *self, struct s_client const *const dest,
 						 int code);
+
+	int		(*rm_from_chan)(char *const nick, struct s_channel *chan);
+	struct s_channel *(*get_channel)(struct s_server *self, char const *const name);
 };
 
 struct s_server_msg
@@ -151,5 +154,8 @@ void	server_msg_del(void *msgp, size_t size);
 int		channel_add_client(struct s_channel *channel, struct s_client *client);
 int		channel_rm_nick(struct s_channel *const channel, char const *const nick);
 int		server_rm_nick(struct s_server *server, char const *const nick, char const *const chan);
+
+struct s_channel	*server_get_channel(struct s_server *self, char const *const name);
+int	server_rm_from_chan(char *nick, struct s_channel *chan);
 
 #endif

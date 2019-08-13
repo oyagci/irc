@@ -16,6 +16,8 @@ static int	server_init_methods(struct s_server *s)
 	s->send = &server_send_queued_replies;
 	s->exec_cmd = &execute_command;
 	s->queuecode = &server_queue_code_reply;
+	s->rm_from_chan = &server_rm_from_chan;
+	s->get_channel = &server_get_channel;
 	return (0);
 }
 

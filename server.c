@@ -243,17 +243,44 @@ int	nparams(char **params)
 	return (ii);
 }
 
+// ------------
+
+int	server_rm_from_chan(char *nick, struct s_channel *chan)
+{
+	t_list	*clients;
+	t_list	*prev;
+	struct s_client	*c;
+
+	clients = chan->clients;
+	prev = NULL;
+	while (clients)
+	{
+		c = clients->content;
+		if (ft_strequ(c->nickname, nick))
+		{
+			if (prev)
+				prev->next = clients->next;
+			else
+				chan->clients = clients->next;
+			free(clients);
+		}
+		prev = clients;
+		clients = clients->next;
+	}
+	return (0);
+}
+
 int	irc_part(struct s_client *client, char **params, int nparam)
 {
-	char	*chan;
-	char	*nick;
+	struct s_server		*s;
+	struct s_channel	*chan;
 
-	nick = NULL;
-	chan = NULL;
 	if (nparam <= 0)
-		return (1);
-	chan = params[0];
-	server_rm_nick(client->server, nick, chan);
+		return (-1);
+	LOG(LOGDEBUG, "%s PART %s", client->nickname, params[0]);
+	s = client->server;
+	chan = s->get_channel(s, params[0]);
+	s->rm_from_chan(client->nickname, chan);
 	return (0);
 }
 
