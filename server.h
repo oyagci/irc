@@ -89,9 +89,12 @@ struct s_server
 
 	int		(*queuecode)(struct s_server *self, struct s_client const *const dest,
 						 int code);
+	int		(*queuenotif)(struct s_server *self, struct s_client const *const dest, char *msg);
 
 	int		(*rm_from_chan)(char *const nick, struct s_channel *chan);
 	struct s_channel *(*get_channel)(struct s_server *self, char const *const name);
+
+	int		(*notifypart)(struct s_server *self, struct s_channel *chan, char const *const nick);
 };
 
 struct s_server_msg

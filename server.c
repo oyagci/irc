@@ -286,6 +286,8 @@ int	irc_part(struct s_client *client, char **params, int nparam)
 			s->queuecode(s, client, ERR_NOSUCHCHANNEL);
 		else if (ret == ERR_NEEDMOREPARAM)
 			s->queuecode(s, client, ERR_NEEDMOREPARAM);
+		else
+			s->notifypart(s, chan, client->nickname);
 	}
 	else
 		s->queuecode(s, client, ERR_NOSUCHCHANNEL);
