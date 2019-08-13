@@ -180,6 +180,7 @@ int		client_execute_command(struct s_client *const self, struct s_client_msg con
 		{ .cmd = CMD_JOIN, .f = self->join },
 		{ .cmd = CMD_MSG, .f = self->message },
 		{ .cmd = CMD_USER, .f = self->user },
+		{ .cmd = CMD_LEAVE, .f = self->leave },
 	};
 	size_t					ii;
 
@@ -343,6 +344,20 @@ int		client_user(struct s_client *const self, struct s_client_msg const *const c
 	return (self->queuemsg(self, msg));
 }
 
+int		client_leave(struct s_client *const self, struct s_client_msg const *const cmd)
+{
+	char	*msg;
+
+	msg = ft_strnew(513);
+	if (!msg)
+		return (-1);
+	ft_strlcat(msg, "PART", 513);
+	ft_strlcat(msg, " ", 513);
+	ft_strlcat(msg, cmd->params[0], 513);
+	ft_strlcat(msg, CRLF, 513);
+	return (self->queuemsg(self, msg));
+}
+
 void	client_init(struct s_client *self)
 {
 	if (!self)
@@ -362,6 +377,7 @@ void	client_init(struct s_client *self)
 	self->nick = &client_nick;
 	self->join = &client_join;
 	self->user = &client_user;
+	self->leave = &client_leave;
 
 	self->eventjoin = &eventjoin;
 
