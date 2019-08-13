@@ -1,5 +1,6 @@
 #include "../libft/includes/libft.h"
 #include "server.h"
+#include <stdlib.h>
 
 /*
 ** channels: <chanstr> *( "," <chanstr> )
@@ -22,4 +23,15 @@ t_list		*channels(char *input)
 			input++;
 	}
 	return (chans);
+}
+
+void		channels_delone(void *c, size_t s)
+{
+	(void)s;
+	free(c);
+}
+
+void		channels_del(t_list **chansp)
+{
+	ft_lstdel(chansp, &channels_delone);
 }

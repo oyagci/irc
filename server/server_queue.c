@@ -159,6 +159,7 @@ int			server_queue_code_reply(struct s_server *server,
 		return (-1);
 	}
 	server_queue_reply(server, dest, replystr);
+	free(replystr);
 	return (0);
 }
 

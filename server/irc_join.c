@@ -1,6 +1,7 @@
 #include "libft.h"
 #include "server.h"
 #include "logger.h"
+#include <stdlib.h>
 
 /*
 ** Tell every client in the given channel that a new user joined,
@@ -30,6 +31,7 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 		ft_strlcat(msg, chan->name, 513);
 		ft_strlcat(msg, CRLF, 513);
 		server_queue_reply(server, recipient, msg);
+		free(msg);
 		elem = elem->next;
 	}
 	return (0);
@@ -53,5 +55,6 @@ int	irc_join(struct s_client *client, char **params, int nparams)
 		LOG(LOGDEBUG, "%s joins channel %s", client->nickname, chan);
 		server_add_to_chan(client->server, client, chan);
 	}
+	channels_del(&chans);
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "server.h"
 #include "libft.h"
-#include <stdio.h>
+#include <stdlib.h>
 
 int					is_nospcrlfcl(unsigned char c)
 {
@@ -91,4 +91,21 @@ struct s_params		*params(char const *input)
 	}
 	p->len = i;
 	return (p);
+}
+
+void		params_del(struct s_params **paramsp)
+{
+	struct s_params	*p;
+	int				i;
+
+	p = *paramsp;
+	i = 0;
+	while (i < 15)
+	{
+		if (p->param[i])
+			free(p->param[i]);
+		i++;
+	}
+	free(p);
+	*paramsp = NULL;
 }

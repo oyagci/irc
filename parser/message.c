@@ -43,7 +43,7 @@ struct s_message	*message(char const *input)
 		msg->params = params(input);
 		if (msg->params)
 			input += msg->params->len;
-		if (!crlf(input))
+		if (!(msg->crlf = crlf(input)))
 			message_del(&msg);
 	}
 	else
@@ -57,6 +57,8 @@ void			message_del(struct s_message **msg)
 	{
 		prefix_del(&((*msg)->prefix));
 		command_del(&((*msg)->cmd));
+		params_del(&((*msg)->params));
+		crlf_del(&((*msg)->crlf));
 		free(*msg);
 		*msg = NULL;
 	}

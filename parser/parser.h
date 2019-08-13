@@ -10,9 +10,9 @@
 
 struct s_message
 {
-	struct s_prefix		*prefix;
-	struct s_command	*cmd;
+	struct s_prefix		*prefix; struct s_command	*cmd;
 	struct s_params		*params;
+	struct s_crlf		*crlf;
 	size_t				len;
 };
 
@@ -61,5 +61,8 @@ void				prefix_del(struct s_prefix **p);
 void				command_del(struct s_command **cmd);
 void				message_del(struct s_message **msg);
 void				msgto_del(t_list **lp);
+void				crlf_del(struct s_crlf **p);
+void				channels_del(t_list **chansp);
+void				params_del(struct s_params **paramsp);
 
 #endif
