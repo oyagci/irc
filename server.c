@@ -261,11 +261,12 @@ int	server_rm_from_chan(char *nick, struct s_channel *chan)
 			else
 				chan->clients = clients->next;
 			free(clients);
+			return (0);
 		}
 		prev = clients;
 		clients = clients->next;
 	}
-	return (0);
+	return (ERR_NOTONCHANNEL);
 }
 
 int	irc_part(struct s_client *client, char **params, int nparam)
@@ -274,18 +275,19 @@ int	irc_part(struct s_client *client, char **params, int nparam)
 	struct s_channel	*chan;
 	int					ret;
 
-	if (nparam <= 0)
-		return (-1);
-	LOG(LOGDEBUG, "%s PART %s", client->nickname, params[0]);
 	s = client->server;
+	if (nparam <= 0)
+	{
+		s->queuecode(s, client, ERR_NEEDMOREPARAM);
+		return (0);
+	}
+	LOG(LOGDEBUG, "%s PART %s", client->nickname, params[0]);
 	chan = s->get_channel(s, params[0]);
 	if (chan)
 	{
 		ret = s->rm_from_chan(client->nickname, chan);
 		if (ret == ERR_NOTONCHANNEL)
 			s->queuecode(s, client, ERR_NOSUCHCHANNEL);
-		else if (ret == ERR_NEEDMOREPARAM)
-			s->queuecode(s, client, ERR_NEEDMOREPARAM);
 		else
 			s->notifypart(s, chan, client->nickname);
 	}

@@ -46,7 +46,6 @@ int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 
 int	rpl_welcome(struct s_client *const self, struct s_message const *const msg)
 {
-	LOG(LOGDEBUG, "rpl_welcome");
 	(void)self;
 	if (msg->params->param[0])
 	{
@@ -253,14 +252,10 @@ int		client_event(struct s_client *self, char const *const data)
 	if (!msg)
 		return (0);
 	ii = 0;
-	LOG(LOGDEBUG, "event: %s", msg->cmd->data);
 	while (ii < sizeof(events) / sizeof(*events))
 	{
 		if (ft_strequ(events[ii].s, msg->cmd->data))
-		{
-			LOG(LOGDEBUG, "%s", events[ii].s);
 			events[ii].f(self, msg);
-		}
 		ii += 1;
 	}
 	return (0);
