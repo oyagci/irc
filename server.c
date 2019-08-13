@@ -243,8 +243,6 @@ int	nparams(char **params)
 	return (ii);
 }
 
-// ------------
-
 int	server_rm_from_chan(char *nick, struct s_channel *chan)
 {
 	t_list	*clients;
@@ -274,13 +272,23 @@ int	irc_part(struct s_client *client, char **params, int nparam)
 {
 	struct s_server		*s;
 	struct s_channel	*chan;
+	int					ret;
 
 	if (nparam <= 0)
 		return (-1);
 	LOG(LOGDEBUG, "%s PART %s", client->nickname, params[0]);
 	s = client->server;
 	chan = s->get_channel(s, params[0]);
-	s->rm_from_chan(client->nickname, chan);
+	if (chan)
+	{
+		ret = s->rm_from_chan(client->nickname, chan);
+		if (ret == ERR_NOTONCHANNEL)
+			s->queuecode(s, client, ERR_NOSUCHCHANNEL);
+		else if (ret == ERR_NEEDMOREPARAM)
+			s->queuecode(s, client, ERR_NEEDMOREPARAM);
+	}
+	else
+		s->queuecode(s, client, ERR_NOSUCHCHANNEL);
 	return (0);
 }
 
