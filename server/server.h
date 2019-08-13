@@ -161,4 +161,6 @@ int		server_rm_nick(struct s_server *server, char const *const nick, char const 
 struct s_channel	*server_get_channel(struct s_server *self, char const *const name);
 int	server_rm_from_chan(char *nick, struct s_channel *chan);
 
+int			server_notifypart(struct s_server *s, struct s_channel *chan, char const *const nick);
+
 #endif

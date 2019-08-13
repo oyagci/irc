@@ -22,6 +22,7 @@ SERVER_SOURCES := \
 	server/server_loop.c \
 	server/server_init.c \
 	server/channel.c \
+	server/notify.c \
 	logger.c
 
 CLIENT_SOURCES := \
