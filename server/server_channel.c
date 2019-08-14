@@ -47,7 +47,7 @@ struct s_channel	*get_channel(struct s_server *server,
 	return (chan);
 }
 
-int	server_add_to_chan(struct s_server *server, struct s_client *client,
+int	add_to_chan(struct s_server *server, struct s_client *client,
 	char const *const channame)
 {
 	t_list				*elem;

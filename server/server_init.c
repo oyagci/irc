@@ -21,6 +21,7 @@ static int	init_methods(struct s_server *s)
 	s->get_channel = &get_channel;
 	s->notifypart = &notifypart;
 	s->new_channel = &new_channel;
+	s->add_to_chan = &add_to_chan;
 	return (0);
 }
 

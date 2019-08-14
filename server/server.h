@@ -93,6 +93,9 @@ struct	s_server
 	struct s_channel	*(*get_channel)(struct s_server *self, char const *const name);
 	int					(*notifypart)(struct s_server *self, struct s_channel *chan,
 							char const *const nick);
+	int					(*add_to_chan)(struct s_server *server,
+							struct s_client *client,
+							char const *const channame);
 };
 
 struct	s_server_msg
@@ -151,7 +154,7 @@ int					queue_reply(struct s_server *server,
 int					queue_code_reply(struct s_server *server,
 						struct s_client const *const dest, int reply_code);
 
-int					server_add_to_chan(struct s_server *server,
+int					add_to_chan(struct s_server *server,
 						struct s_client *client, char const *const channame);
 int					server_tell_new_client(struct s_server *server,
 						struct s_client *client, struct s_channel *chan);
@@ -173,6 +176,7 @@ int					notifypart(struct s_server *s,
 						struct s_channel *chan, char const *const nick);
 
 char				*irc_repcode_itoa(unsigned int n);
-struct s_channel	*new_channel(struct s_server *server, char const *name, int mode);
+struct s_channel	*new_channel(struct s_server *server, char const *name,
+						int mode);
 
 #endif

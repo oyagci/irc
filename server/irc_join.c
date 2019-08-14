@@ -55,7 +55,7 @@ int	irc_join(struct s_client *client, char **params, int nparams)
 	{
 		chan = l->content;
 		LOG(LOGDEBUG, "%s joins channel %s", client->nickname, chan);
-		server_add_to_chan(client->server, client, chan);
+		client->server->add_to_chan(client->server, client, chan);
 		l = l->next;
 	}
 	channels_del(&chans);
