@@ -20,6 +20,7 @@ static int	init_methods(struct s_server *s)
 	s->rm_from_chan = &server_rm_from_chan;
 	s->get_channel = &get_channel;
 	s->notifypart = &notifypart;
+	s->new_channel = &new_channel;
 	return (0);
 }
 
