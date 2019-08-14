@@ -8,9 +8,9 @@
 
 char	*irc_repcode_itoa(unsigned int n)
 {
-	char	digits[10] = "0123456789";
-	char	*s;
-	int		i;
+	char const	digits[10] = "0123456789";
+	char		*s;
+	int			i;
 
 	i = 0;
 	s = ft_strdup("000");
@@ -74,7 +74,6 @@ int			server_send_queued_replies(struct s_server *const server)
 		{
 			/* TODO: Error handling */
 			server_reply_to_client(msg);
-
 			if (prev)
 				prev->next = msgelem->next;
 			else
@@ -94,7 +93,6 @@ static char	*server_format_reply(struct s_client const *const c, int reply_code)
 
 	if (reply_code == 0)
 		return (NULL);
-
 	reply = NULL;
 	if (reply_code > 0)
 	{
@@ -141,7 +139,6 @@ int			server_queue_reply(struct s_server *server,
 	msg->dest = dest;
 	ft_strncpy(msg->msg, reply, 512);
 	msg->len = ft_strlen(reply);
-
 	elem = ft_lstnew(0, 0);
 	elem->content = msg;
 	ft_lstadd(&server->msgqueue, elem);
@@ -154,7 +151,8 @@ int			server_queue_code_reply(struct s_server *server,
 	char				*replystr;
 
 	replystr = server_format_reply(dest, reply_code);
-	if (!replystr) {
+	if (!replystr)
+	{
 		LOG(LOGWARN, "Reply code %d not handled", reply_code);
 		return (-1);
 	}

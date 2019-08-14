@@ -11,7 +11,8 @@ int		channel_add_client(struct s_channel *channel, struct s_client *client)
 		return (-1);
 	elem->content = client;
 	ft_lstpush(&channel->clients, elem);
-	LOG(LOGDEBUG, "Client %s added to channel %.50s", client->nickname, channel->name);
+	LOG(LOGDEBUG, "Client %s added to channel %.50s", client->nickname,
+		channel->name);
 	return (0);
 }
 

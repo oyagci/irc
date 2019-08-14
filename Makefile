@@ -18,6 +18,12 @@ SERVER_SOURCES := \
 	server/nick.c \
 	server/set_usermode.c \
 	server/irc_join.c \
+	server/irc_nick.c \
+	server/irc_part.c \
+	server/irc_pass.c \
+	server/irc_privmsg.c \
+	server/irc_user.c \
+	server/irc_who.c \
 	server/server_channel.c \
 	server/server_loop.c \
 	server/server_init.c \

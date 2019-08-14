@@ -2,7 +2,8 @@
 #include "libft/includes/libft.h"
 #include "logger.h"
 
-struct s_channel	*server_new_channel(struct s_server *server, char const *name, int mode)
+struct s_channel	*server_new_channel(struct s_server *server,
+	char const *name, int mode)
 {
 	t_list				*elem;
 	struct s_channel	*chan;
@@ -27,7 +28,8 @@ struct s_channel	*server_new_channel(struct s_server *server, char const *name, 
 	return (chan);
 }
 
-struct s_channel	*server_get_channel(struct s_server *server, char const *name)
+struct s_channel	*server_get_channel(struct s_server *server,
+	char const *name)
 {
 	t_list				*elem;
 	struct s_channel	*chan;
@@ -63,7 +65,8 @@ int	server_add_to_chan(struct s_server *server, struct s_client *client,
 	}
 	if (!chan)
 	{
-		LOG(LOGDEBUG, "No channel named '%s' found. Creating channel...", channame);
+		LOG(LOGDEBUG, "No channel named '%s' found. Creating channel...",
+			channame);
 		chan = server_new_channel(server, channame, 0);
 	}
 	else
@@ -73,7 +76,8 @@ int	server_add_to_chan(struct s_server *server, struct s_client *client,
 	return (0);
 }
 
-int server_remove_from_chan(struct s_server *server, struct s_client *client, char const *const channame)
+int server_remove_from_chan(struct s_server *server, struct s_client *client,
+	char const *const channame)
 {
 	struct s_channel	*chan;
 	t_list				*elem;
@@ -93,7 +97,8 @@ int server_remove_from_chan(struct s_server *server, struct s_client *client, ch
 	return (0);
 }
 
-int server_rm_nick(struct s_server *server, char const *const nick, char const *const chan)
+int server_rm_nick(struct s_server *server, char const *const nick,
+	char const *const chan)
 {
 	struct s_channel	*channel;
 

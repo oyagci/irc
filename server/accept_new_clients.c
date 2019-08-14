@@ -15,9 +15,11 @@ int		server_accept_new_clients(struct s_server *server)
 	int						confd;
 
 	cli_len = sizeof(cli_addr);
-	if (FD_ISSET(server->sockfd, &server->readfds)) {
+	if (FD_ISSET(server->sockfd, &server->readfds))
+	{
 		confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
-		LOG(LOGDEBUG, "%s: connected on fd %d", inet_ntoa(cli_addr.sin_addr), confd);
+		LOG(LOGDEBUG, "%s: connected on fd %d", inet_ntoa(cli_addr.sin_addr),
+			confd);
 		client = ft_memalloc(sizeof(*client));
 		client->fd = confd;
 		client->server = server;

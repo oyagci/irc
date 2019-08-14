@@ -8,7 +8,7 @@
 ** including the new user
 */
 int	server_tell_new_client(struct s_server *server, struct s_client *client,
-		struct s_channel *chan)
+	struct s_channel *chan)
 {
 	t_list			*elem;
 	char			*msg;
@@ -42,6 +42,7 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 */
 int	irc_join(struct s_client *client, char **params, int nparams)
 {
+	t_list	*l;
 	t_list	*chans;
 	char	*chan;
 
@@ -49,11 +50,13 @@ int	irc_join(struct s_client *client, char **params, int nparams)
 	if (nparams < 1)
 		return (ERR_NEEDMOREPARAM);
 	chans = channels(params[0]);
-	for (t_list *l = chans; l != NULL; l = l->next)
+	l = chans;
+	while (l)
 	{
 		chan = l->content;
 		LOG(LOGDEBUG, "%s joins channel %s", client->nickname, chan);
 		server_add_to_chan(client->server, client, chan);
+		l = l->next;
 	}
 	channels_del(&chans);
 	return (0);
