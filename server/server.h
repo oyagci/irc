@@ -57,6 +57,8 @@ struct	s_client
 	int						fd;
 	int						lastret;
 	struct s_client_buffer	buffer;
+	struct timespec			ping;
+	struct timespec			timeout;
 
 	short					is_connected;
 	short					is_registered;
@@ -79,20 +81,24 @@ struct	s_server
 	t_list				*clients;
 	t_list				*msgqueue;
 	int					(*run)(struct s_server *const self);
+	int					(*pinginactive)(struct s_server *self);
 	int					(*set_fds)(struct s_server *const self);
 	int					(*accept)(struct s_server *const self);
 	int					(*read)(struct s_server *const self);
 	int					(*send)(struct s_server *const self);
 	int					(*exec_cmd)(struct s_client *c);
-	int					(*queuecode)(struct s_server *self, struct s_client const *const dest,
-							int code);
-	int					(*queuenotif)(struct s_server *self, struct s_client const *const dest,
-							char *msg);
-	int					(*rm_from_chan)(char *const nick, struct s_channel *chan);
-	struct s_channel	*(*new_channel)(struct s_server *self, char const *name, int mode);
-	struct s_channel	*(*get_channel)(struct s_server *self, char const *const name);
-	int					(*notifypart)(struct s_server *self, struct s_channel *chan,
-							char const *const nick);
+	int					(*queuecode)(struct s_server *self,
+							struct s_client const *const dest, int code);
+	int					(*queuenotif)(struct s_server *self,
+							struct s_client const *const dest, char *msg);
+	int					(*rm_from_chan)(char *const nick,
+							struct s_channel *chan);
+	struct s_channel	*(*new_channel)(struct s_server *self, char const *name,
+							int mode);
+	struct s_channel	*(*get_channel)(struct s_server *self,
+							char const *const name);
+	int					(*notifypart)(struct s_server *self,
+							struct s_channel *chan, char const *const nick);
 	int					(*add_to_chan)(struct s_server *server,
 							struct s_client *client,
 							char const *const channame);
@@ -137,6 +143,8 @@ int					irc_part(struct s_client *client, char **params,
 						int nparam);
 int					irc_privmsg(struct s_client *client, char **params,
 						int nparams);
+int					irc_ping(struct s_client *client, char **params,
+						int nparam);
 
 /* TODO: Handle nick collision */
 int					nickavail(char *nick);
@@ -176,5 +184,7 @@ int					notifypart(struct s_server *s,
 char				*irc_repcode_itoa(unsigned int n);
 struct s_channel	*new_channel(struct s_server *server, char const *name,
 						int mode);
+
+int					pinginactive(struct s_server *self);
 
 #endif

@@ -22,6 +22,7 @@ static int	init_methods(struct s_server *s)
 	s->notifypart = &notifypart;
 	s->new_channel = &new_channel;
 	s->add_to_chan = &add_to_chan;
+	s->pinginactive = &pinginactive;
 	return (0);
 }
 

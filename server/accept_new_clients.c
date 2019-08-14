@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <stdio.h>
 #include "logger.h"
+#include <time.h>
 
 int		accept_new_clients(struct s_server *server)
 {
@@ -23,6 +24,8 @@ int		accept_new_clients(struct s_server *server)
 		client = ft_memalloc(sizeof(*client));
 		client->fd = confd;
 		client->server = server;
+		clock_gettime(CLOCK_REALTIME, &client->ping);
+		client->ping.tv_sec += 10;
 		ft_memcpy(client->nickname, "guest", 5);
 		elem = ft_lstnew(NULL, 0);
 		elem->content = client;

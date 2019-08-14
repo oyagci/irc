@@ -24,11 +24,13 @@ SERVER_SOURCES := \
 	server/irc_privmsg.c \
 	server/irc_user.c \
 	server/irc_who.c \
+	server/irc_ping.c \
 	server/server_channel.c \
 	server/server_loop.c \
 	server/server_init.c \
 	server/channel.c \
 	server/notify.c \
+	server/pinginactive.c \
 	logger.c
 
 CLIENT_SOURCES := \
