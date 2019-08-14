@@ -167,8 +167,6 @@ int					channel_add_client(struct s_channel *channel,
 						struct s_client *client);
 int					channel_rm_nick(struct s_channel *const channel,
 						char const *const nick);
-int					server_rm_nick(struct s_server *server,
-						char const *const nick, char const *const chan);
 
 int					server_rm_from_chan(char *nick, struct s_channel *chan);
 

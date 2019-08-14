@@ -75,13 +75,3 @@ int	add_to_chan(struct s_server *server, struct s_client *client,
 	server_tell_new_client(server, client, chan);
 	return (0);
 }
-
-int server_rm_nick(struct s_server *server, char const *const nick,
-	char const *const chan)
-{
-	struct s_channel	*channel;
-
-	channel = server->get_channel(server, chan);
-	channel_rm_nick(channel, nick);
-	return (0);
-}
