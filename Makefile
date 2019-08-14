@@ -32,6 +32,7 @@ SERVER_SOURCES := \
 	server/channel.c \
 	server/notify.c \
 	server/pinginactive.c \
+	server/quit.c \
 	logger.c
 
 CLIENT_SOURCES := \

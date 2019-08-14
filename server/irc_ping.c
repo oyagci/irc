@@ -6,6 +6,7 @@ int		irc_ping(struct s_client *client, char **params, int nparam)
 	char			pingmsg[512];
 	struct s_server	*s;
 
+	ft_memset(pingmsg, 0, 512);
 	(void)params;
 	(void)nparam;
 	s = client->server;

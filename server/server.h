@@ -87,6 +87,8 @@ struct	s_server
 	int					(*read)(struct s_server *const self);
 	int					(*send)(struct s_server *const self);
 	int					(*exec_cmd)(struct s_client *c);
+	int					(*quit)(struct s_server *self, struct s_client *client,
+							const char *const msg);
 	int					(*queuecode)(struct s_server *self,
 							struct s_client const *const dest, int code);
 	int					(*queuenotif)(struct s_server *self,
@@ -188,5 +190,7 @@ struct s_channel	*new_channel(struct s_server *server, char const *name,
 						int mode);
 
 int					pinginactive(struct s_server *self);
+int					quit(struct s_server *self, struct s_client *client,
+						char const *const msg);
 
 #endif

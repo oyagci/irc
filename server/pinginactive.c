@@ -4,7 +4,21 @@
 
 int		updatetimeout(struct s_server *self)
 {
-	(void)self;
+	t_list			*clients;
+	struct s_client	*client;
+	struct timespec	current;
+
+	clock_gettime(CLOCK_REALTIME, &current);
+	clients = self->clients;
+	while (clients)
+	{
+		client = clients->content;
+		if (current.tv_sec >= client->timeout.tv_sec + 10)
+		{
+			self->quit(self, client, "Timed out");
+		}
+		clients = clients->next;
+	}
 	return (0);
 }
 
@@ -15,6 +29,7 @@ int		pinginactive(struct s_server *self)
 	struct timespec	current;
 
 	clients = self->clients;
+	updatetimeout(self);
 	while (clients)
 	{
 		client = clients->content;
