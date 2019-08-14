@@ -76,6 +76,7 @@ struct s_client
 	int	(*user)(struct s_client *const, struct s_client_msg const *const);
 	int	(*leave)(struct s_client *const, struct s_client_msg const *const);
 	int	(*quit)(struct s_client *const, struct s_client_msg const *const);
+	int	(*who)(struct s_client *const, struct s_client_msg const *const);
 
 	int	(*eventjoin)(struct s_client *const, struct s_message const *const);
 	int	(*eventprivmsg)(struct s_client *const, struct s_message const *const);

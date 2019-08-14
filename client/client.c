@@ -174,6 +174,23 @@ int		client_nick(struct s_client *const self,
 	return (0);
 }
 
+int		client_who(struct s_client *const self,
+				   struct s_client_msg const *const cmd)
+{
+	char	*msg;
+
+	(void)cmd;
+	msg = ft_strnew(513);
+	if (!msg)
+		return (-1);
+	ft_strlcat(msg, "WHO", 513);
+//	ft_strlcat(msg, " ", 513);
+//	ft_strlcat(msg, cmd->params[0], 513);
+	ft_strlcat(msg, CRLF, 513);
+	self->queuemsg(self, msg);
+	return (0);
+}
+
 int		client_execute_command(struct s_client *const self,
 							   struct s_client_msg const *const cmd)
 {
@@ -184,6 +201,7 @@ int		client_execute_command(struct s_client *const self,
 		{ .cmd = CMD_MSG, .f = self->message },
 		{ .cmd = CMD_USER, .f = self->user },
 		{ .cmd = CMD_LEAVE, .f = self->leave },
+		{ .cmd = CMD_WHO, .f = self->who },
 	};
 	size_t					ii;
 
@@ -380,6 +398,7 @@ void	client_init(struct s_client *self)
 	self->join = &client_join;
 	self->user = &client_user;
 	self->leave = &client_leave;
+	self->who = &client_who;
 
 	self->eventjoin = &eventjoin;
 

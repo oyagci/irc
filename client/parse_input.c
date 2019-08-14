@@ -12,7 +12,7 @@ enum e_client_cmd	set_command(char const **inputp, struct s_client_msg *buf)
 		{ .str = "leave", .cmd = CMD_LEAVE, .nparam = 1 },
 		{ .str = "msg", .cmd = CMD_MSG, .nparam = 2 },
 		{ .str = "disconnect", .cmd = CMD_DISCONNECT, .nparam = 0 },
-		{ .str = "who", .cmd = CMD_WHO, .nparam = 1 },
+		{ .str = "who", .cmd = CMD_WHO, .nparam = 0 },
 	};
 	char const					*input;
 	int							ii;
@@ -115,6 +115,12 @@ char				*format_message(struct s_client_msg *msg)
 	else if (msg->cmd == CMD_JOIN)
 	{
 		ft_strlcat(strmsg, "JOIN ", 512);
+		ft_strlcat(strmsg, msg->params[0], 512);
+	}
+	else if (msg->cmd == CMD_WHO)
+	{
+		ft_strlcat(strmsg, "WHO", 512);
+		ft_strlcat(strmsg, " ", 512);
 		ft_strlcat(strmsg, msg->params[0], 512);
 	}
 	ft_strlcat(strmsg, CRLF, 512);

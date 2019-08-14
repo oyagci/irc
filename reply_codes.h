@@ -13,6 +13,8 @@
 # define ERR_ALREADYREGISTRED	462
 # define ERR_PASSWDMISMATCH		464
 
-# define RPL_WELCOME			1
+# define RPL_WELCOME			  1
+# define RPL_ENDOFWHO			315
+# define RPL_WHOREPLY			352
 
 #endif

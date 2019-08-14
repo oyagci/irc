@@ -163,4 +163,6 @@ int	server_rm_from_chan(char *nick, struct s_channel *chan);
 
 int			server_notifypart(struct s_server *s, struct s_channel *chan, char const *const nick);
 
+char	*irc_repcode_itoa(unsigned int n);
+
 #endif
