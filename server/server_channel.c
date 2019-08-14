@@ -28,7 +28,7 @@ struct s_channel	*server_new_channel(struct s_server *server,
 	return (chan);
 }
 
-struct s_channel	*server_get_channel(struct s_server *server,
+struct s_channel	*get_channel(struct s_server *server,
 	char const *name)
 {
 	t_list				*elem;
@@ -83,7 +83,7 @@ int server_remove_from_chan(struct s_server *server, struct s_client *client,
 	t_list				*elem;
 	struct s_client		*c;
 
-	chan = server_get_channel(server, channame);
+	chan = server->get_channel(server, channame);
 	elem = chan->clients;
 	while (elem)
 	{
@@ -102,7 +102,7 @@ int server_rm_nick(struct s_server *server, char const *const nick,
 {
 	struct s_channel	*channel;
 
-	channel = server_get_channel(server, chan);
+	channel = server->get_channel(server, chan);
 	channel_rm_nick(channel, nick);
 	return (0);
 }

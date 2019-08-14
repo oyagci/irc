@@ -1,6 +1,6 @@
 #include "server.h"
 
-int			server_notifypart(struct s_server *s, struct s_channel *chan,
+int			notifypart(struct s_server *s, struct s_channel *chan,
 	char const *const nick)
 {
 	t_list			*elem;

@@ -18,22 +18,6 @@
 #include "server.h"
 #include "logger.h"
 
-int	read_client_command(int cfd, struct s_client_buffer *buffer)
-{
-	int	ret;
-
-	if ((ret = read(cfd, buffer->data + buffer->len,
-					COMMAND_LENGTH - buffer->len)) > 0)
-	{
-		buffer->len += ret;
-		if (strstr(buffer->data, CRLF))
-		{
-			buffer->is_complete = 1;
-		}
-	}
-	return (ret);
-}
-
 int	nparams(char **params)
 {
 	int ii;

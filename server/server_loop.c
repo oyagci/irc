@@ -1,6 +1,6 @@
 #include "server.h"
 
-int	server_loop(struct s_server *self)
+int	loop(struct s_server *self)
 {
 	int	max_sd;
 

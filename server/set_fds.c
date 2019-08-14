@@ -15,7 +15,7 @@
 #include <sys/select.h>
 #include <stdio.h>
 
-int		server_set_fds(struct s_server *server)
+int		set_fds(struct s_server *server)
 {
 	t_list			*cur;
 	struct s_client	*client;

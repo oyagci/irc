@@ -105,12 +105,11 @@ struct	s_server_msg
 };
 
 int					server_init(struct s_server *server, unsigned int port);
-int					server_set_fds(struct s_server *server);
+int					set_fds(struct s_server *server);
 int					execute_command(struct s_client *c);
-int					read_client_command(int cfd,
-						struct s_client_buffer *buffer);
+int					read_clients_command(struct s_server *const self);
 int					server_read_clients_command(struct s_server *const server);
-int					server_accept_new_clients(struct s_server *server);
+int					accept_new_clients(struct s_server *server);
 int					reply_client(struct s_client *c, int retcode);
 
 /*
@@ -145,19 +144,20 @@ int					nickadd(char *nick);
 int					set_usermode(struct s_client *c, int mode);
 int					set_realname(struct s_client *c, char *rn);
 
-int					server_loop(struct s_server *server);
-int					server_send_queued_replies(struct s_server *const server);
-int					server_queue_reply(struct s_server *server,
+int					loop(struct s_server *server);
+
+int					send_queued_replies(struct s_server *const server);
+int					queue_reply(struct s_server *server,
 						struct s_client const *const dest,
 						char *reply);
-int					server_queue_code_reply(struct s_server *server,
+int					queue_code_reply(struct s_server *server,
 						struct s_client const *const dest, int reply_code);
+
 int					server_add_to_chan(struct s_server *server,
 						struct s_client *client, char const *const channame);
 int					server_tell_new_client(struct s_server *server,
 						struct s_client *client, struct s_channel *chan);
-struct s_channel	*server_get_channel(struct s_server *server,
-						char const *name);
+struct s_channel	*get_channel(struct s_server *server, char const *name);
 int					server_send_formated_message_to(struct s_server *server,
 						char const *recipient, char *msg);
 void				server_msg_del(void *msgp, size_t size);
@@ -169,11 +169,9 @@ int					channel_rm_nick(struct s_channel *const channel,
 int					server_rm_nick(struct s_server *server,
 						char const *const nick, char const *const chan);
 
-struct s_channel	*server_get_channel(struct s_server *self,
-						char const *const name);
 int					server_rm_from_chan(char *nick, struct s_channel *chan);
 
-int					server_notifypart(struct s_server *s,
+int					notifypart(struct s_server *s,
 						struct s_channel *chan, char const *const nick);
 
 char				*irc_repcode_itoa(unsigned int n);

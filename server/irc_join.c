@@ -30,7 +30,7 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 		ft_strlcat(msg, " JOIN ", 513);
 		ft_strlcat(msg, chan->name, 513);
 		ft_strlcat(msg, CRLF, 513);
-		server_queue_reply(server, recipient, msg);
+		queue_reply(server, recipient, msg);
 		free(msg);
 		elem = elem->next;
 	}

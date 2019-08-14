@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "logger.h"
 
-int		server_accept_new_clients(struct s_server *server)
+int		accept_new_clients(struct s_server *server)
 {
 	t_list					*elem;
 	struct s_client			*client;

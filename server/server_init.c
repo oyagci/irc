@@ -7,19 +7,19 @@
 #include "server.h"
 #include "logger.h"
 
-static int	server_init_methods(struct s_server *s)
+static int	init_methods(struct s_server *s)
 {
-	s->run = &server_loop;
-	s->set_fds = &server_set_fds;
-	s->accept = &server_accept_new_clients;
-	s->read = &server_read_clients_command;
-	s->send = &server_send_queued_replies;
+	s->run = &loop;
+	s->set_fds = &set_fds;
+	s->accept = &accept_new_clients;
+	s->read = &read_clients_command;
+	s->send = &send_queued_replies;
 	s->exec_cmd = &execute_command;
-	s->queuecode = &server_queue_code_reply;
-	s->queuenotif = &server_queue_reply;
+	s->queuecode = &queue_code_reply;
+	s->queuenotif = &queue_reply;
 	s->rm_from_chan = &server_rm_from_chan;
-	s->get_channel = &server_get_channel;
-	s->notifypart = &server_notifypart;
+	s->get_channel = &get_channel;
+	s->notifypart = &notifypart;
 	return (0);
 }
 
@@ -28,7 +28,7 @@ int			server_init(struct s_server *server, unsigned int port)
 	struct sockaddr_in	serv_addr;
 
 	ft_memset(server, 0, sizeof(*server));
-	server_init_methods(server);
+	init_methods(server);
 	if ((server->sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		return (-1);
 	ft_memset(&serv_addr, 0, sizeof(serv_addr));

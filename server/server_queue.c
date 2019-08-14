@@ -25,7 +25,23 @@ char	*irc_repcode_itoa(unsigned int n)
 	return (s);
 }
 
-int		server_read_clients_command(struct s_server *const self)
+int	read_to_buffer(int cfd, struct s_client_buffer *buffer)
+{
+	int	ret;
+
+	if ((ret = read(cfd, buffer->data + buffer->len,
+					COMMAND_LENGTH - buffer->len)) > 0)
+	{
+		buffer->len += ret;
+		if (strstr(buffer->data, CRLF))
+		{
+			buffer->is_complete = 1;
+		}
+	}
+	return (ret);
+}
+
+int		read_clients_command(struct s_server *const self)
 {
 	t_list			*cur;
 	struct s_client	*client;
@@ -36,7 +52,7 @@ int		server_read_clients_command(struct s_server *const self)
 		client = cur->content;
 		if (FD_ISSET(client->fd, &self->readfds))
 		{
-			read_client_command(client->fd, &client->buffer);
+			read_to_buffer(client->fd, &client->buffer);
 			if (client->buffer.is_complete)
 			{
 				client->buffer.is_complete = 0;
@@ -56,7 +72,7 @@ static int	server_reply_to_client(struct s_server_msg const *const msg)
 	return (send(msg->dest->fd, msg->msg, msg->len, 0));
 }
 
-int			server_send_queued_replies(struct s_server *const server)
+int			send_queued_replies(struct s_server *const server)
 {
 	t_list				*prev;
 	t_list				*next;
@@ -127,7 +143,7 @@ static char	*server_format_reply(struct s_client const *const c, int reply_code)
 	return (reply);
 }
 
-int			server_queue_reply(struct s_server *server,
+int			queue_reply(struct s_server *server,
 	struct s_client const *const dest, char *reply)
 {
 	t_list				*elem;
@@ -145,7 +161,7 @@ int			server_queue_reply(struct s_server *server,
 	return (0);
 }
 
-int			server_queue_code_reply(struct s_server *server,
+int			queue_code_reply(struct s_server *server,
 	struct s_client const *const dest, int reply_code)
 {
 	char				*replystr;
@@ -156,7 +172,7 @@ int			server_queue_code_reply(struct s_server *server,
 		LOG(LOGWARN, "Reply code %d not handled", reply_code);
 		return (-1);
 	}
-	server_queue_reply(server, dest, replystr);
+	server->queuenotif(server, dest, replystr);
 	free(replystr);
 	return (0);
 }

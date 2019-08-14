@@ -32,7 +32,7 @@ int	server_send_channel(struct s_server *server, struct s_channel *chan,
 	while (client)
 	{
 		recipient = client->content;
-		server_queue_reply(server, recipient, msg);
+		server->queuenotif(server, recipient, msg);
 		client = client->next;
 	}
 	return (0);
@@ -49,7 +49,7 @@ int	server_send_formated_message_to(struct s_server *server, char const *name,
 
 	if (*name == '#' || *name == '&' || *name == '!')
 	{
-		chan = server_get_channel(server, name);
+		chan = server->get_channel(server, name);
 		if (chan)
 			server_send_channel(server, chan, msg);
 		else
@@ -61,7 +61,7 @@ int	server_send_formated_message_to(struct s_server *server, char const *name,
 	else
 	{
 		client = server_get_client(server, name);
-		server_queue_reply(server, client, msg);
+		server->queuenotif(server, client, msg);
 	}
 	return (0);
 }
