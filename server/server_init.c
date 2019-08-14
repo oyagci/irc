@@ -17,7 +17,7 @@ static int	init_methods(struct s_server *s)
 	s->exec_cmd = &execute_command;
 	s->queuecode = &queue_code_reply;
 	s->queuenotif = &queue_reply;
-	s->rm_from_chan = &server_rm_from_chan;
+	s->rm_from_chan = &rm_from_chan;
 	s->get_channel = &get_channel;
 	s->notifypart = &notifypart;
 	s->new_channel = &new_channel;

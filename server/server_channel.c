@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "server.h"
 #include "libft/includes/libft.h"
 #include "logger.h"
@@ -74,4 +76,30 @@ int	add_to_chan(struct s_server *server, struct s_client *client,
 	channel_add_client(chan, client);
 	server_tell_new_client(server, client, chan);
 	return (0);
+}
+
+int				rm_from_chan(char *nick, struct s_channel *chan)
+{
+	t_list			*clients;
+	t_list			*prev;
+	struct s_client	*c;
+
+	clients = chan->clients;
+	prev = NULL;
+	while (clients)
+	{
+		c = clients->content;
+		if (ft_strequ(c->nickname, nick))
+		{
+			if (prev)
+				prev->next = clients->next;
+			else
+				chan->clients = clients->next;
+			free(clients);
+			return (0);
+		}
+		prev = clients;
+		clients = clients->next;
+	}
+	return (ERR_NOTONCHANNEL);
 }

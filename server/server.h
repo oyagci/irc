@@ -168,7 +168,7 @@ int					channel_add_client(struct s_channel *channel,
 int					channel_rm_nick(struct s_channel *const channel,
 						char const *const nick);
 
-int					server_rm_from_chan(char *nick, struct s_channel *chan);
+int					rm_from_chan(char *nick, struct s_channel *chan);
 
 int					notifypart(struct s_server *s,
 						struct s_channel *chan, char const *const nick);

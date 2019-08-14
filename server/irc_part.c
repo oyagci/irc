@@ -3,32 +3,6 @@
 #include "server.h"
 #include "logger.h"
 
-int				server_rm_from_chan(char *nick, struct s_channel *chan)
-{
-	t_list			*clients;
-	t_list			*prev;
-	struct s_client	*c;
-
-	clients = chan->clients;
-	prev = NULL;
-	while (clients)
-	{
-		c = clients->content;
-		if (ft_strequ(c->nickname, nick))
-		{
-			if (prev)
-				prev->next = clients->next;
-			else
-				chan->clients = clients->next;
-			free(clients);
-			return (0);
-		}
-		prev = clients;
-		clients = clients->next;
-	}
-	return (ERR_NOTONCHANNEL);
-}
-
 int				irc_part(struct s_client *client, char **params, int nparam)
 {
 	struct s_server		*s;
