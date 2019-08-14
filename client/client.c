@@ -264,12 +264,20 @@ int		eventprivmsg(struct s_client *const self, struct s_message const *const m)
 	return (0);
 }
 
+int	eventping(struct s_client *const self, struct s_message const *const msg)
+{
+	(void)msg;
+	self->queuemsg(self, ft_strdup("PONG\x0d\x0a"));
+	return (0);
+}
+
 int		client_event(struct s_client *self, char const *const data)
 {
 	struct s_event_list events[] = {
 		{ .s = "JOIN", .f = self->eventjoin },
 		{ .s = "PRIVMSG", .f = self->eventprivmsg },
 		{ .s = "PART", .f = self->eventpart },
+		{ .s = "PING", .f = self->eventping },
 		{ .s = "001", .f = self->rpl_welcome },
 	};
 	size_t				ii;
@@ -400,6 +408,7 @@ void	client_init(struct s_client *self)
 	self->sendmsgs = &client_sendmsgs;
 	self->event = &client_event;
 	self->parse_input = &parse_input;
+	self->eventping = &eventping;
 
 	self->connect = &client_connect;
 	self->message = &client_message;

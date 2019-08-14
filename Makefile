@@ -25,6 +25,7 @@ SERVER_SOURCES := \
 	server/irc_user.c \
 	server/irc_who.c \
 	server/irc_ping.c \
+	server/irc_pong.c \
 	server/server_channel.c \
 	server/server_loop.c \
 	server/server_init.c \

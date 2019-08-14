@@ -78,6 +78,7 @@ struct s_client
 	int	(*eventjoin)(struct s_client *const, struct s_message const *const);
 	int	(*eventprivmsg)(struct s_client *const, struct s_message const *const);
 	int	(*eventpart)(struct s_client *const, struct s_message const *const);
+	int	(*eventping)(struct s_client *const, struct s_message const *const);
 
 	int	(*rpl_welcome)(struct s_client *const, struct s_message const *const);
 };

@@ -145,6 +145,8 @@ int					irc_privmsg(struct s_client *client, char **params,
 						int nparams);
 int					irc_ping(struct s_client *client, char **params,
 						int nparam);
+int					irc_pong(struct s_client *client, char **params,
+						int nparam);
 
 /* TODO: Handle nick collision */
 int					nickavail(char *nick);
