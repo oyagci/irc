@@ -39,7 +39,7 @@ int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 	if (nick && chan)
 	{
 		self->channels.rmnick(&self->channels, nick, chan);
-		printf(" * %s left %s\n", nick, chan);
+		printf(" * %s has left %s\n", nick, chan);
 	}
 	return (0);
 }
@@ -169,6 +169,7 @@ int		client_nick(struct s_client *const self,
 	ft_strlcat(msg, " ", 513);
 	ft_strlcat(msg, cmd->params[0], 513);
 	ft_strlcat(msg, CRLF, 513);
+	ft_memcpy(self->nickname, cmd->params[0], 9);
 	self->queuemsg(self, msg);
 	self->user(self, &usercmd);
 	return (0);
@@ -235,9 +236,14 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 	ret = nickname(m->prefix->data, &nick);
 	if (nick)
 	{
+		LOG(LOGDEBUG, "%s %s", nick, self->nickname);
 		if (m->params && m->params->param[0])
 		{
 			self->channels.addnick(&self->channels, nick, chan);
+			if (ft_strnequ(self->nickname, nick, 9))
+			{
+				self->channel = self->channels.get(&self->channels, m->params->param[0]);
+			}
 			printf(" * %s joined channel %s\n", nick, chan);
 		}
 	}
@@ -319,7 +325,7 @@ int		client_run(struct s_client *self)
 			fgets(buf, 512, stdin);
 			if ((c = ft_strchr(buf, '\n')))
 				*c = '\0';
-			cmd = self->parse_input(buf);
+			cmd = self->parse_input(self, buf);
 			self->exec_cmd(self, cmd);
 		}
 		self->sendmsgs(self);
@@ -375,6 +381,7 @@ int		client_leave(struct s_client *const self,
 	ft_strlcat(msg, " ", 513);
 	ft_strlcat(msg, cmd->params[0], 513);
 	ft_strlcat(msg, CRLF, 513);
+	self->channel = 0;
 	return (self->queuemsg(self, msg));
 }
 
@@ -383,7 +390,9 @@ void	client_init(struct s_client *self)
 	if (!self)
 		return ;
 	self->servsock = 0;
+	self->channel = 0;
 	self->msgs = NULL;
+	ft_memset(self->nickname, 0, 9);
 	channels_init(&self->channels);
 	self->run = &client_run;
 	self->exec_cmd = &client_execute_command;

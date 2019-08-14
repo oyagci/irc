@@ -42,9 +42,6 @@ struct s_client_msg
 	size_t				nparam;
 };
 
-struct s_client_msg	*parse_input(char const *input);
-char				*format_message(struct s_client_msg *msg);
-
 struct s_client
 {
 	int					is_running;
@@ -64,7 +61,7 @@ struct s_client
 	int (*queuemsg)(struct s_client *const, char *msg);
 	int	(*sendmsgs)(struct s_client *const);
 	int	(*event)(struct s_client *const, char const *const event);
-	struct s_client_msg	*(*parse_input)(char const *input);
+	struct s_client_msg	*(*parse_input)(struct s_client *const, char const *input);
 
 	/*
 	** IRC Commands
@@ -96,5 +93,8 @@ struct s_event_list
 	char	*s;
 	int		(*f)(struct s_client *const, struct s_message const *const);
 };
+
+struct s_client_msg	*parse_input(struct s_client *const self, char const *input);
+char				*format_message(struct s_client_msg *msg);
 
 #endif
