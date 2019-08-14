@@ -34,7 +34,7 @@ int		accept_new_clients(struct s_server *server)
 		client->fd = confd;
 		client->server = server;
 		clock_gettime(CLOCK_REALTIME, &client->ping);
-		clock_gettime(CLOCK_REALTIME, &client->timeout);
+		ft_memset(&client->timeout, 0, sizeof(client->timeout));
 		client->ping.tv_sec += 10;
 		ft_memcpy(client->nickname, "guest", 5);
 		elem = ft_lstnew(NULL, 0);
