@@ -6,13 +6,12 @@
 #include <stdio.h>
 #include "logger.h"
 #include <time.h>
+#include <signal.h>
 
-int		setnosigpipe(int fd)
+int		setnosigpipe(void)
 {
-	int	set;
-
-	set = 1;
-	return (setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(set)));
+	signal(SIGPIPE, SIG_IGN);
+	return (0);
 }
 
 int		accept_new_clients(struct s_server *server)
@@ -27,7 +26,7 @@ int		accept_new_clients(struct s_server *server)
 	if (FD_ISSET(server->sockfd, &server->readfds))
 	{
 		confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
-		setnosigpipe(confd);
+		setnosigpipe();
 		LOG(LOGDEBUG, "%s: connected on fd %d", inet_ntoa(cli_addr.sin_addr),
 			confd);
 		client = ft_memalloc(sizeof(*client));

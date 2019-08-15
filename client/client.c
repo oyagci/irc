@@ -27,10 +27,16 @@
 #include <stdio.h>
 #include <errno.h>
 
+#define container_of(ptr, type, member) ({                      \
+        const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+        (type *)( (char *)__mptr - offsetof(type,member) );})
+
 int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 {
 	char	*nick;
 	char	*chan;
+
+	struct s_client *c = container_of(eventpart);
 
 	nick = NULL;
 	chan = NULL;
@@ -293,50 +299,6 @@ int		client_event(struct s_client *self, char const *const data)
 		if (ft_strequ(events[ii].s, msg->cmd->data))
 			events[ii].f(self, msg);
 		ii += 1;
-	}
-	return (0);
-}
-
-int		client_run(struct s_client *self)
-{
-	struct s_client_msg	*cmd;
-	char				*c;
-	char				buf[512];
-	struct timeval		t;
-
-	self->is_running = 1;
-	while (self->is_running)
-	{
-		FD_ZERO(&self->readfds);
-		FD_SET(self->servsock, &self->readfds);
-		FD_SET(STDIN_FILENO, &self->readfds);
-		FD_ZERO(&self->writefds);
-		FD_SET(self->servsock, &self->writefds);
-		t.tv_sec = 0;
-		t.tv_usec = 10000;
-		select(self->servsock + 1, &self->readfds, NULL, NULL, &t);
-		if (FD_ISSET(self->servsock, &self->readfds))
-		{
-			ft_memset(buf, 0, 512);
-			int	ret = recv(self->servsock, buf, 512, 0);
-			if (ret > 0)
-			{
-				self->event(self, buf);
-				char *c = ft_strstr(buf, CRLF);
-				if (c)
-					*c = '\0';
-				LOG(LOGDEBUG, "%s", buf);
-			}
-		}
-		if (FD_ISSET(0, &self->readfds))
-		{
-			fgets(buf, 512, stdin);
-			if ((c = ft_strchr(buf, '\n')))
-				*c = '\0';
-			cmd = self->parse_input(self, buf);
-			self->exec_cmd(self, cmd);
-		}
-		self->sendmsgs(self);
 	}
 	return (0);
 }

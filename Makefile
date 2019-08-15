@@ -48,6 +48,7 @@ CLIENT_SOURCES := \
 	client/client.c \
 	client/parse_input.c \
 	client/channels.c \
+	client/client_run.c \
 	logger.c \
 
 SERVER_OBJS := $(SERVER_SOURCES:.c=.o)
@@ -81,7 +82,7 @@ CLIENT_INCLUDES := -I client
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
 $(SERVER_NAME): $(SERVER_OBJS) $(SERVER_HEADERS) bin
-	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g
+	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g -lbsd
 
 $(CLIENT_NAME): $(CLIENT_OBJS) $(CLIENT_HEADERS) bin
 	$(CC) $(CLIENT_OBJS) -o $@ -g -L libft -lft -g
