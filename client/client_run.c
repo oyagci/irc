@@ -1,6 +1,8 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include "client.h"
+#include <cbuf.h>
+#include "logger.h"
 
 int		read_input(struct s_client *self)
 {
@@ -21,20 +23,43 @@ int		read_input(struct s_client *self)
 
 int		read_notif(struct s_client *self)
 {
-	char	*c;
 	char	buf[512];
+	int		complete;
+	int		ret;
+	int		i;
 
 	if (FD_ISSET(self->servsock, &self->readfds))
 	{
 		ft_memset(buf, 0, 512);
-		int	ret = recv(self->servsock, buf, 512, 0);
-		if (ret > 0)
+		if ((ret = recv(self->servsock, buf, 512, 0)) > 0)
 		{
-			self->event(self, buf);
-			c = ft_strstr(buf, CRLF);
-			if (c)
-				*c = '\0';
-			LOG(LOGDEBUG, "%s", buf);
+			LOG(LOGDEBUG, "Received %d bytes", ret);
+			i = 0;
+			complete = 0;
+			while (i < ret)
+			{
+				cbuf_put2(self->cbuf, buf[i]);
+				if (buf[i] == '\n')
+					complete += 1;
+				i++;
+			}
+			while (complete)
+			{
+				char	buf2[512];
+				unsigned char	data;
+
+				i = 0;
+				ft_memset(buf2, 0, 512);
+				while (i < 512 && buf2[i] != 0x0d)
+				{
+					if (cbuf_get(self->cbuf, &data) < 0)
+						break ;
+					buf2[i] = data;
+					i += 1;
+				}
+				self->event(self, buf2);
+				complete -= 1;
+			}
 		}
 	}
 	return (0);

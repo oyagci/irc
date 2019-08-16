@@ -6,6 +6,7 @@
 # include <sys/types.h>
 # include "parser/parser.h"
 # include "channels.h"
+# include <cbuf.h>
 
 # define CRLF	"\x0d\x0a"
 
@@ -52,6 +53,8 @@ struct s_client
 	struct s_channels	channels;
 	struct s_chan		*channel;
 	char				nickname[9];
+	t_cbuf_handle		cbuf;
+	uint8_t				*raw_buffer;
 
 	/*
 	** Methods
@@ -79,6 +82,7 @@ struct s_client
 	int	(*eventprivmsg)(struct s_client *const, struct s_message const *const);
 	int	(*eventpart)(struct s_client *const, struct s_message const *const);
 	int	(*eventping)(struct s_client *const, struct s_message const *const);
+	int	(*eventmotd)(struct s_client *const, struct s_message const *const);
 
 	int	(*rpl_welcome)(struct s_client *const, struct s_message const *const);
 };

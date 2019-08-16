@@ -100,12 +100,15 @@ void		params_del(struct s_params **paramsp)
 
 	p = *paramsp;
 	i = 0;
-	while (i < 15)
+	if (p)
 	{
-		if (p->param[i])
-			free(p->param[i]);
-		i++;
+		while (i < 15)
+		{
+			if (p->param[i])
+				free(p->param[i]);
+			i++;
+		}
+		free(p);
+		*paramsp = NULL;
 	}
-	free(p);
-	*paramsp = NULL;
 }

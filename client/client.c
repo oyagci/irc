@@ -27,6 +27,21 @@
 #include <stdio.h>
 #include <errno.h>
 
+int	eventmotd(struct s_client *const self, struct s_message const *const cmd)
+{
+	int	ii;
+	(void)self;
+
+	LOG(LOGDEBUG, "MOTD");
+	ii = 0;
+	while (cmd->params->param[ii] && ii < 14)
+	{
+		printf("%s\n", cmd->params->param[ii]);
+		ii++;
+	}
+	return (0);
+}
+
 int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 {
 	char	*nick;
@@ -302,6 +317,9 @@ int		client_event(struct s_client *self, char const *const data)
 		{ .s = "PART", .f = self->eventpart },
 		{ .s = "PING", .f = self->eventping },
 		{ .s = "001", .f = self->rpl_welcome },
+		{ .s = "372", .f = self->eventmotd },
+		{ .s = "375", .f = self->eventmotd },
+		{ .s = "376", .f = self->eventmotd },
 	};
 	size_t				ii;
 
@@ -417,6 +435,11 @@ void	client_init(struct s_client *self)
 	self->rpl_welcome = &rpl_welcome;
 	self->eventprivmsg = &eventprivmsg;
 	self->eventpart = &eventpart;
+	self->eventmotd = &eventmotd;
+
+	self->raw_buffer = malloc(sizeof(char) * 2048);
+	self->cbuf = malloc(sizeof(*self->cbuf));
+	cbuf_init(self->cbuf, self->raw_buffer, 2048);
 }
 
 int	main(void)
