@@ -139,6 +139,11 @@ int		client_message(struct s_client *const self,
 {
 	char	*msg;
 
+	if (!self->servsock)
+	{
+		printf(" * Not connected to a server\n");
+		return (0);
+	}
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
@@ -162,6 +167,11 @@ int		client_nick(struct s_client *const self,
 		.params = params,
 	};
 
+	if (!self->servsock)
+	{
+		printf(" * Not connected to a server\n");
+		return (0);
+	}
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
@@ -181,6 +191,11 @@ int		client_who(struct s_client *const self,
 	char	*msg;
 
 	(void)cmd;
+	if (!self->servsock)
+	{
+		printf(" * Not connected to a server\n");
+		return (0);
+	}
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
@@ -302,6 +317,11 @@ int		client_join(struct s_client *const self,
 {
 	char	*msg;
 
+	if (!self->servsock)
+	{
+		printf(" * Not connected to a server\n");
+		return (0);
+	}
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
@@ -317,6 +337,11 @@ int		client_user(struct s_client *const self,
 {
 	char	*msg;
 
+	if (!self->servsock)
+	{
+		printf(" * Not connected to a server\n");
+		return (0);
+	}
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
@@ -338,6 +363,11 @@ int		client_leave(struct s_client *const self,
 {
 	char	*msg;
 
+	if (!self->servsock)
+	{
+		printf(" * Not connected to a server\n");
+		return (0);
+	}
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
