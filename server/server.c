@@ -28,7 +28,7 @@ int	nparams(char **params)
 	return (ii);
 }
 
-int	execute_command(struct s_client *c)
+int	execute_command(struct s_client *c, char const *const cmd)
 {
 	const struct s_irc_cmds	cmds[] = {
 		{ .name = "PASS", .f = irc_pass }, { .name = "NICK", .f = irc_nick },
@@ -41,7 +41,7 @@ int	execute_command(struct s_client *c)
 	struct s_message		*msg;
 	int						validcmd;
 
-	msg = message(c->buffer.data);
+	msg = message(cmd);
 	if (!msg)
 		return (0);
 	ii = 0;

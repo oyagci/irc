@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "logger.h"
 #include <stdlib.h>
+#include <cbuf.h>
 
 char	*irc_repcode_itoa(unsigned int n)
 {
@@ -25,26 +26,40 @@ char	*irc_repcode_itoa(unsigned int n)
 	return (s);
 }
 
-int	read_to_buffer(int cfd, struct s_client_buffer *buffer)
+int	read_to_buffer(int cfd, t_cbuf_handle cbuf)
 {
 	int	ret;
+	char buf[512];
+	int	ii;
+	int	complete;
 
-	if ((ret = read(cfd, buffer->data + buffer->len,
-					COMMAND_LENGTH - buffer->len)) > 0)
+	ft_memset(buf, 0, 512);
+	if ((ret = recv(cfd, buf, 512, 0)) > 0)
 	{
-		buffer->len += ret;
-		if (strstr(buffer->data, CRLF))
+		LOG(LOGDEBUG, "Received %d bytes", ret);
+		complete = 0;
+		ii = 0;
+		while (ii < ret)
 		{
-			buffer->is_complete = 1;
+			if (cbuf_put2(cbuf, buf[ii]) < 0)
+				break ;
+			if (buf[ii] == '\n')
+				complete += 1;
+			ii += 1;
 		}
+		LOG(LOGDEBUG, "%d", ii);
 	}
-	return (ret);
+	return (complete);
 }
 
 int		read_clients_command(struct s_server *const self)
 {
 	t_list			*cur;
 	struct s_client	*client;
+	int				ii;
+	char			buf[512];
+	unsigned char	data;
+	int				complete;
 
 	cur = self->clients;
 	while (cur)
@@ -52,13 +67,20 @@ int		read_clients_command(struct s_server *const self)
 		client = cur->content;
 		if (FD_ISSET(client->fd, &self->readfds))
 		{
-			read_to_buffer(client->fd, &client->buffer);
-			if (client->buffer.is_complete)
+			complete = read_to_buffer(client->fd, client->cbuf);
+			while (complete)
 			{
-				client->buffer.is_complete = 0;
-				client->buffer.len = 0;
-				client->lastret = self->exec_cmd(client);
-				ft_memset(client->buffer.data, 0, CLIENT_BUFFER_SIZE);
+				ii = 0;
+				ft_memset(buf, 0, 512);
+				while (ii < 512 && buf[ii] != 0x0d)
+				{
+					if (cbuf_get(client->cbuf, &data) < 0)
+						break ;
+					buf[ii] = data;
+					ii += 1;
+				}
+				self->exec_cmd(client, buf);
+				complete -= 1;
 			}
 		}
 		cur = cur->next;
