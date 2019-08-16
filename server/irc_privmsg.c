@@ -102,6 +102,8 @@ int	irc_privmsg(struct s_client *client, char **params, int nparams)
 {
 	t_list	*recipients;
 
+	if (!client->is_registered)
+		return (0);
 	if (nparams < 1)
 	{
 		client->server->queuecode(client->server, client, ERR_NORECIPIENT);

@@ -9,6 +9,8 @@ int				irc_part(struct s_client *client, char **params, int nparam)
 	struct s_channel	*chan;
 	int					ret;
 
+	if (!client->is_registered)
+		return (0);
 	s = client->server;
 	if (nparam <= 0)
 	{

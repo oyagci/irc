@@ -46,6 +46,8 @@ int	irc_join(struct s_client *client, char **params, int nparams)
 	t_list	*chans;
 	char	*chan;
 
+	if (!client->is_registered)
+		return (0);
 	chan = NULL;
 	if (nparams < 1)
 		return (ERR_NEEDMOREPARAM);

@@ -7,6 +7,8 @@
 */
 int	irc_user(struct s_client *c, char **params, int nparams)
 {
+	if (!c->nickname[0])
+		return (0);
 	if (nparams < 4)
 	{
 		c->server->queuecode(c->server, c, ERR_NEEDMOREPARAM);
@@ -20,5 +22,6 @@ int	irc_user(struct s_client *c, char **params, int nparams)
 	set_realname(c, params[3]);
 	LOG(LOGDEBUG, "Realname set to %s", c->realname);
 	c->server->queuecode(c->server, c, RPL_WELCOME);
+	c->is_registered = 1;
 	return (0);
 }
