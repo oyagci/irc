@@ -12,7 +12,7 @@ int	loop(struct s_server *self)
 		self->accept(self);
 		self->read(self);
 		self->send(self);
-		self->pinginactive(self);
+		// self->pinginactive(self);
 	}
 	return (0);
 }
