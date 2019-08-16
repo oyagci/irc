@@ -58,7 +58,8 @@ int		client_connect(struct s_client *const self,
 					   struct s_client_msg const *const cmd)
 {
 	int					portno;
-	struct sockaddr_in	serv_addr;
+	struct addrinfo		*server = NULL;
+	struct addrinfo		hints;
 
 	if (self->servsock > 0)
 	{
@@ -69,21 +70,28 @@ int		client_connect(struct s_client *const self,
 
 	LOG(LOGDEBUG, "Opening connection to %s:%d", cmd->params[0], portno);
 
-	ft_memset(&serv_addr, 0, sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(portno);
-	if (-1 == (self->servsock = socket(AF_INET, SOCK_STREAM, 0)))
+	ft_bzero(&hints, sizeof(hints));
+	hints.ai_family = AF_INET;
+	hints.ai_socktype = SOCK_STREAM;
+
+	int ret = 0;
+	if ((ret = getaddrinfo(cmd->params[0], cmd->params[1], &hints, &server)) != 0)
+	{
+		LOG(LOGERR, "getaddrinfo: %s", gai_strerror(ret));
+		exit(1);
+		return (0);
+	}
+	if (-1 == (self->servsock = socket(server->ai_family, server->ai_socktype, server->ai_protocol)))
 	{
 		LOG(LOGERR, "Could not create socket (%s)", strerror(errno));
 		exit(EXIT_FAILURE);
 	}
-	if (connect(self->servsock, (struct sockaddr *)&serv_addr,
-				sizeof(serv_addr)) < 0)
+	if (connect(self->servsock, server->ai_addr, server->ai_addrlen) < 0)
 	{
 		LOG(LOGERR, "Could not connect\n");
-		exit(EXIT_FAILURE);
+		printf(" * Could not connect to %s:%d (%s)\n", cmd->params[0], portno, strerror(errno));
 	}
-	return (-1);
+	return (0);
 }
 
 void	client_del_msg(void *content, size_t size)
