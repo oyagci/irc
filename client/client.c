@@ -67,7 +67,7 @@ int		client_connect(struct s_client *const self,
 	}
 	portno = atoi(cmd->params[1]);
 
-	LOG(LOGDEBUG, "Opening connection to %s:%d\n", cmd->params[0], portno);
+	LOG(LOGDEBUG, "Opening connection to %s:%d", cmd->params[0], portno);
 
 	ft_memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
