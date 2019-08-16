@@ -31,7 +31,9 @@ void	set_timeout(struct s_client *c, unsigned sec)
 
 	clock_gettime(CLOCK_REALTIME, &t);
 	c->timeout.tv_sec = t.tv_sec + sec;
-	c->timeout.tv_nsec = t.tv_nsec;
+	c->timeout.tv_nsec = 0;
+	LOG(LOGDEBUG, "Timeout set to %ld (current time is %ld)",
+		c->timeout.tv_sec, t.tv_sec);
 }
 
 int		pinginactive(struct s_server *self)
@@ -51,7 +53,7 @@ int		pinginactive(struct s_server *self)
 		{
 			irc_ping(client, 0, 0);
 			clock_gettime(CLOCK_REALTIME, &client->ping);
-			client->ping.tv_sec += 10;
+			client->ping.tv_sec += 20;
 			set_timeout(client, 10);
 		}
 		clients = clients->next;
