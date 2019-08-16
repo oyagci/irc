@@ -48,6 +48,7 @@ CLIENT_SOURCES := \
 	client/client.c \
 	client/parse_input.c \
 	client/channels.c \
+	client/client_run.c \
 	logger.c \
 
 SERVER_OBJS := $(SERVER_SOURCES:.c=.o)

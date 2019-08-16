@@ -98,4 +98,5 @@ struct s_event_list
 struct s_client_msg	*parse_input(struct s_client *const self, char const *input);
 char				*format_message(struct s_client_msg *msg);
 
+int					client_run(struct s_client *self);
 #endif
