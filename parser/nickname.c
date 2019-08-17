@@ -1,4 +1,4 @@
-#include "server.h"
+#include "parser.h"
 
 int			nickname(char const *input, char **buf)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server.h"
+#include "parser.h"
 #include <libft.h>
 #include <stdlib.h>
 #include <stdio.h>

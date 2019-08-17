@@ -1,4 +1,4 @@
-#include "server.h"
+#include "parser.h"
 
 struct s_servername	*servername(char *input)
 {
