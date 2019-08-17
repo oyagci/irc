@@ -72,11 +72,13 @@ int		read_clients_command(struct s_server *const self)
 			{
 				ii = 0;
 				ft_memset(buf, 0, 512);
-				while (ii < 512 && buf[ii] != 0x0d)
+				while (ii < 512)
 				{
 					if (cbuf_get(client->cbuf, &data) < 0)
 						break ;
 					buf[ii] = data;
+					if (buf[ii] == '\n')
+						break ;
 					ii += 1;
 				}
 				self->exec_cmd(client, buf);
