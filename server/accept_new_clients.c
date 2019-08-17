@@ -40,8 +40,7 @@ int		accept_new_clients(struct s_server *server)
 		client->ping.tv_sec += 10;
 
 		client->raw_buffer = ft_memalloc(sizeof(char) * 2048);
-		client->cbuf = ft_memalloc(sizeof(*client->cbuf));
-		cbuf_init(client->cbuf, client->raw_buffer, 2048);
+		client->cbuf = cbuf_init(client->raw_buffer, 2048);
 
 		elem = ft_lstnew(NULL, 0);
 		elem->content = client;

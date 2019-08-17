@@ -16,7 +16,7 @@ struct	s_cbuf
 typedef struct s_cbuf	t_cbuf;
 typedef t_cbuf *		t_cbuf_handle;
 
-void			cbuf_init(t_cbuf_handle cbuf, uint8_t *buffer, size_t size);
+t_cbuf_handle	cbuf_init(uint8_t *buffer, size_t size);
 void			cbuf_free(t_cbuf_handle cbuf);
 void			cbuf_reset(t_cbuf_handle cbuf);
 void			cbuf_put(t_cbuf_handle cbuf, uint8_t data);

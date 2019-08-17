@@ -12,7 +12,8 @@ SOURCES_RAW	= cbuf_capacity.c \
 			  cbuf_put.c \
 			  cbuf_reset.c \
 			  cbuf_size.c \
-			  cbuf_get.c
+			  cbuf_get.c \
+			  cbuf_free.c
 OBJECTS_RAW	= $(SOURCES_RAW:.c=.o)
 DEPS_RAW	= cbuf.h
 

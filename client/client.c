@@ -439,8 +439,7 @@ void	client_init(struct s_client *self)
 	self->eventmotd = &eventmotd;
 
 	self->raw_buffer = malloc(sizeof(char) * 2048);
-	self->cbuf = malloc(sizeof(*self->cbuf));
-	cbuf_init(self->cbuf, self->raw_buffer, 2048);
+	self->cbuf = cbuf_init(self->raw_buffer, 2048);
 }
 
 int	main(void)
