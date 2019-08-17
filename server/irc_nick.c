@@ -1,5 +1,6 @@
 #include "server.h"
 #include "logger.h"
+#include <bsd/string.h>
 
 int	irc_nick(struct s_client *c, char **params, int nparams)
 {

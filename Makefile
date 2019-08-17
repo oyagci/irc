@@ -75,17 +75,17 @@ CLIENT_HEADERS := \
 	client/channels.h
 
 SERVER_INCLUDES := -I server -I $(shell pwd)
-CLIENT_INCLUDES := -I client
+CLIENT_INCLUDES := -I client -I cbuf/
 
 .PHONY: all clean fclean
 
 all: $(SERVER_NAME) $(CLIENT_NAME)
 
 $(SERVER_NAME): $(SERVER_OBJS) $(SERVER_HEADERS) bin
-	$(CC) $(SERVER_OBJS) -o $@ -L libft -lft -g
+	$(CC) $(SERVER_OBJS) -o $@ -L libft -L cbuf -lft -g -lbsd -lcbuf
 
 $(CLIENT_NAME): $(CLIENT_OBJS) $(CLIENT_HEADERS) bin
-	$(CC) $(CLIENT_OBJS) -o $@ -g -L libft -lft -g
+	$(CC) $(CLIENT_OBJS) -o $@ -g -L libft -L cbuf -lft -g -lcbuf
 
 %.o: %.c $(SERVER_HEADERS) $(CLIENT_HEADERS)
 	$(CC) $(SERVER_INCLUDES) $(CLIENT_INCLUDES) $(CFLAGS) $< -c -o $@ -I libft/includes -g

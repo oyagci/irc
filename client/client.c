@@ -127,6 +127,7 @@ int		client_sendmsgs(struct s_client *const self)
 		str = self->msgs->content;
 		len = ft_strlen(str);
 		ret = send(self->servsock, str, ft_strlen(str), 0);
+		LOG(LOGDEBUG, "sending '%s'", str);
 		if (ret == len)
 		{
 			next = self->msgs->next;
