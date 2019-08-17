@@ -1,0 +1,76 @@
+CC			:= gcc
+CFLAGS		:= -Wall -Wextra -Werror -g
+
+SOURCES		:= \
+	../parser/message.c \
+	../parser/prefix.c \
+	../parser/command.c \
+	../parser/crlf.c \
+	../parser/params.c \
+	../parser/channels.c \
+	../parser/digit.c \
+	../parser/letter.c\
+	../parser/special.c \
+	../parser/msgto.c \
+	../parser/chanstr.c \
+	../parser/nickname.c \
+	server.c \
+	set_fds.c \
+	accept_new_clients.c \
+	server_queue.c \
+	nick.c \
+	set_usermode.c \
+	irc_join.c \
+	irc_nick.c \
+	irc_part.c \
+	irc_pass.c \
+	irc_privmsg.c \
+	irc_user.c \
+	irc_who.c \
+	irc_ping.c \
+	irc_pong.c \
+	server_channel.c \
+	server_loop.c \
+	server_init.c \
+	channel.c \
+	notify.c \
+	pinginactive.c \
+	quit.c \
+	../logger.c
+HEADERS		:= \
+	server.h \
+	../logger.h \
+	../reply_codes.h \
+	../parser/parser.h
+OBJS 		:= $(SOURCES:.c=.o)
+OUTDIR		:= ../bin
+INCLUDES	:= -I./ -I../ -I../libft/includes -I../cbuf/
+LIBS		:= -L../libft -lft -L../cbuf -lcbuf
+
+NAME		:= $(OUTDIR)/server
+
+all: $(NAME)
+
+$(NAME): libcbuf libft $(OBJS) $(HEADERS)
+	@mkdir -p $(OUTDIR)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS) -lbsd
+
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) $(INCLUDES) $< -c -o $@
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+	rmdir $(OUTDIR)
+
+re: fclean all
+
+libcbuf: ../cbuf/libcbuf.a
+
+../cbuf/libcbuf.a:
+	make -C ../cbuf
+
+libft: ../libft/libft.a
+	make -C ../libft

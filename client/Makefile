@@ -1,0 +1,59 @@
+CC			:= gcc
+CFLAGS		:= -Wall -Wextra -Werror -g
+
+SOURCES		:= \
+	../parser/message.c \
+	../parser/prefix.c \
+	../parser/command.c \
+	../parser/crlf.c \
+	../parser/params.c \
+	../parser/nickname.c \
+	../parser/digit.c \
+	../parser/letter.c\
+	../parser/special.c \
+	client.c \
+	parse_input.c \
+	channels.c \
+	client_run.c \
+	../logger.c
+
+HEADERS		:= \
+	client.h \
+	channels.h \
+	../parser/parser.h \
+	../reply_codes.h \
+	../logger.h
+
+OBJS 		:= $(SOURCES:.c=.o)
+OUTDIR		:= ../bin
+INCLUDES	:= -I./ -I../ -I../libft/includes -I../cbuf/
+LIBS		:= -L../libft -lft -L../cbuf -lcbuf
+
+NAME		:= $(OUTDIR)/client
+
+all: $(NAME)
+
+$(NAME): libcbuf libft $(OBJS) $(HEADERS)
+	@mkdir -p $(OUTDIR)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS) -lbsd
+
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) $(INCLUDES) $< -c -o $@
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+	rmdir $(OUTDIR)
+
+re: fclean all
+
+libcbuf: ../cbuf/libcbuf.a
+
+../cbuf/libcbuf.a:
+	make -C ../cbuf
+
+libft: ../libft/libft.a
+	make -C ../libft
+
