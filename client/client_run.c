@@ -33,7 +33,6 @@ int		read_notif(struct s_client *self)
 		ft_memset(buf, 0, 512);
 		if ((ret = recv(self->servsock, buf, 512, 0)) > 0)
 		{
-			LOG(LOGDEBUG, "Received %d bytes", ret);
 			i = 0;
 			complete = 0;
 			while (i < ret)
@@ -50,11 +49,13 @@ int		read_notif(struct s_client *self)
 
 				i = 0;
 				ft_memset(buf2, 0, 512);
-				while (i < 512 && buf2[i] != 0x0d)
+				while (i < 512)
 				{
 					if (cbuf_get(self->cbuf, &data) < 0)
 						break ;
 					buf2[i] = data;
+					if (buf2[i] == '\n')
+						break ;
 					i += 1;
 				}
 				self->event(self, buf2);
