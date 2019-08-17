@@ -29,16 +29,8 @@
 
 int	eventmotd(struct s_client *const self, struct s_message const *const cmd)
 {
-	int	ii;
 	(void)self;
-
-	LOG(LOGDEBUG, "MOTD");
-	ii = 0;
-	while (cmd->params->param[ii] && ii < 14)
-	{
-		printf("%s\n", cmd->params->param[ii]);
-		ii++;
-	}
+	printf("%s\n", cmd->params->param[cmd->params->nparam - 1]);
 	return (0);
 }
 
@@ -320,7 +312,6 @@ int		client_event(struct s_client *self, char const *const data)
 		{ .s = "001", .f = self->rpl_welcome },
 		{ .s = "372", .f = self->eventmotd },
 		{ .s = "375", .f = self->eventmotd },
-		{ .s = "376", .f = self->eventmotd },
 	};
 	size_t				ii;
 
