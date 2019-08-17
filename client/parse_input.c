@@ -11,7 +11,7 @@ enum e_client_cmd	set_command(char const **inputp, struct s_client_msg *buf)
 		{ .str = "join", .cmd = CMD_JOIN, .nparam = 1 },
 		{ .str = "leave", .cmd = CMD_LEAVE, .nparam = 1 },
 		{ .str = "msg", .cmd = CMD_MSG, .nparam = 2 },
-		{ .str = "disconnect", .cmd = CMD_DISCONNECT, .nparam = 0 },
+		{ .str = "quit", .cmd = CMD_QUIT, .nparam = 1 },
 		{ .str = "who", .cmd = CMD_WHO, .nparam = 0 },
 	};
 	char const					*input;

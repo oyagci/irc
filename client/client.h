@@ -14,7 +14,7 @@ enum e_client_cmd
 {
 	CMD_NONE,
 	CMD_CONNECT,
-	CMD_DISCONNECT,
+	CMD_QUIT,
 	CMD_JOIN,
 	CMD_LEAVE,
 	CMD_MSG,
@@ -103,4 +103,6 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 char				*format_message(struct s_client_msg *msg);
 
 int					client_run(struct s_client *self);
+
+int		quit(struct s_client *const self, struct s_client_msg const *const msg);
 #endif

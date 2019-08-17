@@ -15,6 +15,7 @@ SOURCES		:= \
 	parse_input.c \
 	channels.c \
 	client_run.c \
+	quit.c \
 	../logger.c
 
 HEADERS		:= \

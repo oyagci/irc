@@ -119,7 +119,6 @@ int		client_sendmsgs(struct s_client *const self)
 		str = self->msgs->content;
 		len = ft_strlen(str);
 		ret = send(self->servsock, str, ft_strlen(str), 0);
-		LOG(LOGDEBUG, "sending '%s'", str);
 		if (ret == len)
 		{
 			next = self->msgs->next;
@@ -234,6 +233,7 @@ int		client_execute_command(struct s_client *const self,
 		{ .cmd = CMD_USER, .f = self->user },
 		{ .cmd = CMD_LEAVE, .f = self->leave },
 		{ .cmd = CMD_WHO, .f = self->who },
+		{ .cmd = CMD_QUIT, .f = self->quit },
 	};
 	size_t					ii;
 
@@ -421,6 +421,7 @@ void	client_init(struct s_client *self)
 	self->user = &client_user;
 	self->leave = &client_leave;
 	self->who = &client_who;
+	self->quit = &quit;
 
 	self->eventjoin = &eventjoin;
 
