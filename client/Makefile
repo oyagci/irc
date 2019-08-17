@@ -16,6 +16,20 @@ SOURCES		:= \
 	channels.c \
 	client_run.c \
 	quit.c \
+	event.c \
+	eventmotd.c \
+	eventjoin.c \
+	eventpart.c \
+	eventping.c \
+	eventprivmsg.c \
+	messages.c \
+	init.c \
+	connect.c \
+	nick.c \
+	user.c \
+	leave.c \
+	who.c \
+	join.c \
 	../logger.c
 
 HEADERS		:= \

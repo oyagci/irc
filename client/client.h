@@ -54,7 +54,7 @@ struct s_client
 	struct s_chan		*channel;
 	char				nickname[9];
 	t_cbuf_handle		cbuf;
-	uint8_t				*raw_buffer;
+	uint8_t				raw_buffer[2048];
 
 	/*
 	** Methods
@@ -105,4 +105,34 @@ char				*format_message(struct s_client_msg *msg);
 int					client_run(struct s_client *self);
 
 int		quit(struct s_client *const self, struct s_client_msg const *const msg);
+int		eventmotd(struct s_client *const self, struct s_message const *const cmd);
+int		eventpart(struct s_client *const self, struct s_message const *const cmd);
+int		eventjoin(struct s_client *const self, struct s_message const *const m);
+int		eventprivmsg(struct s_client *const self, struct s_message const *const m);
+int		eventping(struct s_client *const self, struct s_message const *const msg);
+
+void	client_init(struct s_client *self);
+int		client_sendmsgs(struct s_client *const self);
+int		client_queuemsg(struct s_client *const self, char *msg);
+int		client_message(struct s_client *const self,
+					   struct s_client_msg const *const cmd);
+
+int		client_event(struct s_client *self, char const *const data);
+int		client_leave(struct s_client *const self,
+					 struct s_client_msg const *const cmd);
+int		client_user(struct s_client *const self,
+					struct s_client_msg const *const cmd);
+int		client_join(struct s_client *const self,
+					struct s_client_msg const *const cmd);
+int		client_execute_command(struct s_client *const self,
+							   struct s_client_msg const *const cmd);
+int		client_who(struct s_client *const self,
+				   struct s_client_msg const *const cmd);
+int		client_nick(struct s_client *const self,
+					struct s_client_msg const *const cmd);
+int		client_connect(struct s_client *const self,
+					   struct s_client_msg const *const cmd);
+int		rpl_welcome(struct s_client *const self,
+					struct s_message const *const msg);
+
 #endif
