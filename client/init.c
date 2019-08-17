@@ -33,18 +33,25 @@ void	init_methods(struct s_client *self)
 	self->parse_input = &parse_input;
 }
 
-void	client_init(struct s_client *self)
+int		client_init(struct s_client *self)
 {
-	if (!self)
-		return ;
-	self->servsock = 0;
-	self->channel = 0;
-	self->msgs = NULL;
-	ft_memset(self->nickname, 0, 9);
-	channels_init(&self->channels);
-	init_methods(self);
-	init_events(self);
-	init_messages(self);
-	ft_bzero(self->raw_buffer, 2048);
-	self->cbuf = cbuf_init(self->raw_buffer, 2048);
+	int	ret;
+
+	ret = -1;
+	if (self)
+	{
+		self->servsock = 0;
+		self->channel = 0;
+		self->msgs = NULL;
+		ft_memset(self->nickname, 0, 9);
+		channels_init(&self->channels);
+		init_methods(self);
+		init_events(self);
+		init_messages(self);
+		ft_bzero(self->raw_buffer, 2048);
+		self->cbuf = cbuf_init(self->raw_buffer, 2048);
+		if (!self->cbuf)
+			ret = -1;
+	}
+	return (ret);
 }

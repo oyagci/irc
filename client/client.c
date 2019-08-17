@@ -75,7 +75,11 @@ int	main(void)
 {
 	struct s_client		client;
 
-	client_init(&client);
+	if (client_init(&client) < 0)
+	{
+		LOG(LOGERR, "Could not initialize client!");
+		return (EXIT_FAILURE);
+	}
 	client.run(&client);
 	close(client.servsock);
 	return (0);
