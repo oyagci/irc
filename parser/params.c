@@ -72,19 +72,16 @@ struct s_params		*params(char const *input)
 			p->param[j] = extract_param(input + i);
 			i += ft_strlen(p->param[j]);
 			j += 1;
+			p->nparam += 1;
 		}
 		if (input[i] == ' ')
 		{
 			i += 1;
-			if (input[i] == ':')
+			if (input[i] == ':' || j == 14)
 			{
-				i += 1;
+				input[i] == ':' ? (i++) : 0;
 				p->param[j] = extract_trailing(input + i);
-				i += ft_strlen(p->param[j]);
-			}
-			else if (j == 14)
-			{
-				p->param[j] = extract_trailing(input + i);
+				p->nparam += 1;
 				i += ft_strlen(p->param[j]);
 			}
 		}

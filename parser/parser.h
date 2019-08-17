@@ -40,6 +40,7 @@ struct s_params
 {
 	char	*param[15];
 	size_t	len;
+	size_t	nparam;
 };
 
 struct s_message	*message(char const *input);
