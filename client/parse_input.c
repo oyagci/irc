@@ -100,34 +100,3 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 	}
 	return (msg);
 }
-
-char				*format_message(struct s_client_msg *msg)
-{
-	char	*strmsg;
-
-	strmsg = ft_strnew(512);
-	if (msg->cmd == CMD_NICK)
-	{
-		ft_strlcat(strmsg, "NICK ", 512);
-		ft_strlcat(strmsg, msg->params[0], 512);
-	}
-	else if (msg->cmd == CMD_MSG)
-	{
-		ft_strlcat(strmsg, "PRIVMSG ", 512);
-		ft_strlcat(strmsg, msg->params[0], 512);
-		ft_strlcat(strmsg, msg->params[1], 512);
-	}
-	else if (msg->cmd == CMD_JOIN)
-	{
-		ft_strlcat(strmsg, "JOIN ", 512);
-		ft_strlcat(strmsg, msg->params[0], 512);
-	}
-	else if (msg->cmd == CMD_WHO)
-	{
-		ft_strlcat(strmsg, "WHO", 512);
-		ft_strlcat(strmsg, " ", 512);
-		ft_strlcat(strmsg, msg->params[0], 512);
-	}
-	ft_strlcat(strmsg, CRLF, 512);
-	return (strmsg);
-}
