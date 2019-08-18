@@ -37,7 +37,7 @@ int		client_init(struct s_client *self)
 {
 	int	ret;
 
-	ret = -1;
+	ret = 0;
 	if (self)
 	{
 		self->servsock = 0;

@@ -80,7 +80,9 @@ int	main(void)
 		LOG(LOGERR, "Could not initialize client!");
 		return (EXIT_FAILURE);
 	}
-	client.run(&client);
-	close(client.servsock);
+	if (client.run(&client) < 0)
+	{
+		return (EXIT_FAILURE);
+	}
 	return (0);
 }
