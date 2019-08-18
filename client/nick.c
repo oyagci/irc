@@ -25,6 +25,10 @@ int		client_nick(struct s_client *const self,
 	ft_strlcat(msg, CRLF, 513);
 	ft_memcpy(self->nickname, cmd->params[0], 9);
 	self->queuemsg(self, msg);
-	self->user(self, &usercmd);
+	if (!self->is_registered)
+	{
+		self->user(self, &usercmd);
+		self->is_registered = 1;
+	}
 	return (0);
 }

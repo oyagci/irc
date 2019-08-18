@@ -45,7 +45,8 @@ struct s_client_msg
 
 struct s_client
 {
-	int					is_running;
+	short				is_running;
+	short				is_registered;
 	int					servsock;
 	t_list				*msgs;
 	fd_set				readfds;
