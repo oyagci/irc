@@ -85,18 +85,15 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 			input++;
 		set_params(input, msg);
 	}
-	else
+	else if (self->channel)
 	{
-		if (self->channel)
-		{
-			msg->cmd = CMD_MSG;
-			msg->nparam = 2;
-			msg->params = ft_memalloc(sizeof(char *) * 2);
-			msg->params[0] = ft_strndup(self->channel->name, 50);
-			msg->params[1] = ft_strdup(input);
-		}
-		else
-			printf(" * Not in a channel (/join <channel>)\n");
+		msg->cmd = CMD_MSG;
+		msg->nparam = 2;
+		msg->params = ft_memalloc(sizeof(char *) * 2);
+		msg->params[0] = ft_strndup(self->channel->name, 50);
+		msg->params[1] = ft_strdup(input);
 	}
+	else
+		printf(" * Not in a channel (/join <channel>)\n");
 	return (msg);
 }
