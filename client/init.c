@@ -43,6 +43,7 @@ int		client_init(struct s_client *self)
 		self->servsock = 0;
 		self->channel = 0;
 		self->msgs = NULL;
+		self->is_registered = 0;
 		ft_memset(self->nickname, 0, 9);
 		channels_init(&self->channels);
 		init_methods(self);

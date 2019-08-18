@@ -65,7 +65,8 @@ struct s_client
 	int (*queuemsg)(struct s_client *const, char *msg);
 	int	(*sendmsgs)(struct s_client *const);
 	int	(*event)(struct s_client *const, char const *const event);
-	struct s_client_msg	*(*parse_input)(struct s_client *const, char const *input);
+	struct s_client_msg	*(*parse_input)(struct s_client *const,
+		char const *input);
 
 	/*
 	** IRC Commands
@@ -100,17 +101,22 @@ struct s_event_list
 	int		(*f)(struct s_client *const, struct s_message const *const);
 };
 
-struct s_client_msg	*parse_input(struct s_client *const self, char const *input);
+struct s_client_msg	*parse_input(struct s_client *const self,
+									char const *input);
 char				*format_message(struct s_client_msg *msg);
 
 int					client_run(struct s_client *self);
 
 int		quit(struct s_client *const self, struct s_client_msg const *const msg);
-int		eventmotd(struct s_client *const self, struct s_message const *const cmd);
-int		eventpart(struct s_client *const self, struct s_message const *const cmd);
+int		eventmotd(struct s_client *const self,
+					struct s_message const *const cmd);
+int		eventpart(struct s_client *const self,
+					struct s_message const *const cmd);
 int		eventjoin(struct s_client *const self, struct s_message const *const m);
-int		eventprivmsg(struct s_client *const self, struct s_message const *const m);
-int		eventping(struct s_client *const self, struct s_message const *const msg);
+int		eventprivmsg(struct s_client *const self,
+						struct s_message const *const m);
+int		eventping(struct s_client *const self,
+					struct s_message const *const msg);
 
 int		client_init(struct s_client *self);
 int		client_sendmsgs(struct s_client *const self);
