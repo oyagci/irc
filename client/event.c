@@ -18,7 +18,7 @@ int		client_event(struct s_client *self, char const *const data)
 	msg = message(data);
 	if (!msg)
 	{
-		printf("Invalid command\n");
+		printf("Invalid command: \n  -> %s\n", data);
 		return (0);
 	}
 	ii = 0;

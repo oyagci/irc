@@ -39,7 +39,10 @@ static int	do_buffered_event(struct s_client *client)
 	while (i < 512)
 	{
 		if (cbuf_get(client->cbuf, &data) < 0)
+		{
+			LOG(LOGDEBUG, "cbuf_get < 0");
 			break ;
+		}
 		buf[i] = data;
 		if (buf[i] == '\n')
 			break ;
@@ -72,8 +75,11 @@ static int	bufferise_events(struct s_client *client, char *buf, int buflen)
 	while (ii < buflen)
 	{
 		/* TODO: Handle full buffer */
-		if (cbuf_put2(client->cbuf, buf[ii] < 0))
+		if (cbuf_put2(client->cbuf, buf[ii]) < 0)
+		{
+			LOG(LOGDEBUG, "buffer full");
 			return (-1);
+		}
 		if (buf[ii] == '\n')
 			nevent += 1;
 		ii++;
