@@ -78,7 +78,7 @@ static int	bufferise_events(struct s_client *client, char *buf, int buflen)
 			nevent += 1;
 		ii++;
 	}
-	return (0);
+	return (nevent);
 }
 
 static int	read_notif(struct s_client *self)
