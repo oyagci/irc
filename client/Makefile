@@ -48,7 +48,7 @@ NAME		:= $(OUTDIR)/client
 
 all: $(NAME)
 
-$(NAME): libcbuf libft $(OBJS) $(HEADERS)
+$(NAME): ../cbuf/libcbuf.a ../libft/libft.a $(OBJS) $(HEADERS)
 	@mkdir -p $(OUTDIR)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS) -lbsd
 
@@ -64,11 +64,9 @@ fclean: clean
 
 re: fclean all
 
-libcbuf: ../cbuf/libcbuf.a
-
 ../cbuf/libcbuf.a:
 	make -C ../cbuf
 
-libft: ../libft/libft.a
+../libft/libft.a:
 	make -C ../libft
 
