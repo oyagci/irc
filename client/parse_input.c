@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "logger.h"
 #include "libft.h"
+#include <stdlib.h>
 
 enum e_client_cmd	set_command(char const **inputp, struct s_client_msg *buf)
 {
@@ -37,7 +38,7 @@ enum e_client_cmd	set_command(char const **inputp, struct s_client_msg *buf)
 	return (CMD_NONE);
 }
 
-int					set_params(char const *input, struct s_client_msg *buf)
+size_t				set_params(char const *input, struct s_client_msg *buf)
 {
 	int		start;
 	int		end;
@@ -56,23 +57,25 @@ int					set_params(char const *input, struct s_client_msg *buf)
 			end = start;
 			while (input[end] != ' ' && input[end] != '\0')
 				end++;
+			/* TODO: Replace alloc by static */
 			buf->params[ii] = ft_strndup(input + start, end - start);
 			if (input[end] == ' ')
 				end++;
 			start = end;
 			ii += 1;
 		}
-		buf->params[ii] = ft_strdup(input + start);
+		if (input[start] != 0) {
+			buf->params[ii] = ft_strdup(input + start);
+			ii += 1;
+		}
 	}
-	return (0);
+	return (ii);
 }
 
 struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 {
 	struct s_client_msg	*msg;
 
-	if (!input)
-		return (0);
 	msg = ft_memalloc(sizeof(*msg));
 	if (!msg)
 		return (0);
@@ -83,7 +86,11 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 		set_command(&input, msg);
 		if (*input == ' ')
 			input++;
-		set_params(input, msg);
+		if (set_params(input, msg) < msg->nparam) {
+			printf("Not enough parameters given (expected %ld)\n", msg->nparam);
+			free(msg);
+			return (0);
+		}
 	}
 	else if (self->channel)
 	{
