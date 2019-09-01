@@ -1,6 +1,5 @@
 #include "server.h"
 #include "logger.h"
-#include <bsd/string.h>
 
 int	irc_nick(struct s_client *c, char **params, int nparams)
 {
@@ -25,7 +24,7 @@ int	irc_nick(struct s_client *c, char **params, int nparams)
 		return (ERR_ERRONEUSNICKNAME);
 	}
 	LOG(LOGDEBUG, "NICK %.9s -> %.9s", c->nickname, nick);
-	strlcpy(c->nickname, nick, NICK_SIZE);
+	strncpy(c->nickname, nick, NICK_SIZE);
 	nickadd(nick); /* TODO */
 	return (0);
 }

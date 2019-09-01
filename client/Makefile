@@ -50,7 +50,7 @@ all: $(NAME)
 
 $(NAME): ../cbuf/libcbuf.a ../libft/libft.a $(OBJS) $(HEADERS)
 	@mkdir -p $(OUTDIR)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS) -lbsd
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS)
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) $(INCLUDES) $< -c -o $@
