@@ -39,7 +39,7 @@ struct s_cmd_params
 struct s_client_msg
 {
 	enum e_client_cmd	cmd;
-	char				**params;
+	char const			*params[15];
 	size_t				nparam;
 };
 

@@ -46,7 +46,6 @@ size_t				set_params(char const *input, struct s_client_msg *buf)
 
 	if (*input == 0)
 		return (0);
-	buf->params = ft_memalloc(sizeof(char *) * buf->nparam);
 	start = 0;
 	end = 0;
 	ii = 0;
@@ -96,9 +95,8 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 	{
 		msg->cmd = CMD_MSG;
 		msg->nparam = 2;
-		msg->params = ft_memalloc(sizeof(char *) * 2);
-		msg->params[0] = ft_strndup(self->channel->name, 50);
-		msg->params[1] = ft_strdup(input);
+		msg->params[0] = self->channel->name;
+		msg->params[1] = input;
 	}
 	else
 		printf(" * Not in a channel (/join <channel>)\n");

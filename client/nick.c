@@ -3,12 +3,11 @@
 int		client_nick(struct s_client *const self,
 					struct s_client_msg const *const cmd)
 {
-	char	*msg;
-	char	*params[] = { "TODO", "*", "*", "Todo TODO" };
+	char				*msg;
 	struct s_client_msg	usercmd = {
 		.cmd = CMD_USER,
 		.nparam = 4,
-		.params = params,
+		.params = { "TODO", "*", "*", "Todo TODO" },
 	};
 
 	if (!self->servsock)

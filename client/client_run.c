@@ -4,7 +4,12 @@
 #include <cbuf.h>
 #include "logger.h"
 #include <errno.h>
+#include "libft.h"
+#include <stdlib.h>
 
+/*
+** Read user input from stdin
+*/
 static int	read_input(struct s_client *self)
 {
 	char				buf[512 + 1];
@@ -14,6 +19,7 @@ static int	read_input(struct s_client *self)
 
 	ret = 0;
 	buf[512] = 0;
+	ft_memset(buf, 0, sizeof(buf) / sizeof(*buf));
 	if (FD_ISSET(0, &self->readfds))
 	{
 		ret = read(0, buf, 512);
