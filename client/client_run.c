@@ -27,6 +27,8 @@ static int	read_input(struct s_client *self)
 		{
 			if ((c = ft_strchr(buf, '\n')))
 				*c = '\0';
+			if (ft_strlen(buf) == 0)
+				return (0);
 			cmd = self->parse_input(self, buf);
 			if (cmd) {
 				self->exec_cmd(self, cmd);
