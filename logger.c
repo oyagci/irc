@@ -25,7 +25,7 @@ void	printprefix(int level)
 		prefix = PREFIX_ERR;
 	else
 		prefix = PREFIX_DEFAULT;
-	printf("%s ", prefix);
+	fprintf(stderr, "%s ", prefix);
 }
 
 void	msglog(int level, char *s)

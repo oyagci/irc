@@ -85,7 +85,8 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 		set_command(&input, msg);
 		if (*input == ' ')
 			input++;
-		if (set_params(input, msg) < msg->nparam) {
+		if (set_params(input, msg) < msg->nparam)
+		{
 			printf("Not enough parameters given (expected %ld)\n", msg->nparam);
 			free(msg);
 			return (0);

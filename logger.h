@@ -30,10 +30,10 @@
 	do {\
 		if (lvl >= LOGLEVEL) {\
 			printprefix(lvl);\
-			printf(__VA_ARGS__);\
-			printf("\n");\
+			fprintf(stderr, __VA_ARGS__);\
+			fprintf(stderr, "\n");\
 		}\
-	} while (0);
+	} while (0)
 
 void	msglog(int level, char *s);
 
