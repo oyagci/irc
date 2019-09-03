@@ -157,6 +157,13 @@ static char	*server_format_reply(struct s_client const *const c, int reply_code)
 				ft_strlcat(reply, " ", 512);
 				ft_strlcat(reply, "Unknown command", 512);
 			}
+			else if (reply_code == ERR_NICKNAMEINUSE)
+			{
+				ft_strlcat(reply, ":irc.42.fr ", 512);
+				ft_strlcat(reply, retstr, 512);
+				ft_strlcat(reply, " ", 512);
+				ft_strlcat(reply, "Nickname is in use", 512);
+			}
 			else
 				ft_strdel(&reply);
 			free(retstr);
