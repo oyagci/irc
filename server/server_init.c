@@ -33,6 +33,7 @@ int			server_init(struct s_server *server, unsigned int port)
 
 	ft_memset(server, 0, sizeof(*server));
 	init_methods(server);
+	nickinit(&server->nicks);
 	if ((server->sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
 		return (-1);
 	ft_memset(&serv_addr, 0, sizeof(serv_addr));

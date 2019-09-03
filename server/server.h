@@ -18,6 +18,7 @@
 # include "libft/includes/libft.h"
 # include "parser/parser.h"
 # include "reply_codes.h"
+# include "nick.h"
 # include <cbuf.h>
 
 # define COMMAND_LENGTH		512
@@ -83,6 +84,7 @@ struct	s_server
 	t_list				*channels;
 	t_list				*clients;
 	t_list				*msgqueue;
+	t_nicktable			nicks;
 	int					(*run)(struct s_server *const self);
 	int					(*pinginactive)(struct s_server *self);
 	int					(*set_fds)(struct s_server *const self);
@@ -154,8 +156,6 @@ int					irc_pong(struct s_client *client, char **params,
 						int nparam);
 
 /* TODO: Handle nick collision */
-int					nickavail(char *nick);
-int					nickadd(char *nick);
 
 int					set_usermode(struct s_client *c, int mode);
 int					set_realname(struct s_client *c, char *rn);
