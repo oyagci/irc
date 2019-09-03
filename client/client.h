@@ -9,6 +9,7 @@
 # include <cbuf.h>
 
 # define CRLF	"\x0d\x0a"
+# define SNICK	9
 
 enum e_client_cmd
 {
@@ -53,7 +54,7 @@ struct s_client
 	fd_set				writefds;
 	struct s_channels	channels;
 	struct s_chan		*channel;
-	char				nickname[9];
+	char				nickname[SNICK];
 	t_cbuf_handle		cbuf;
 	uint8_t				raw_buffer[2048];
 
