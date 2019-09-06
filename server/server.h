@@ -196,4 +196,10 @@ int					pinginactive(struct s_server *self);
 int					quit(struct s_server *self, struct s_client *client,
 						char const *const msg);
 
+typedef int			(*t_rpl_handle)(char *, size_t, struct s_client const *);
+
+int					rpl_welcome(char *buf, size_t buflen, struct s_client const *c);
+int					err_unknowncmd(char *buf, size_t buflen, struct s_client const *c);
+int					err_nickinuse(char *buf, size_t buflen, struct s_client const *c);
+
 #endif

@@ -128,48 +128,23 @@ int			send_queued_replies(struct s_server *const server)
 
 static char	*server_format_reply(struct s_client const *const c, int reply_code)
 {
-	char	*reply;
-	char	*retstr;
+	t_rpl_handle const	handles[]  = { rpl_welcome, err_unknowncmd,
+		err_unknowncmd, err_nickinuse };
+	int const			replies[] = { RPL_WELCOME };
+	char				*reply;
+	size_t				i;
 
-	if (reply_code == 0)
-		return (NULL);
 	reply = NULL;
+	i = 0;
 	if (reply_code > 0)
 	{
 		reply = ft_strnew(512);
-		retstr = irc_repcode_itoa(reply_code);
-		if (retstr)
+		while (i < sizeof(handles) / sizeof(*handles))
 		{
-			if (reply_code == RPL_WELCOME)
-			{
-				ft_strlcat(reply, ":irc.42.fr ", 512);
-				ft_strlcat(reply, retstr, 512);
-				ft_strlcat(reply, " ", 512);
-				ft_strlcat(reply, ":Welcome to the Internet Relay Chat, ", 512);
-				ft_strlcat(reply, c->nickname, 512);
-				ft_strlcat(reply, "!", 512);
-				ft_strlcat(reply, CRLF, 512);
-			}
-			else if (reply_code == ERR_UNKNOWNCOMMAND)
-			{
-				ft_strlcat(reply, ":irc.42.fr ", 512);
-				ft_strlcat(reply, retstr, 512);
-				ft_strlcat(reply, " ", 512);
-				ft_strlcat(reply, "Unknown command", 512);
-			}
-			else if (reply_code == ERR_NICKNAMEINUSE)
-			{
-				ft_strlcat(reply, ":irc.42.fr ", 512);
-				ft_strlcat(reply, retstr, 512);
-				ft_strlcat(reply, " ", 512);
-				ft_strlcat(reply, "Nickname is in use", 512);
-			}
-			else
-				ft_strdel(&reply);
-			free(retstr);
+			if (replies[i] == reply_code)
+				handles[i](reply, 512, c);
+			i += 1;
 		}
-		else
-			ft_strdel(&reply);
 	}
 	return (reply);
 }

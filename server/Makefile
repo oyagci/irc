@@ -36,7 +36,10 @@ SOURCES		:= \
 	notify.c \
 	pinginactive.c \
 	quit.c \
-	../logger.c
+	../logger.c \
+	replies/rpl_welcome.c \
+	replies/err_unknowncmd.c \
+	replies/err_nickinuse.c
 HEADERS		:= \
 	server.h \
 	../logger.h \
