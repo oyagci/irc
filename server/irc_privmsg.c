@@ -55,13 +55,14 @@ int	server_send_formated_message_to(struct s_server *server, char const *name,
 		else
 		{
 			LOG(LOGDEBUG, "No channel named %s", name);
-			/* TODO: Send ERR_CANNOTSENDTOCHAN */
+			return (ERR_CANNOTSENDTOCHAN);
 		}
 	}
 	else
 	{
-		client = server_get_client(server, name);
-		server->queuenotif(server, client, msg);
+		if ((client = server_get_client(server, name)))
+			server->queuenotif(server, client, msg);
+		return (ERR_NOSUCHNICK);
 	}
 	return (0);
 }
