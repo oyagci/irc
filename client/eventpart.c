@@ -1,4 +1,5 @@
 #include "client.h"
+#include <stdlib.h>
 
 int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 {
@@ -13,6 +14,7 @@ int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 	{
 		self->channels.rmnick(&self->channels, nick, chan);
 		printf(" * %s has left %s\n", nick, chan);
+		free(nick);
 	}
 	return (0);
 }
