@@ -67,6 +67,7 @@ int		channels_rmnick(struct s_channels *self, char const *const nick,
 	t_list			*elem;
 	char			*n;
 	t_list			*prev;
+	t_list			*next;
 
 	c = self->get(self, channel);
 	if (c)
@@ -75,6 +76,7 @@ int		channels_rmnick(struct s_channels *self, char const *const nick,
 		elem = c->clients;
 		while (elem)
 		{
+			next = elem->next;
 			n = elem->content;
 			if (ft_strequ(nick, n))
 			{
@@ -86,7 +88,7 @@ int		channels_rmnick(struct s_channels *self, char const *const nick,
 				free(elem);
 			}
 			prev = elem;
-			elem = elem->next;
+			elem = next;
 		}
 	}
 	return (0);
