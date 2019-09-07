@@ -5,7 +5,7 @@ int		client_nick(struct s_client *const self,
 {
 	char				*msg;
 
-	ft_memcpy(self->nickname, cmd->params[0], SNICK);
+	ft_strncpy(self->nickname, cmd->params[0], SNICK);
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
