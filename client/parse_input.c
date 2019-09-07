@@ -89,7 +89,7 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 		{
 			printf("Not enough parameters given (expected %ld)\n", msg->nparam);
 			free(msg);
-			return (0);
+			msg = NULL;
 		}
 	}
 	else if (self->channel)
@@ -100,6 +100,10 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 		msg->params[1] = input;
 	}
 	else
+	{
 		printf(" * Not in a channel (/join <channel>)\n");
+		free(msg);
+		msg = NULL;
+	}
 	return (msg);
 }
