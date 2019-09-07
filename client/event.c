@@ -1,6 +1,6 @@
 #include "client.h"
 
-int		client_event(struct s_client *self, char const *const data)
+int		client_event(struct s_client *const self, char const *const data)
 {
 	struct s_event_list events[] = {
 		{ .s = "JOIN", .f = self->eventjoin },

@@ -33,7 +33,7 @@ void	init_methods(struct s_client *self)
 	self->parse_input = &parse_input;
 }
 
-int		client_init(struct s_client *self)
+int		client_init(struct s_client *const self)
 {
 	int	ret;
 

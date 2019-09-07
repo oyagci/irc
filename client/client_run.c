@@ -10,7 +10,7 @@
 /*
 ** Read user input from stdin
 */
-static int	read_input(struct s_client *self)
+static int	read_input(struct s_client *const self)
 {
 	char				buf[512 + 1];
 	struct s_client_msg	*cmd;
@@ -40,7 +40,7 @@ static int	read_input(struct s_client *self)
 	return (ret);
 }
 
-static int	do_buffered_event(struct s_client *client)
+static int	do_buffered_event(struct s_client *const client)
 {
 	char	buf[512];
 	uint8_t	data;
@@ -63,7 +63,7 @@ static int	do_buffered_event(struct s_client *client)
 	return (client->event(client, buf));
 }
 
-static int	do_all_buffered_events(struct s_client *client, int nevent)
+static int	do_all_buffered_events(struct s_client *const client, int nevent)
 {
 	int	ret;
 
@@ -99,7 +99,7 @@ static int	bufferise_events(struct s_client *client, char *buf, int buflen)
 	return (nevent);
 }
 
-static int	read_notif(struct s_client *self)
+static int	read_notif(struct s_client *const self)
 {
 	char	buf[512 + 1];
 	int		nevent;
@@ -122,7 +122,7 @@ static int	read_notif(struct s_client *self)
 	return (0);
 }
 
-int			client_run(struct s_client *self)
+int			client_run(struct s_client *const self)
 {
 	struct timeval		t;
 
