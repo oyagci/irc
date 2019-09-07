@@ -51,5 +51,6 @@ int			server_init(struct s_server *server, unsigned int port)
 		LOG(LOGERR, "Could not listen on port %d", port);
 		exit(EXIT_FAILURE);
 	}
+	printf("Server started on port %u\n", port);
 	return (0);
 }
