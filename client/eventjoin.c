@@ -1,4 +1,5 @@
 #include "client.h"
+#include <stdlib.h>
 
 int		eventjoin(struct s_client *const self, struct s_message const *const m)
 {
@@ -20,6 +21,7 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 			}
 			printf(" * %s joined channel %s\n", nick, chan);
 		}
+		free(nick);
 	}
 	return (ret);
 }
