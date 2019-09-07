@@ -34,6 +34,7 @@ int	read_to_buffer(int cfd, t_cbuf_handle cbuf)
 	int	complete;
 
 	ft_memset(buf, 0, 512);
+	complete = 0;
 	if ((ret = recv(cfd, buf, 512, 0)) > 0)
 	{
 		LOG(LOGDEBUG, "Received %d bytes", ret);
