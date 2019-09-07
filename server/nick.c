@@ -37,7 +37,7 @@ int	nickinit(t_nicktable *nicks)
 	ret = 0;
 	nicks->size = 0;
 	nicks->capacity = 10;
-	nicks->table = ft_memalloc(sizeof(*nicks->table) * nicks->size);
+	nicks->table = ft_memalloc(sizeof(*nicks->table) * nicks->capacity);
 	if (!nicks->table)
 		ret = -1;
 	return (ret);
