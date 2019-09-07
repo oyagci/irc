@@ -10,6 +10,8 @@
 
 # define CRLF	"\x0d\x0a"
 # define SNICK	9
+# define NPARAM	15
+# define SPARAM	255
 
 enum e_client_cmd
 {
@@ -40,7 +42,7 @@ struct s_cmd_params
 struct s_client_msg
 {
 	enum e_client_cmd	cmd;
-	char const			*params[15];
+	char 				params[NPARAM][SPARAM];
 	size_t				nparam;
 };
 

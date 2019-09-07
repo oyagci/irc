@@ -30,7 +30,8 @@ static int	read_input(struct s_client *self)
 			if (ft_strlen(buf) == 0)
 				return (0);
 			cmd = self->parse_input(self, buf);
-			if (cmd) {
+			if (cmd)
+			{
 				self->exec_cmd(self, cmd);
 				free(cmd);
 			}

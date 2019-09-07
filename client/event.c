@@ -12,13 +12,13 @@ int		client_event(struct s_client *self, char const *const data)
 		{ .s = "375", .f = self->eventmotd },
 	};
 	size_t				ii;
-
 	struct s_message	*msg;
 
 	msg = message(data);
 	if (!msg)
 	{
-		printf("Invalid command: \n  -> %s\n", data);
+		LOG(LOGWARN, "%s Invalid command (msg == NULL) \"%s\"\n", __FUNCTION__,
+			data);
 		return (0);
 	}
 	ii = 0;
@@ -28,5 +28,6 @@ int		client_event(struct s_client *self, char const *const data)
 			events[ii].f(self, msg);
 		ii += 1;
 	}
+	message_del(&msg);
 	return (0);
 }

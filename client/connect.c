@@ -79,6 +79,7 @@ static int	do_conn(struct s_client *self, char const *addr, char const *portstr,
 		printf(" - Connected to %s\n", addr);
 		ret = 0;
 	}
+	freeaddrinfo(server);
 	return (ret);
 }
 

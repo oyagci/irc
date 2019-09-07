@@ -43,6 +43,7 @@ size_t				set_params(char const *input, struct s_client_msg *buf)
 	int		start;
 	int		end;
 	size_t	ii;
+	char	tmp[255];
 
 	if (*input == 0)
 		return (0);
@@ -56,15 +57,16 @@ size_t				set_params(char const *input, struct s_client_msg *buf)
 			end = start;
 			while (input[end] != ' ' && input[end] != '\0')
 				end++;
-			/* TODO: Replace alloc by static */
-			buf->params[ii] = ft_strndup(input + start, end - start);
+			ft_memset(tmp, 0, sizeof(tmp));
+			ft_strncpy(tmp, input + start, end - start);
+			ft_strlcpy(buf->params[ii], tmp, 255);
 			if (input[end] == ' ')
 				end++;
 			start = end;
 			ii += 1;
 		}
 		if (input[start] != 0) {
-			buf->params[ii] = ft_strdup(input + start);
+			ft_strlcpy(buf->params[ii], input + start, 255);
 			ii += 1;
 		}
 	}
@@ -96,8 +98,8 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 	{
 		msg->cmd = CMD_MSG;
 		msg->nparam = 2;
-		msg->params[0] = self->channel->name;
-		msg->params[1] = input;
+		ft_strlcpy(msg->params[0], self->channel->name, 255);
+		ft_strlcpy(msg->params[1], input, 255);
 	}
 	else
 	{
