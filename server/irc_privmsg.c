@@ -91,7 +91,8 @@ int	server_send_privmsg(struct s_server *server, struct s_client *from,
 		ft_strlcat(formated, " :", 512);
 		ft_strlcat(formated, msg, 512);
 		ft_strlcat(formated, CRLF, 512);
-		LOG(LOGDEBUG, "To %s: %s", recipient, msg);
+		LOG(LOGDEBUG, "%.9s to %s: %s", from->nickname, recipient, msg);
+		/* TODO: Handle ERR_NOSUCHNICK and ERR_CANNOTSENDTOCHAN */
 		server_send_formated_message_to(server, recipient, formated);
 		free(formated);
 		elem = elem->next;

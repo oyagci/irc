@@ -103,7 +103,7 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 	}
 	else
 	{
-		printf(" * Not in a channel (/join <channel>)\n");
+		printf(" - Not in a channel (/join <channel>)\n");
 		free(msg);
 		msg = NULL;
 	}

@@ -37,7 +37,6 @@ int	read_to_buffer(int cfd, t_cbuf_handle cbuf)
 	complete = 0;
 	if ((ret = recv(cfd, buf, 512, 0)) > 0)
 	{
-		LOG(LOGDEBUG, "Received %d bytes", ret);
 		complete = 0;
 		ii = 0;
 		while (ii < ret)
@@ -48,7 +47,6 @@ int	read_to_buffer(int cfd, t_cbuf_handle cbuf)
 				complete += 1;
 			ii += 1;
 		}
-		LOG(LOGDEBUG, "%d", ii);
 	}
 	return (complete);
 }
