@@ -17,6 +17,7 @@ int		client_nick(struct s_client *const self,
 			ft_strlcat(msg, " ", 513);
 			ft_strlcat(msg, cmd->params[0], 513);
 			ft_strlcat(msg, CRLF, 513);
+			self->queuemsg(self, msg);
 		}
 		else
 			ret = -1;
