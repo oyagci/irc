@@ -52,7 +52,12 @@ void	nickremove(t_nicktable *nicks, char *name)
 	while (i < nicks->size)
 	{
 		if (ft_strnequ(name, nicks->table[i], NICK_SIZE))
+		{
+			free(nicks->table[i]);
 			nicks->table[i] = 0;
+			nicks->size -= 1;
+			ft_memmove(nicks->table + i, nicks->table + i + 1, nicks->size);
+		}
 		i += 1;
 	}
 }
