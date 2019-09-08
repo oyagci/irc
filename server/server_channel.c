@@ -73,8 +73,8 @@ int	add_to_chan(struct s_server *server, struct s_client *client,
 	}
 	else
 		LOG(LOGDEBUG, "Channel %.50s found", chan->name);
-	channel_add_client(chan, client);
-	server_tell_new_client(server, client, chan);
+	if (!channel_add_client(chan, client))
+		server_tell_new_client(server, client, chan);
 	return (0);
 }
 
