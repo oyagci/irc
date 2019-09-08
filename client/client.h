@@ -13,6 +13,10 @@
 # define NPARAM	15
 # define SPARAM	255
 
+# define BOLDRED	"\033[1;32m"
+# define UNDERLINE	"\033[0;0;4m"
+# define RESET		"\033[0;0m"
+
 enum e_client_cmd
 {
 	CMD_NONE,
