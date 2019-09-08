@@ -89,10 +89,10 @@ int		read_clients_command(struct s_server *const self)
 	return (0);
 }
 
-static int	server_reply_to_client(struct s_server_msg const *const msg)
+static int	server_reply_to_client(struct s_server_msg const *const msg, int fd)
 {
-	LOG(LOGDEBUG, "%s", msg->msg);
-	return (send(msg->dest->fd, msg->msg, msg->len, 0));
+//	LOG(LOGDEBUG, "%s", msg->msg);
+	return (send(fd, msg->msg, msg->len, 0));
 }
 
 int			send_queued_replies(struct s_server *const server)
@@ -101,6 +101,7 @@ int			send_queued_replies(struct s_server *const server)
 	t_list				*next;
 	t_list				*msgelem;
 	struct s_server_msg	*msg;
+	struct s_client		*dest;
 
 	prev = NULL;
 	next = NULL;
@@ -109,10 +110,11 @@ int			send_queued_replies(struct s_server *const server)
 	{
 		next = msgelem->next;
 		msg = msgelem->content;
-		if (FD_ISSET(msg->dest->fd, &server->writefds))
+		dest = server->get_client(server, msg->dest);
+		if (FD_ISSET(dest->fd, &server->writefds))
 		{
 			/* TODO: Error handling */
-			server_reply_to_client(msg);
+			server_reply_to_client(msg, dest->fd);
 			if (prev)
 				prev->next = msgelem->next;
 			else
@@ -149,17 +151,16 @@ static char	*server_format_reply(struct s_client const *const c, int reply_code)
 }
 
 int			queue_reply(struct s_server *server,
-	struct s_client const *const dest, char *reply)
+				struct s_client const *const dest, char *reply)
 {
 	t_list				*elem;
 	struct s_server_msg	*msg;
 
-	msg = NULL;
 	if (!(msg = ft_memalloc(sizeof(*msg))))
 		return (-1);
-	msg->dest = dest;
-	ft_strncpy(msg->msg, reply, 512);
-	msg->len = ft_strlen(reply);
+	ft_strlcpy(msg->dest, dest->nickname, NICK_SIZE);
+	ft_strlcpy(msg->msg, reply, 512);
+	msg->len = ft_strlen(msg->msg);
 	elem = ft_lstnew(0, 0);
 	elem->content = msg;
 	ft_lstadd(&server->msgqueue, elem);

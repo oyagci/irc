@@ -109,13 +109,15 @@ struct	s_server
 	int					(*add_to_chan)(struct s_server *server,
 							struct s_client *client,
 							char const *const channame);
+	struct s_client		*(*get_client)(struct s_server *self,
+							char const *const nickname);
 };
 
 struct	s_server_msg
 {
-	struct s_client const	*dest;
-	char					msg[512];
-	size_t					len;
+	char	dest[NICK_SIZE];
+	char	msg[512];
+	size_t	len;
 };
 
 int					server_init(struct s_server *server, unsigned int port);
@@ -174,6 +176,8 @@ int					add_to_chan(struct s_server *server,
 int					server_tell_new_client(struct s_server *server,
 						struct s_client *client, struct s_channel *chan);
 struct s_channel	*get_channel(struct s_server *server, char const *name);
+struct s_client		*get_client(struct s_server *self,
+						char const *const nickname);
 int					server_send_formated_message_to(struct s_server *server,
 						char const *recipient, char *msg);
 void				server_msg_del(void *msgp, size_t size);

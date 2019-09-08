@@ -24,6 +24,7 @@ static int	init_methods(struct s_server *s)
 	s->add_to_chan = &add_to_chan;
 	s->pinginactive = &pinginactive;
 	s->quit = &quit;
+	s->get_client = &get_client;
 	return (0);
 }
 
