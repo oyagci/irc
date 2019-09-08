@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <signal.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -75,6 +76,7 @@ int	main(void)
 {
 	struct s_client		client;
 
+	signal(SIGPIPE, SIG_IGN);
 	if (client_init(&client) < 0)
 	{
 		LOG(LOGERR, "Could not initialize client!");
