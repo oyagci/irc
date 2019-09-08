@@ -29,6 +29,7 @@ SOURCES		:= \
 	irc_who.c \
 	irc_ping.c \
 	irc_pong.c \
+	irc_quit.c \
 	server_channel.c \
 	server_loop.c \
 	server_init.c \

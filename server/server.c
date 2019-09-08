@@ -35,8 +35,8 @@ int	execute_command(struct s_client *c, char const *const cmd)
 		{ .name = "PASS", .f = irc_pass }, { .name = "NICK", .f = irc_nick },
 		{ .name = "USER", .f = irc_user }, { .name = "JOIN", .f = irc_join },
 		{ .name = "PART", .f = irc_part }, { .name = "WHO", .f = irc_who },
-		{ .name = "PRIVMSG", .f = irc_privmsg },
-		{ .name = "PONG", .f = irc_pong },
+		{ .name = "PONG", .f = irc_pong }, { .name = "QUIT", .f = irc_quit },
+		{ .name = "PRIVMSG", .f = irc_privmsg }
 	};
 	size_t					ii;
 	struct s_message		*msg;

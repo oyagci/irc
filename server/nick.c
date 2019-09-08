@@ -1,8 +1,9 @@
 #include "nick.h"
 #include "libft.h"
 #include <stdlib.h>
+#include "server.h"
 
-int	nickavail(t_nicktable *nicks, char const *nick)
+int		nickavail(t_nicktable *nicks, char const *nick)
 {
 	size_t	i;
 
@@ -16,7 +17,7 @@ int	nickavail(t_nicktable *nicks, char const *nick)
 	return (1);
 }
 
-int	nickadd(t_nicktable *nicks, char const *nick)
+int		nickadd(t_nicktable *nicks, char const *nick)
 {
 	if (!nickavail(nicks, nick))
 		return (0);
@@ -30,7 +31,7 @@ int	nickadd(t_nicktable *nicks, char const *nick)
 	return (1);
 }
 
-int	nickinit(t_nicktable *nicks)
+int		nickinit(t_nicktable *nicks)
 {
 	int	ret;
 
@@ -41,4 +42,17 @@ int	nickinit(t_nicktable *nicks)
 	if (!nicks->table)
 		ret = -1;
 	return (ret);
+}
+
+void	nickremove(t_nicktable *nicks, char *name)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < nicks->size)
+	{
+		if (ft_strnequ(name, nicks->table[i], NICK_SIZE))
+			nicks->table[i] = 0;
+		i += 1;
+	}
 }

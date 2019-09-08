@@ -156,6 +156,7 @@ int					irc_ping(struct s_client *client, char **params,
 						int nparam);
 int					irc_pong(struct s_client *client, char **params,
 						int nparam);
+int					irc_quit(struct s_client *c, char **params, int nparams);
 
 /* TODO: Handle nick collision */
 

@@ -9,8 +9,9 @@ typedef struct	s_nicktable {
 	size_t	capacity;
 }				t_nicktable;
 
-int	nickinit(t_nicktable *nicks);
-int	nickavail(t_nicktable *nicks, char const *nick);
-int	nickadd(t_nicktable *nicks, char const *nick);
+int		nickinit(t_nicktable *nicks);
+int		nickavail(t_nicktable *nicks, char const *nick);
+int		nickadd(t_nicktable *nicks, char const *nick);
+void	nickremove(t_nicktable *nicks, char *name);
 
 #endif
