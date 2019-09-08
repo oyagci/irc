@@ -22,6 +22,6 @@ int	irc_quit(struct s_client *c, char **params, int nparams)
 	(void)nparams;
 	remove_from_all_channels(c);
 	nickremove(&c->server->nicks, c->nickname);
-	close(c->fd);
+	c->server->del_client(c->server, c);
 	return (0);
 }

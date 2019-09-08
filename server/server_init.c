@@ -25,6 +25,7 @@ static int	init_methods(struct s_server *s)
 	s->pinginactive = &pinginactive;
 	s->quit = &quit;
 	s->get_client = &get_client;
+	s->del_client = &del_client;
 	return (0);
 }
 

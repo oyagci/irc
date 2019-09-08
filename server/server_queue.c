@@ -53,6 +53,7 @@ int	read_to_buffer(int cfd, t_cbuf_handle cbuf)
 
 int		read_clients_command(struct s_server *const self)
 {
+	t_list			*next;
 	t_list			*cur;
 	struct s_client	*client;
 	int				ii;
@@ -63,6 +64,7 @@ int		read_clients_command(struct s_server *const self)
 	cur = self->clients;
 	while (cur)
 	{
+		next = cur->next;
 		client = cur->content;
 		if (FD_ISSET(client->fd, &self->readfds))
 		{
@@ -84,7 +86,7 @@ int		read_clients_command(struct s_server *const self)
 				complete -= 1;
 			}
 		}
-		cur = cur->next;
+		cur = next;
 	}
 	return (0);
 }

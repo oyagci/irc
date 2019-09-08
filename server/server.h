@@ -111,6 +111,8 @@ struct	s_server
 							char const *const channame);
 	struct s_client		*(*get_client)(struct s_server *self,
 							char const *const nickname);
+	void				(*del_client)(struct s_server *self,
+							struct s_client *c);
 };
 
 struct	s_server_msg
@@ -179,6 +181,7 @@ int					server_tell_new_client(struct s_server *server,
 struct s_channel	*get_channel(struct s_server *server, char const *name);
 struct s_client		*get_client(struct s_server *self,
 						char const *const nickname);
+void				del_client(struct s_server *self, struct s_client *c);
 int					server_send_formated_message_to(struct s_server *server,
 						char const *recipient, char *msg);
 void				server_msg_del(void *msgp, size_t size);

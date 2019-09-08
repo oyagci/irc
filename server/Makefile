@@ -38,6 +38,7 @@ SOURCES		:= \
 	pinginactive.c \
 	quit.c \
 	get_client.c \
+	del_client.c \
 	../logger.c \
 	replies/rpl_welcome.c \
 	replies/err_unknowncmd.c \
