@@ -93,7 +93,6 @@ int		read_clients_command(struct s_server *const self)
 
 static int	server_reply_to_client(struct s_server_msg const *const msg, int fd)
 {
-//	LOG(LOGDEBUG, "%s", msg->msg);
 	return (send(fd, msg->msg, msg->len, 0));
 }
 
