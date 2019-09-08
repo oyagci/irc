@@ -112,7 +112,7 @@ int			send_queued_replies(struct s_server *const server)
 		next = msgelem->next;
 		msg = msgelem->content;
 		dest = server->get_client(server, msg->dest);
-		if (FD_ISSET(dest->fd, &server->writefds))
+		if (dest && FD_ISSET(dest->fd, &server->writefds))
 		{
 			/* TODO: Error handling */
 			server_reply_to_client(msg, dest->fd);
@@ -131,8 +131,9 @@ int			send_queued_replies(struct s_server *const server)
 static char	*server_format_reply(struct s_client const *const c, int reply_code)
 {
 	t_rpl_handle const	handles[]  = { rpl_welcome, err_unknowncmd,
-		err_unknowncmd, err_nickinuse };
-	int const			replies[] = { RPL_WELCOME };
+		err_nickinuse, err_erroneusnick };
+	int const			replies[] = { RPL_WELCOME, ERR_UNKNOWNCOMMAND,
+		ERR_NICKNAMEINUSE, ERR_ERRONEUSNICKNAME };
 	char				*reply;
 	size_t				i;
 

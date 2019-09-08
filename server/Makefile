@@ -42,7 +42,8 @@ SOURCES		:= \
 	../logger.c \
 	replies/rpl_welcome.c \
 	replies/err_unknowncmd.c \
-	replies/err_nickinuse.c
+	replies/err_nickinuse.c \
+	replies/err_erroneusnick.c
 HEADERS		:= \
 	server.h \
 	../logger.h \
