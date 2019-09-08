@@ -20,7 +20,10 @@ struct s_channel	*new_channel(struct s_server *server,
 	}
 	chan = ft_memalloc(sizeof(*chan));
 	if (!chan)
+	{
+		exit(EXIT_FAILURE);
 		return (NULL);
+	}
 	ft_strcpy(chan->name, name);
 	chan->mode = mode;
 	elem = ft_lstnew(0, 0);

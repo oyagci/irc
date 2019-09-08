@@ -158,7 +158,10 @@ int			queue_reply(struct s_server *server,
 	struct s_server_msg	*msg;
 
 	if (!(msg = ft_memalloc(sizeof(*msg))))
+	{
+		exit(EXIT_FAILURE);
 		return (-1);
+	}
 	ft_strlcpy(msg->dest, dest->nickname, NICK_SIZE);
 	ft_strlcpy(msg->msg, reply, 512);
 	msg->len = ft_strlen(msg->msg);

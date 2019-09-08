@@ -7,6 +7,7 @@
 #include "logger.h"
 #include <time.h>
 #include <signal.h>
+#include <stdlib.h>
 
 int		setnosigpipe(void)
 {
@@ -29,7 +30,8 @@ int		accept_new_clients(struct s_server *server)
 		LOG(LOGDEBUG, "%s: connected on fd %d", inet_ntoa(cli_addr.sin_addr),
 			confd);
 		setnosigpipe();
-		client = ft_memalloc(sizeof(*client));
+		if (!(client = ft_memalloc(sizeof(*client))))
+			exit(EXIT_FAILURE);
 		client->fd = confd;
 		client->server = server;
 		ft_memcpy(client->nickname, "", 1);
@@ -39,7 +41,8 @@ int		accept_new_clients(struct s_server *server)
 
 		client->ping.tv_sec += 10;
 
-		client->raw_buffer = ft_memalloc(sizeof(char) * 2048);
+		if (!(client->raw_buffer = ft_memalloc(sizeof(char) * 2048)))
+			exit(EXIT_FAILURE);
 		client->cbuf = cbuf_init(client->raw_buffer, 2048);
 
 		elem = ft_lstnew(NULL, 0);

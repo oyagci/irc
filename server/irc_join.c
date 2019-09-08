@@ -18,7 +18,8 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 	while (elem)
 	{
 		recipient = elem->content;
-		msg = ft_memalloc(sizeof(char) * 513);
+		if (!(msg = ft_memalloc(sizeof(char) * 513)))
+			exit(EXIT_FAILURE);
 		ft_strlcat(msg, ":", 513);
 		ft_strlcat(msg, client->nickname, 513);
 		if (client->username)

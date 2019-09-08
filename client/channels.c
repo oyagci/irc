@@ -55,7 +55,8 @@ struct s_chan	*channels_create(char const *const name)
 
 	if (ft_strlen(name) > 50)
 		return (NULL);
-	c = ft_memalloc(sizeof(*c));
+	if (!(c = ft_memalloc(sizeof(*c))))
+		exit(EXIT_FAILURE);
 	ft_strncpy(c->name, name, 50);
 	return (c);
 }

@@ -19,11 +19,17 @@ int		nickavail(t_nicktable *nicks, char const *nick)
 
 int		nickadd(t_nicktable *nicks, char const *nick)
 {
+	char	**ntable;
+
 	if (!nickavail(nicks, nick))
 		return (0);
 	if (nicks->size == nicks->capacity)
 	{
-		nicks->table = realloc(nicks->table, sizeof(char *) * (nicks->capacity + 10));
+		if (!(ntable = malloc(sizeof(char *) * (nicks->capacity + 10))))
+			exit(EXIT_FAILURE);
+		ft_memcpy(ntable, nicks->table, sizeof(char *) * nicks->capacity);
+		free(nicks->table);
+		nicks->table = ntable;
 		nicks->capacity += 10;
 	}
 	nicks->table[nicks->size] = ft_strdup(nick);
@@ -40,7 +46,10 @@ int		nickinit(t_nicktable *nicks)
 	nicks->capacity = 10;
 	nicks->table = ft_memalloc(sizeof(*nicks->table) * nicks->capacity);
 	if (!nicks->table)
+	{
 		ret = -1;
+		exit(EXIT_FAILURE);
+	}
 	return (ret);
 }
 

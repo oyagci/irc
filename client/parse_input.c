@@ -80,7 +80,7 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 
 	msg = ft_memalloc(sizeof(*msg));
 	if (!msg)
-		return (0);
+		exit(EXIT_FAILURE);
 	msg->cmd = CMD_NONE;
 	if (input[0] == '/')
 	{
