@@ -16,6 +16,7 @@ SOURCES		:= \
 	channels.c \
 	channels_rmnick.c \
 	client_run.c \
+	read_notif.c \
 	quit.c \
 	event.c \
 	eventmotd.c \

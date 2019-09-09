@@ -164,4 +164,6 @@ int						client_connect(struct s_client *const self,
 int						rpl_welcome(struct s_client *const self,
 							struct s_message const *const msg);
 
+int						read_notif(struct s_client *const self);
+
 #endif
