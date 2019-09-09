@@ -17,7 +17,8 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 			self->channels.addnick(&self->channels, nick, chan);
 			if (ft_strnequ(self->nickname, nick, 9))
 			{
-				self->channel = self->channels.get(&self->channels, m->params->param[0]);
+				self->channel = self->channels.get(&self->channels,
+					m->params->param[0]);
 			}
 			printf(" * %s joined channel %s\n", nick, chan);
 		}
