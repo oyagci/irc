@@ -2,7 +2,7 @@
 
 int		client_event(struct s_client *const self, char const *const data)
 {
-	struct s_event_list events[] = {
+	struct s_event_list const	events[] = {
 		{ .s = "JOIN", .f = self->eventjoin },
 		{ .s = "PRIVMSG", .f = self->eventprivmsg },
 		{ .s = "PART", .f = self->eventpart },
@@ -11,16 +11,11 @@ int		client_event(struct s_client *const self, char const *const data)
 		{ .s = "372", .f = self->eventmotd },
 		{ .s = "375", .f = self->eventmotd },
 	};
-	size_t				ii;
-	struct s_message	*msg;
+	size_t						ii;
+	struct s_message			*msg;
 
-	msg = message(data);
-	if (!msg)
-	{
-		LOG(LOGWARN, "%s Invalid command (msg == NULL) \"%s\"\n", __FUNCTION__,
-			data);
+	if (!(msg = message(data)))
 		return (0);
-	}
 	ii = 0;
 	while (ii < sizeof(events) / sizeof(*events))
 	{
