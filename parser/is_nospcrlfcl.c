@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_nickinuse.c                                    :+:      :+:    :+:   */
+/*   is_nospcrlfcl.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/09 14:29:03 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:29:05 by oyagci           ###   ########.fr       */
+/*   Created: 2019/09/09 14:56:20 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:56:25 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
-#include <server.h>
-#include <libft.h>
-
-int		err_nickinuse(char *buf, size_t buflen, struct s_client const *c)
+int					is_nospcrlfcl(unsigned char c)
 {
-	(void)c;
-	ft_strlcat(buf, ":irc.42.fr ", buflen);
-	ft_strlcat(buf, SERR_NICKNAMEINUSE, buflen);
-	ft_strlcat(buf, " ", buflen);
-	ft_strlcat(buf, "Nickname is in use", buflen);
-	return (0);
+	return ((c >= 0x01 && c <= 0x09) ||
+			(c >= 0x0b && c <= 0x0c) ||
+			(c >= 0x0e && c <= 0x1f) ||
+			(c >= 0x21 && c <= 0x39) ||
+			(c >= 0x3b));
 }

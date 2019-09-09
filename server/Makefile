@@ -14,6 +14,7 @@ SOURCES		:= \
 	../parser/msgto.c \
 	../parser/chanstr.c \
 	../parser/nickname.c \
+	../parser/is_nospcrlfcl.c \
 	server.c \
 	set_fds.c \
 	accept_new_clients.c \

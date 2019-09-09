@@ -11,6 +11,7 @@ SOURCES		:= \
 	../parser/digit.c \
 	../parser/letter.c\
 	../parser/special.c \
+	../parser/is_nospcrlfcl.c \
 	client.c \
 	parse_input.c \
 	channels.c \
