@@ -2,5 +2,5 @@
 
 size_t	cbuf_capacity(t_cbuf_handle cbuf)
 {
-	return cbuf->max;
+	return (cbuf->max);
 }

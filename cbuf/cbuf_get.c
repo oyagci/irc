@@ -6,7 +6,7 @@ static void	retreat_pointer(t_cbuf_handle cbuf)
 	cbuf->tail = (cbuf->tail + 1) % cbuf->max;
 }
 
-int		cbuf_get(t_cbuf_handle cbuf, uint8_t *data)
+int			cbuf_get(t_cbuf_handle cbuf, uint8_t *data)
 {
 	int	ret;
 
