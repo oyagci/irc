@@ -1,7 +1,7 @@
 #include "client.h"
 
 int		client_leave(struct s_client *const self,
-					 struct s_client_msg const *const cmd)
+	struct s_client_msg const *const cmd)
 {
 	char	*msg;
 
