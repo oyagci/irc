@@ -5,17 +5,20 @@
 
 void	remove_from_all_channels(struct s_client *const c)
 {
-	for (t_list *l = c->server->channels; l != NULL; l = l->next)
-	{
-		struct s_channel	*chan;
+	t_list				*l;
+	struct s_channel	*chan;
 
+	l = c->server->channels;
+	while (l != NULL)
+	{
 		chan = l->content;
 		rm_from_chan(c->nickname, chan);
 		c->server->notifypart(c->server, chan, c->nickname);
+		l = l->next;
 	}
 }
 
-int	irc_quit(struct s_client *c, char **params, int nparams)
+int		irc_quit(struct s_client *c, char **params, int nparams)
 {
 	LOG(LOGDEBUG, "QUIT");
 	(void)params;
