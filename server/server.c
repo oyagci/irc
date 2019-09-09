@@ -48,6 +48,7 @@ int	execute_command(struct s_client *c, char const *const cmd)
 		return (0);
 	ii = 0;
 	validcmd = 0;
+	err = 0;
 	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))
 	{
 		if (ft_strequ(cmds[ii].name, msg->cmd->data))
