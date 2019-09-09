@@ -15,9 +15,19 @@ int		setnosigpipe(void)
 	return (0);
 }
 
+void	add_client(struct s_server *self, struct s_client *c)
+{
+	t_list	*elem;
+
+	elem = ft_lstnew(NULL, 0);
+	if (!elem)
+		exit(EXIT_FAILURE);
+	elem->content = c;
+	ft_lstadd(&self->clients, elem);
+}
+
 int		accept_new_clients(struct s_server *server)
 {
-	t_list					*elem;
 	struct s_client			*client;
 	struct sockaddr_in		cli_addr;
 	socklen_t				cli_len;
@@ -35,19 +45,10 @@ int		accept_new_clients(struct s_server *server)
 		client->fd = confd;
 		client->server = server;
 		ft_memcpy(client->nickname, "", 1);
-
-		clock_gettime(CLOCK_REALTIME, &client->ping);
-		ft_memset(&client->timeout, 0, sizeof(client->timeout));
-
-		client->ping.tv_sec += 10;
-
 		if (!(client->raw_buffer = ft_memalloc(sizeof(char) * 2048)))
 			exit(EXIT_FAILURE);
 		client->cbuf = cbuf_init(client->raw_buffer, 2048);
-
-		elem = ft_lstnew(NULL, 0);
-		elem->content = client;
-		ft_lstadd(&server->clients, elem);
+		add_client(server, client);
 	}
 	return (0);
 }
