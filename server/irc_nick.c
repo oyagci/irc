@@ -13,17 +13,14 @@ int	irc_nick(struct s_client *c, char **params, int nparams)
 	nick = params[0];
 	if (ft_strlen(nick) > NICK_SIZE)
 	{
-		LOG(LOGDEBUG, "Nickname '%.9s' is too long (len > %u)", nick, NICK_SIZE);
 		c->server->queuecode(c->server, c, ERR_ERRONEUSNICKNAME);
 		return (ERR_ERRONEUSNICKNAME);
 	}
 	if (!nickadd(&c->server->nicks, nick))
 	{
-		LOG(LOGDEBUG, "Nickname '%.9s' is already in use", nick);
 		c->server->queuecode(c->server, c, ERR_NICKNAMEINUSE);
 		return (ERR_NICKNAMEINUSE);
 	}
-	LOG(LOGDEBUG, "NICK %.9s -> %.9s", c->nickname, nick);
 	ft_strncpy(c->nickname, nick, NICK_SIZE);
 	return (0);
 }
