@@ -14,6 +14,7 @@ SOURCES		:= \
 	client.c \
 	parse_input.c \
 	channels.c \
+	channels_rmnick.c \
 	client_run.c \
 	quit.c \
 	event.c \

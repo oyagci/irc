@@ -1,7 +1,8 @@
 #include "channels.h"
 #include <stdlib.h>
 
-struct s_chan	*channels_get(struct s_channels *const self, char const *const name)
+struct s_chan	*channels_get(struct s_channels *const self,
+					char const *const name)
 {
 	t_list			*elem;
 	struct s_chan	*c;
@@ -17,7 +18,7 @@ struct s_chan	*channels_get(struct s_channels *const self, char const *const nam
 	return (NULL);
 }
 
-int		channels_add(struct s_channels *self, struct s_chan *chan)
+int				channels_add(struct s_channels *self, struct s_chan *chan)
 {
 	t_list	*elem;
 
@@ -30,8 +31,9 @@ int		channels_add(struct s_channels *self, struct s_chan *chan)
 	return (0);
 }
 
-int		channels_addnick(struct s_channels *self, char const *const nick,
-						   char const *const chan)
+int				channels_addnick(struct s_channels *self,
+					char const *const nick,
+					char const *const chan)
 {
 	struct s_chan	*c;
 	t_list			*elem;
@@ -61,41 +63,7 @@ struct s_chan	*channels_create(char const *const name)
 	return (c);
 }
 
-int		channels_rmnick(struct s_channels *self, char const *const nick,
-						char const *const channel)
-{
-	struct s_chan	*c;
-	t_list			*elem;
-	char			*n;
-	t_list			*prev;
-	t_list			*next;
-
-	c = self->get(self, channel);
-	if (c)
-	{
-		prev = 0;
-		elem = c->clients;
-		while (elem)
-		{
-			next = elem->next;
-			n = elem->content;
-			if (ft_strequ(nick, n))
-			{
-				free(n);
-				if (prev)
-					prev->next = elem->next;
-				else
-					c->clients = elem->next;
-				free(elem);
-			}
-			prev = elem;
-			elem = next;
-		}
-	}
-	return (0);
-}
-
-void	channels_init(struct s_channels *ptr)
+void			channels_init(struct s_channels *ptr)
 {
 	ptr->list = 0;
 	ptr->get = &channels_get;
