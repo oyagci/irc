@@ -3,10 +3,6 @@
 #include "logger.h"
 #include <stdlib.h>
 
-/*
-** Tell every client in the given channel that a new user joined,
-** including the new user
-*/
 int	server_tell_new_client(struct s_server *server, struct s_client *client,
 	struct s_channel *chan)
 {
@@ -27,8 +23,7 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 			ft_strlcat(msg, "!", 513);
 			ft_strlcat(msg, client->username, 513);
 		}
-		ft_strlcat(msg, "@irc.42.fr", 513);
-		ft_strlcat(msg, " JOIN ", 513);
+		ft_strlcat(msg, "@irc.42.fr JOIN ", 513);
 		ft_strlcat(msg, chan->name, 513);
 		ft_strlcat(msg, CRLF, 513);
 		queue_reply(server, recipient, msg);
@@ -38,9 +33,6 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 	return (0);
 }
 
-/*
-** JOIN: Command sent by clients to join a list of channels
-*/
 int	irc_join(struct s_client *client, char **params, int nparams)
 {
 	t_list	*l;
