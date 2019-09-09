@@ -18,6 +18,7 @@ SOURCES		:= \
 	set_fds.c \
 	accept_new_clients.c \
 	server_queue.c \
+	read_client_commands.c \
 	nick.c \
 	set_usermode.c \
 	irc_join.c \

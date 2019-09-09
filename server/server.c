@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/12 10:16:56 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/09/09 14:27:41 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "logger.h"
 #include "libft.h"
 
-int	nparams(char **params)
+int			nparams(char **params)
 {
 	int ii;
 
@@ -29,45 +29,58 @@ int	nparams(char **params)
 	return (ii);
 }
 
-int	execute_command(struct s_client *c, char const *const cmd)
+static void	set_cmds(struct s_irc_cmds cmds[9])
 {
-	const struct s_irc_cmds	cmds[] = {
-		{ .name = "PASS", .f = irc_pass }, { .name = "NICK", .f = irc_nick },
-		{ .name = "USER", .f = irc_user }, { .name = "JOIN", .f = irc_join },
-		{ .name = "PART", .f = irc_part }, { .name = "WHO", .f = irc_who },
-		{ .name = "PONG", .f = irc_pong }, { .name = "QUIT", .f = irc_quit },
-		{ .name = "PRIVMSG", .f = irc_privmsg }
-	};
-	size_t					ii;
-	struct s_message		*msg;
-	int						validcmd;
-	int						err;
+	cmds[0].name = "PASS";
+	cmds[0].f = irc_pass;
+	cmds[1].name = "NICK";
+	cmds[1].f = irc_nick;
+	cmds[2].name = "USER";
+	cmds[2].f = irc_user;
+	cmds[3].name = "JOIN";
+	cmds[3].f = irc_join;
+	cmds[4].name = "PART";
+	cmds[4].f = irc_part;
+	cmds[5].name = "WHO";
+	cmds[5].f = irc_who;
+	cmds[6].name = "PONG";
+	cmds[6].f = irc_pong;
+	cmds[7].name = "QUIT";
+	cmds[7].f = irc_quit;
+	cmds[8].name = "PRIVMSG";
+	cmds[8].f = irc_privmsg;
+}
 
-	msg = message(cmd);
-	if (!msg)
+int			execute_command(struct s_client *c, char const *const cmd)
+{
+	struct s_irc_cmds	cmds[9];
+	size_t				ii;
+	struct s_message	*msg;
+	int					validcmd;
+	int					err;
+
+	set_cmds(cmds);
+	if (!(msg = message(cmd)))
 		return (0);
-	ii = 0;
 	validcmd = 0;
 	err = 0;
+	ii = 0;
 	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))
 	{
 		if (ft_strequ(cmds[ii].name, msg->cmd->data))
 		{
 			validcmd = 1;
-			err = cmds[ii].f(c, msg->params->param, nparams(msg->params->param));
-			break ;
+			err = cmds[ii].f(c, msg->params->param,
+				nparams(msg->params->param));
 		}
 		ii++;
 	}
 	message_del(&msg);
-	if (!validcmd)
-		c->server->queuecode(c->server, c, ERR_UNKNOWNCOMMAND);
-	if (err)
-		c->server->queuecode(c->server, c, err);
+	err ? 0 : c->server->queuecode(c->server, c, err);
 	return (0);
 }
 
-int	main(int ac, char *av[])
+int			main(int ac, char *av[])
 {
 	struct s_server		server;
 

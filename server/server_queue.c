@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server_queue.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:27:37 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:27:41 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "server.h"
 #include <sys/socket.h>
@@ -7,93 +19,13 @@
 #include <stdlib.h>
 #include <cbuf.h>
 
-char	*irc_repcode_itoa(unsigned int n)
+void		server_msg_del(void *msgp, size_t size)
 {
-	char const	digits[10] = "0123456789";
-	char		*s;
-	int			i;
+	struct s_server_msg *msg;
 
-	i = 0;
-	s = ft_strdup("000");
-	if (n > 999)
-		return (NULL);
-	while (n > 0)
-	{
-		s[2 - i] = digits[(n % 10)];
-		n /= 10;
-		i++;
-	}
-	return (s);
-}
-
-int	read_to_buffer(int cfd, t_cbuf_handle cbuf)
-{
-	int	ret;
-	char buf[512];
-	int	ii;
-	int	complete;
-
-	ft_memset(buf, 0, 512);
-	complete = 0;
-	if ((ret = recv(cfd, buf, 512, 0)) > 0)
-	{
-		complete = 0;
-		ii = 0;
-		while (ii < ret)
-		{
-			if (cbuf_put2(cbuf, buf[ii]) < 0)
-				break ;
-			if (buf[ii] == '\n')
-				complete += 1;
-			ii += 1;
-		}
-	}
-	return (complete);
-}
-
-int		read_clients_command(struct s_server *const self)
-{
-	t_list			*next;
-	t_list			*cur;
-	struct s_client	*client;
-	int				ii;
-	char			buf[512];
-	unsigned char	data;
-	int				complete;
-
-	cur = self->clients;
-	while (cur)
-	{
-		next = cur->next;
-		client = cur->content;
-		if (FD_ISSET(client->fd, &self->readfds))
-		{
-			complete = read_to_buffer(client->fd, client->cbuf);
-			while (complete)
-			{
-				ii = 0;
-				ft_memset(buf, 0, 512);
-				while (ii < 512)
-				{
-					if (cbuf_get(client->cbuf, &data) < 0)
-						break ;
-					buf[ii] = data;
-					if (buf[ii] == '\n')
-						break ;
-					ii += 1;
-				}
-				self->exec_cmd(client, buf);
-				complete -= 1;
-			}
-		}
-		cur = next;
-	}
-	return (0);
-}
-
-static int	server_reply_to_client(struct s_server_msg const *const msg, int fd)
-{
-	return (send(fd, msg->msg, msg->len, 0));
+	(void)size;
+	msg = msgp;
+	free(msg);
 }
 
 int			send_queued_replies(struct s_server *const server)
@@ -114,12 +46,9 @@ int			send_queued_replies(struct s_server *const server)
 		dest = server->get_client(server, msg->dest);
 		if (dest && FD_ISSET(dest->fd, &server->writefds))
 		{
-			/* TODO: Error handling */
-			server_reply_to_client(msg, dest->fd);
-			if (prev)
-				prev->next = msgelem->next;
-			else
-				server->msgqueue = msgelem->next;
+			send(dest->fd, msg->msg, msg->len, 0);
+			prev ? (prev->next = msgelem->next) :
+				(server->msgqueue = msgelem->next);
 			ft_lstdelone(&msgelem, &server_msg_del);
 		}
 		prev = msgelem;
@@ -130,7 +59,7 @@ int			send_queued_replies(struct s_server *const server)
 
 static char	*server_format_reply(struct s_client const *const c, int reply_code)
 {
-	t_rpl_handle const	handles[]  = { rpl_welcome, err_unknowncmd,
+	t_rpl_handle const	handles[] = { rpl_welcome, err_unknowncmd,
 		err_nickinuse, err_erroneusnick };
 	int const			replies[] = { RPL_WELCOME, ERR_UNKNOWNCOMMAND,
 		ERR_NICKNAMEINUSE, ERR_ERRONEUSNICKNAME };
@@ -186,13 +115,4 @@ int			queue_code_reply(struct s_server *server,
 	server->queuenotif(server, dest, replystr);
 	free(replystr);
 	return (0);
-}
-
-void		server_msg_del(void *msgp, size_t size)
-{
-	struct s_server_msg *msg;
-
-	(void)size;
-	msg = msgp;
-	free(msg);
 }

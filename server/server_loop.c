@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server_loop.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:27:37 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:27:41 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 int	loop(struct s_server *self)
@@ -12,7 +24,6 @@ int	loop(struct s_server *self)
 		self->accept(self);
 		self->read(self);
 		self->send(self);
-		// self->pinginactive(self);
 	}
 	return (0);
 }

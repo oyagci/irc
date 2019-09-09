@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   irc_nick.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:27:40 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 #include "logger.h"
 
@@ -24,4 +36,3 @@ int	irc_nick(struct s_client *c, char **params, int nparams)
 	ft_strncpy(c->nickname, nick, NICK_SIZE);
 	return (0);
 }
-

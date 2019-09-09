@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   irc_privmsg.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:27:40 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 
 #include "server.h"
@@ -19,11 +31,8 @@ struct s_client	*server_get_client(struct s_server *server, char const *nick)
 	return (NULL);
 }
 
-/*
-** Send a message to every member of a channel
-*/
-int	server_send_channel(struct s_server *server, struct s_channel *chan,
-	char *msg)
+int				server_send_channel(struct s_server *server,
+	struct s_channel *chan, char *msg)
 {
 	t_list			*client;
 	struct s_client	*recipient;
@@ -38,11 +47,8 @@ int	server_send_channel(struct s_server *server, struct s_channel *chan,
 	return (0);
 }
 
-/*
-** Send a message to a channel or a nickname
-*/
-int	server_send_formated_message_to(struct s_server *server, char const *name,
-	char *msg)
+int				server_send_formated_message_to(struct s_server *server,
+	char const *name, char *msg)
 {
 	struct s_channel	*chan;
 	struct s_client		*client;
@@ -67,18 +73,15 @@ int	server_send_formated_message_to(struct s_server *server, char const *name,
 	return (0);
 }
 
-int	server_send_privmsg(struct s_server *server, struct s_client *from,
-		t_list *recipients, char const *msg)
+int				server_send_privmsg(struct s_server *server,
+		struct s_client *from, t_list *recipients, char const *msg)
 {
 	t_list	*elem;
 	char	*formated;
 	char	*recipient;
 
 	if (!msg)
-	{
-		LOG(LOGWARN, "%s", __FUNCTION__);
 		return (1);
-	}
 	elem = recipients;
 	while (elem)
 	{
@@ -92,7 +95,6 @@ int	server_send_privmsg(struct s_server *server, struct s_client *from,
 		ft_strlcat(formated, msg, 512);
 		ft_strlcat(formated, CRLF, 512);
 		LOG(LOGDEBUG, "%.9s to %s: %s", from->nickname, recipient, msg);
-		/* TODO: Handle ERR_NOSUCHNICK and ERR_CANNOTSENDTOCHAN */
 		server_send_formated_message_to(server, recipient, formated);
 		free(formated);
 		elem = elem->next;
@@ -100,7 +102,7 @@ int	server_send_privmsg(struct s_server *server, struct s_client *from,
 	return (0);
 }
 
-int	irc_privmsg(struct s_client *client, char **params, int nparams)
+int				irc_privmsg(struct s_client *client, char **params, int nparams)
 {
 	t_list	*recipients;
 
