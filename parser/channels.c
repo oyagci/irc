@@ -1,10 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   channels.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:56:20 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:56:25 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/includes/libft.h"
 #include "parser.h"
 #include <stdlib.h>
 
-/*
-** channels: <chanstr> *( "," <chanstr> )
-*/
 t_list		*channels(char *input)
 {
 	t_list	*chans;

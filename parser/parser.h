@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:56:20 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:56:25 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -65,5 +77,6 @@ void				msgto_del(t_list **lp);
 void				crlf_del(struct s_crlf **p);
 void				channels_del(t_list **chansp);
 void				params_del(struct s_params **paramsp);
+int					is_nospcrlfcl(unsigned char c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 11:52:49 by oyagci            #+#    #+#             */
-/*   Updated: 2019/08/09 11:52:20 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/09/09 14:56:25 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ struct s_crlf	*crlf(char const *input)
 	{
 		c = ft_memalloc(sizeof(*c));
 	}
-	return c;
+	return (c);
 }
 
-void crlf_del(struct s_crlf **c)
+void			crlf_del(struct s_crlf **c)
 {
 	if (*c)
 	{

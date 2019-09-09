@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chanstr.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:56:20 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:56:25 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/includes/libft.h"
 
-int		chanstr(char const *inputc, char **buffer)
+int	chanstr(char const *inputc, char **buffer)
 {
 	unsigned char const	*input;
 	int					ii;
@@ -11,11 +23,11 @@ int		chanstr(char const *inputc, char **buffer)
 		ii = 1;
 		while (input[ii] != '\0' &&
 				((input[ii] >= 0x01 && input[ii] <= 0x07) ||
-				 (input[ii] >= 0x08 && input[ii] <= 0x09) ||
-				 (input[ii] >= 0x0b && input[ii] <= 0x0c) ||
-				 (input[ii] >= 0x0e && input[ii] <= 0x1f) ||
-				 (input[ii] >= 0x2d && input[ii] <= 0x39) ||
-				 (input[ii] >= 0x3b)))
+					(input[ii] >= 0x08 && input[ii] <= 0x09) ||
+					(input[ii] >= 0x0b && input[ii] <= 0x0c) ||
+					(input[ii] >= 0x0e && input[ii] <= 0x1f) ||
+					(input[ii] >= 0x2d && input[ii] <= 0x39) ||
+					(input[ii] >= 0x3b)))
 		{
 			ii++;
 		}

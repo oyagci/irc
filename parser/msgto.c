@@ -1,14 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   msgto.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 14:56:20 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 14:56:25 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft/includes/libft.h"
 #include "parser.h"
 #include "../logger.h"
 #include <stdlib.h>
 
-/*
-** msgtarget  =  msgto *( "," msgto )
-** msgto      =  channel / ( user [ "%" host ] "@" servername )
-** msgto      =/ ( user "%" host ) / targetmask
-** msgto      =/ nickname / ( nickname "!" user "@" host )
-*/
 int			msgto(char *input, t_list **listbuf)
 {
 	char	*buf;
@@ -34,7 +40,7 @@ int			msgto(char *input, t_list **listbuf)
 	return (0);
 }
 
-void	msgto_del(t_list **lp)
+void		msgto_del(t_list **lp)
 {
 	t_list	*l;
 	t_list	*next;
