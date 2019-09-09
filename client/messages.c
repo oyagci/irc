@@ -51,7 +51,7 @@ int		client_queuemsg(struct s_client *const self, char *msg)
 }
 
 int		client_message(struct s_client *const self,
-					   struct s_client_msg const *const cmd)
+	struct s_client_msg const *const cmd)
 {
 	char	*msg;
 
