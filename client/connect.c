@@ -46,9 +46,9 @@ static void	set_usercmd(struct s_client_msg *msg)
 	msg->cmd = CMD_USER;
 	msg->nparam = 4;
 	ft_strcpy(msg->params[0], "TODO");
-	ft_strcpy(msg->params[0], "*");
-	ft_strcpy(msg->params[0], "*");
-	ft_strcpy(msg->params[0], "Todo TODO");
+	ft_strcpy(msg->params[1], "*");
+	ft_strcpy(msg->params[2], "*");
+	ft_strcpy(msg->params[3], "Todo TODO");
 }
 
 static int	register_conn(struct s_client *const self)

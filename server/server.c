@@ -55,23 +55,18 @@ int			execute_command(struct s_client *c, char const *const cmd)
 	struct s_irc_cmds	cmds[9];
 	size_t				ii;
 	struct s_message	*msg;
-	int					validcmd;
 	int					err;
 
 	set_cmds(cmds);
 	if (!(msg = message(cmd)))
 		return (0);
-	validcmd = 0;
 	err = 0;
 	ii = 0;
 	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))
 	{
 		if (ft_strequ(cmds[ii].name, msg->cmd->data))
-		{
-			validcmd = 1;
 			err = cmds[ii].f(c, msg->params->param,
 				nparams(msg->params->param));
-		}
 		ii++;
 	}
 	message_del(&msg);
