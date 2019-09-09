@@ -51,7 +51,7 @@ void				set_param(char *buf, char const *input,
 	char	tmp[255];
 
 	ft_memset(tmp, 0, sizeof(tmp));
-	ft_strlcpy(tmp, input + start, end - start);
+	ft_strncpy(tmp, input + start, end - start);
 	ft_strlcpy(buf, tmp, 255);
 }
 
