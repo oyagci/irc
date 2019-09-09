@@ -18,7 +18,7 @@ void		catnick(char *s, char const *nick, size_t slen, size_t nlen)
 	while (s[i] != 0 && i < slen)
 		i++;
 	s += i;
-	if(slen - i >= nlen + 1)
+	if (slen - i >= nlen + 1)
 	{
 		j = 0;
 		while (j < nlen && j + i < slen)
@@ -30,15 +30,22 @@ void		catnick(char *s, char const *nick, size_t slen, size_t nlen)
 	}
 }
 
+static void	set_usercmd(struct s_client_msg *msg)
+{
+	msg->cmd = CMD_USER;
+	msg->nparam = 4;
+	ft_strcpy(msg->params[0], "TODO");
+	ft_strcpy(msg->params[0], "*");
+	ft_strcpy(msg->params[0], "*");
+	ft_strcpy(msg->params[0], "Todo TODO");
+}
+
 static int	register_conn(struct s_client *const self)
 {
 	char				*msg;
-	struct s_client_msg	usercmd = {
-		.cmd = CMD_USER,
-		.nparam = 4,
-		.params = { "TODO", "*", "*", "Todo TODO" },
-	};
+	struct s_client_msg usercmd;
 
+	set_usercmd(&usercmd);
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
@@ -52,14 +59,15 @@ static int	register_conn(struct s_client *const self)
 	return (0);
 }
 
-static int	do_conn(struct s_client *self, char const *addr, char const *portstr,
-	int portno)
+static int	do_conn(struct s_client *self, char const *addr,
+	char const *portstr, int portno)
 {
-	struct addrinfo		*server = NULL;
+	struct addrinfo		*server;
 	struct addrinfo		hints;
 	int					ret;
 	int					gaierr;
 
+	server = NULL;
 	ret = -1;
 	printf(" - Connecting to %s:%d\n", addr, portno);
 	ft_bzero(&hints, sizeof(hints));
@@ -68,12 +76,10 @@ static int	do_conn(struct s_client *self, char const *addr, char const *portstr,
 	if ((gaierr = getaddrinfo(addr, portstr, &hints, &server)) != 0)
 		LOG(LOGERR, "getaddrinfo: %s", gai_strerror(gaierr));
 	else if (-1 == (self->servsock = socket(server->ai_family,
-				server->ai_socktype,
-				server->ai_protocol)))
+				server->ai_socktype, server->ai_protocol)))
 		LOG(LOGERR, "Could not create socket (%s)", strerror(errno));
 	else if (connect(self->servsock, server->ai_addr, server->ai_addrlen) < 0)
-		printf(" - Could not connect to %s:%d (%s)\n", addr, portno,
-				strerror(errno));
+		printf(" - Could not connect to %s:%d\n", addr, portno);
 	else
 	{
 		printf(" - Connected to %s\n", addr);
@@ -83,8 +89,8 @@ static int	do_conn(struct s_client *self, char const *addr, char const *portstr,
 	return (ret);
 }
 
-int			client_connect(struct s_client *const self, 
-					   struct s_client_msg const *const cmd)
+int			client_connect(struct s_client *const self,
+	struct s_client_msg const *const cmd)
 {
 	unsigned short	portno;
 	int				ret;
