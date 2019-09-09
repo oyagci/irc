@@ -1,7 +1,7 @@
 #include "client.h"
 
 int		client_who(struct s_client *const self,
-				   struct s_client_msg const *const cmd)
+	struct s_client_msg const *const cmd)
 {
 	char	*msg;
 
@@ -15,8 +15,6 @@ int		client_who(struct s_client *const self,
 	if (!msg)
 		return (-1);
 	ft_strlcat(msg, "WHO", 513);
-//	ft_strlcat(msg, " ", 513);
-//	ft_strlcat(msg, cmd->params[0], 513);
 	ft_strlcat(msg, CRLF, 513);
 	self->queuemsg(self, msg);
 	return (0);
