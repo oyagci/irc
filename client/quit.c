@@ -1,6 +1,7 @@
 #include "client.h"
 
-int		quit(struct s_client *const self, struct s_client_msg const *const clientmsg)
+int		quit(struct s_client *const self,
+	struct s_client_msg const *const clientmsg)
 {
 	char	*msg;
 
