@@ -82,4 +82,3 @@ int			read_notif(struct s_client *const self)
 	}
 	return (0);
 }
-
