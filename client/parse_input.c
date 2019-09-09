@@ -12,7 +12,6 @@
 
 #include "client.h"
 #include <stdio.h>
-#include "logger.h"
 #include "libft.h"
 #include <stdlib.h>
 

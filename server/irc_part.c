@@ -11,9 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
 #include "server.h"
-#include "logger.h"
 
 int				irc_part(struct s_client *client, char **params, int nparam)
 {
@@ -29,7 +27,6 @@ int				irc_part(struct s_client *client, char **params, int nparam)
 		s->queuecode(s, client, ERR_NEEDMOREPARAM);
 		return (0);
 	}
-	LOG(LOGDEBUG, "%s PART %s", client->nickname, params[0]);
 	chan = s->get_channel(s, params[0]);
 	if (chan)
 	{

@@ -12,12 +12,11 @@
 
 #include <unistd.h>
 #include <sys/socket.h>
-#include "client.h"
 #include <cbuf.h>
-#include "logger.h"
 #include <errno.h>
-#include "libft.h"
 #include <stdlib.h>
+#include "libft.h"
+#include "client.h"
 
 static int	read_input(struct s_client *const self)
 {
@@ -63,10 +62,7 @@ int			client_run(struct s_client *const self)
 		t.tv_sec = 0;
 		t.tv_usec = 10000;
 		if (select(self->servsock + 1, &self->readfds, NULL, NULL, &t) < 0)
-		{
-			LOG(LOGERR, "select has failed");
 			return (-1);
-		}
 		if (read_notif(self) < 0 || read_input(self) < 0)
 			return (-1);
 		self->sendmsgs(self);

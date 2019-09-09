@@ -13,6 +13,7 @@
 #include "client.h"
 #include <stdlib.h>
 #include <sys/socket.h>
+#include <stdio.h>
 
 void	client_del_msg(void *content, size_t size)
 {
@@ -41,10 +42,7 @@ int		client_sendmsgs(struct s_client *const self)
 		else if (ret > 0)
 			ft_memmove(str, str + ret, ft_strlen(str + ret));
 		else
-		{
-			LOG(LOGDEBUG, "%s: could not send message", __FUNCTION__);
 			return (-1);
-		}
 	}
 	return (0);
 }

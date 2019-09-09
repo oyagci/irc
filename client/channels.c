@@ -53,7 +53,6 @@ int				channels_addnick(struct s_channels *self,
 	c = self->get(self, chan);
 	if (!c)
 	{
-		LOG(LOGDEBUG, "Creating channel %s", chan);
 		c = self->create(chan);
 		self->add(self, c);
 	}

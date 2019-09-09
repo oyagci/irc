@@ -1,5 +1,17 @@
-#ifndef REPLY_CODES
-# define REPLY_CODES
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reply_codes.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/09 15:13:41 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/09 15:13:42 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef REPLY_CODES_H
+# define REPLY_CODES_H
 
 # define ERR_NOSUCHNICK			401
 # define ERR_NOSUCHCHANNEL		403

@@ -12,7 +12,6 @@
 
 #include "libft.h"
 #include "server.h"
-#include "logger.h"
 #include <stdlib.h>
 
 int		client_in_channel(struct s_client const *const client,
@@ -50,8 +49,6 @@ int		channel_add_client(struct s_channel *channel, struct s_client *client)
 	if (!client_in_channel(client, channel))
 	{
 		ft_lstpush(&channel->clients, elem);
-		LOG(LOGDEBUG, "Client %s added to channel %.50s", client->nickname,
-			channel->name);
 	}
 	else
 	{

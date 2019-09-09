@@ -20,35 +20,33 @@
 ** Helper structs for parsing
 */
 
-struct s_message
+struct				s_message
 {
-	struct s_prefix		*prefix; struct s_command	*cmd;
+	struct s_prefix		*prefix;
+	struct s_command	*cmd;
 	struct s_params		*params;
 	struct s_crlf		*crlf;
 	size_t				len;
 };
 
-struct s_prefix
+struct				s_prefix
 {
 	char				*data;
 	size_t				len;
 };
 
-struct s_command
+struct				s_command
 {
 	char	*data;
 	size_t	len;
 };
 
-struct s_crlf
+struct				s_crlf
 {
+	char c;
 };
 
-/*
-** RFC2812 tells us that the maximum number of parameters
-** per message is 15 (fifteen)
-*/
-struct s_params
+struct				s_params
 {
 	char	*param[15];
 	size_t	len;

@@ -12,7 +12,6 @@
 
 #include "server.h"
 #include <time.h>
-#include "logger.h"
 
 int		updatetimeout(struct s_server *self)
 {
@@ -28,7 +27,6 @@ int		updatetimeout(struct s_server *self)
 		if (client->timeout.tv_sec != 0 &&
 			current.tv_sec >= client->timeout.tv_sec)
 		{
-			LOG(LOGDEBUG, "Sending QUIT notification...");
 			self->quit(self, client, "Ping timeout exceeded");
 			ft_memset(&client->timeout, 0, sizeof(client->timeout));
 		}
@@ -44,8 +42,6 @@ void	set_timeout(struct s_client *c, unsigned sec)
 	clock_gettime(CLOCK_REALTIME, &t);
 	c->timeout.tv_sec = t.tv_sec + sec;
 	c->timeout.tv_nsec = 0;
-	LOG(LOGDEBUG, "Timeout set to %ld (current time is %ld)",
-		c->timeout.tv_sec, t.tv_sec);
 }
 
 int		pinginactive(struct s_server *self)

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "server.h"
-#include "logger.h"
 #include <stdlib.h>
 #include <unistd.h>
 

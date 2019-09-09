@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "server.h"
-#include "logger.h"
 
 int	irc_user(struct s_client *c, char **params, int nparams)
 {

@@ -32,15 +32,13 @@ SOURCES		:= \
 	user.c \
 	leave.c \
 	who.c \
-	join.c \
-	../logger.c
+	join.c
 
 HEADERS		:= \
 	client.h \
 	channels.h \
 	../parser/parser.h \
-	../reply_codes.h \
-	../logger.h
+	../reply_codes.h
 
 OBJS 		:= $(SOURCES:.c=.o)
 OUTDIR		:= ../bin

@@ -12,6 +12,7 @@
 
 #include "client.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int		eventjoin(struct s_client *const self, struct s_message const *const m)
 {
@@ -23,7 +24,6 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 	ret = nickname(m->prefix->data, &nick);
 	if (nick)
 	{
-		LOG(LOGDEBUG, "%s %s", nick, self->nickname);
 		if (m->params && m->params->param[0])
 		{
 			self->channels.addnick(&self->channels, nick, chan);

@@ -41,14 +41,12 @@ SOURCES		:= \
 	quit.c \
 	get_client.c \
 	del_client.c \
-	../logger.c \
 	replies/rpl_welcome.c \
 	replies/err_unknowncmd.c \
 	replies/err_nickinuse.c \
 	replies/err_erroneusnick.c
 HEADERS		:= \
 	server.h \
-	../logger.h \
 	../reply_codes.h \
 	../parser/parser.h
 OBJS 		:= $(SOURCES:.c=.o)

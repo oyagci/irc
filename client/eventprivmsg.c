@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "client.h"
+#include <stdio.h>
 
 int		eventprivmsg(struct s_client *const self,
 	struct s_message const *const m)

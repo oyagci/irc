@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "client.h"
-#include "logger.h"
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -86,10 +85,10 @@ static int	do_conn(struct s_client *self, char const *addr,
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	if ((gaierr = getaddrinfo(addr, portstr, &hints, &server)) != 0)
-		LOG(LOGERR, "getaddrinfo: %s", gai_strerror(gaierr));
+		printf("getaddrinfo\n");
 	else if (-1 == (self->servsock = socket(server->ai_family,
 				server->ai_socktype, server->ai_protocol)))
-		LOG(LOGERR, "Could not create socket (%s)", strerror(errno));
+		printf("Could not create socket\n");
 	else if (connect(self->servsock, server->ai_addr, server->ai_addrlen) < 0)
 		printf(" - Could not connect to %s:%d\n", addr, portno);
 	else

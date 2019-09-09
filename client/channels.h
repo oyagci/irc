@@ -14,7 +14,6 @@
 # define CHANNELS_H
 
 # include <libft.h>
-# include "logger.h"
 
 struct				s_chan
 {

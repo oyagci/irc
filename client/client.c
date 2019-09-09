@@ -12,7 +12,6 @@
 
 #include "libft.h"
 #include "client.h"
-#include "logger.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +26,8 @@
 
 #include <netdb.h>
 
-int	rpl_welcome(struct s_client *const self, struct s_message const *const msg)
+int		rpl_welcome(struct s_client *const self,
+	struct s_message const *const msg)
 {
 	(void)self;
 	if (msg->params->param[0])
@@ -38,9 +38,9 @@ int	rpl_welcome(struct s_client *const self, struct s_message const *const msg)
 }
 
 int		client_execute_command(struct s_client *const self,
-							   struct s_client_msg const *const cmd)
+	struct s_client_msg const *const cmd)
 {
-	const struct s_tuple_cmds cmds[] = {
+	const struct s_tuple_cmds	cmds[] = {
 		{ .cmd = CMD_CONNECT, .f = self->connect },
 		{ .cmd = CMD_NICK, .f = self->nick },
 		{ .cmd = CMD_JOIN, .f = self->join },
@@ -50,18 +50,12 @@ int		client_execute_command(struct s_client *const self,
 		{ .cmd = CMD_WHO, .f = self->who },
 		{ .cmd = CMD_QUIT, .f = self->quit },
 	};
-	size_t					ii;
+	size_t						ii;
 
 	if (!self)
-	{
-		LOG(LOGWARN, "%s: self == NULL", __FUNCTION__);
 		return (-1);
-	}
 	if (!cmd)
-	{
-		LOG(LOGWARN, "%s: msg == NULL", __FUNCTION__);
 		return (-1);
-	}
 	ii = 0;
 	while (ii < sizeof(cmds) / sizeof(*cmds))
 	{
@@ -70,16 +64,15 @@ int		client_execute_command(struct s_client *const self,
 		ii++;
 	}
 	return (0);
-};
+}
 
-int	main(void)
+int		main(void)
 {
 	struct s_client		client;
 
 	signal(SIGPIPE, SIG_IGN);
 	if (client_init(&client) < 0)
 	{
-		LOG(LOGERR, "Could not initialize client!");
 		return (EXIT_FAILURE);
 	}
 	if (client.run(&client) < 0)

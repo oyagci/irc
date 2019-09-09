@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "client.h"
+#include <stdio.h>
 
 int		client_who(struct s_client *const self,
 	struct s_client_msg const *const cmd)

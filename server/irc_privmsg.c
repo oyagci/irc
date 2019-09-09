@@ -11,9 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
 #include "server.h"
-#include "logger.h"
 
 struct s_client	*server_get_client(struct s_server *server, char const *nick)
 {
@@ -60,7 +58,6 @@ int				server_send_formated_message_to(struct s_server *server,
 			server_send_channel(server, chan, msg);
 		else
 		{
-			LOG(LOGDEBUG, "No channel named %s", name);
 			return (ERR_CANNOTSENDTOCHAN);
 		}
 	}
@@ -94,7 +91,6 @@ int				server_send_privmsg(struct s_server *server,
 		ft_strlcat(formated, " :", 512);
 		ft_strlcat(formated, msg, 512);
 		ft_strlcat(formated, CRLF, 512);
-		LOG(LOGDEBUG, "%.9s to %s: %s", from->nickname, recipient, msg);
 		server_send_formated_message_to(server, recipient, formated);
 		free(formated);
 		elem = elem->next;

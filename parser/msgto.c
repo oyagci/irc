@@ -12,7 +12,6 @@
 
 #include "../libft/includes/libft.h"
 #include "parser.h"
-#include "../logger.h"
 #include <stdlib.h>
 
 int			msgto(char *input, t_list **listbuf)

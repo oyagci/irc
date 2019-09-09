@@ -15,7 +15,6 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <stdio.h>
-#include "logger.h"
 #include <stdlib.h>
 #include <cbuf.h>
 
@@ -108,10 +107,7 @@ int			queue_code_reply(struct s_server *server,
 
 	replystr = server_format_reply(dest, reply_code);
 	if (!replystr)
-	{
-		LOG(LOGWARN, "Reply code %d not handled", reply_code);
 		return (-1);
-	}
 	server->queuenotif(server, dest, replystr);
 	free(replystr);
 	return (0);

@@ -16,7 +16,6 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <stdio.h>
-#include "logger.h"
 #include <time.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -49,8 +48,6 @@ int		accept_new_clients(struct s_server *server)
 	if (FD_ISSET(server->sockfd, &server->readfds))
 	{
 		confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
-		LOG(LOGDEBUG, "%s: connected on fd %d", inet_ntoa(cli_addr.sin_addr),
-			confd);
 		setnosigpipe();
 		if (!(client = ft_memalloc(sizeof(*client))))
 			exit(EXIT_FAILURE);

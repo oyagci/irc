@@ -13,7 +13,6 @@
 #include "server.h"
 #include <libft.h>
 #include <unistd.h>
-#include "logger.h"
 
 void	remove_from_all_channels(struct s_client *const c)
 {
@@ -32,7 +31,6 @@ void	remove_from_all_channels(struct s_client *const c)
 
 int		irc_quit(struct s_client *c, char **params, int nparams)
 {
-	LOG(LOGDEBUG, "QUIT");
 	(void)params;
 	(void)nparams;
 	remove_from_all_channels(c);

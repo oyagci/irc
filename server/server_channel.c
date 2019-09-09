@@ -14,7 +14,6 @@
 
 #include "server.h"
 #include "libft/includes/libft.h"
-#include "logger.h"
 
 struct s_channel	*new_channel(struct s_server *server,
 	char const *name, int mode)
@@ -41,7 +40,6 @@ struct s_channel	*new_channel(struct s_server *server,
 	elem = ft_lstnew(0, 0);
 	elem->content = chan;
 	ft_lstpush(&server->channels, elem);
-	LOG(LOGDEBUG, "Channel %s has been created", chan->name);
 	return (chan);
 }
 
@@ -82,12 +80,8 @@ int					add_to_chan(struct s_server *server,
 	}
 	if (!chan)
 	{
-		LOG(LOGDEBUG, "No channel named '%s' found. Creating channel...",
-			channame);
 		chan = server->new_channel(server, channame, 0);
 	}
-	else
-		LOG(LOGDEBUG, "Channel %.50s found", chan->name);
 	if (!channel_add_client(chan, client))
 		server_tell_new_client(server, client, chan);
 	return (0);

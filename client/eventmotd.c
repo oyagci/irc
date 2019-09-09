@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "client.h"
+#include <stdio.h>
 
 int	eventmotd(struct s_client *const self, struct s_message const *const cmd)
 {

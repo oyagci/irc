@@ -25,10 +25,7 @@ static int	do_buffered_event(struct s_client *const client)
 	while (i < 512)
 	{
 		if (cbuf_get(client->cbuf, &data) < 0)
-		{
-			LOG(LOGDEBUG, "cbuf_get < 0");
 			break ;
-		}
 		buf[i] = data;
 		if (buf[i] == '\n')
 			break ;
@@ -61,10 +58,7 @@ static int	bufferise_events(struct s_client *client, char *buf, int buflen)
 	while (ii < buflen)
 	{
 		if (cbuf_put2(client->cbuf, buf[ii]) < 0)
-		{
-			LOG(LOGDEBUG, "buffer full");
 			return (-1);
-		}
 		if (buf[ii] == '\n')
 			nevent += 1;
 		ii++;
@@ -87,10 +81,7 @@ int			read_notif(struct s_client *const self)
 			do_all_buffered_events(self, nevent);
 		}
 		else if (ret < 0)
-		{
-			LOG(LOGERR, "recv has failed (%s)", strerror(errno));
 			return (-1);
-		}
 	}
 	return (0);
 }

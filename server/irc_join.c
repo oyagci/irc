@@ -12,7 +12,6 @@
 
 #include "libft.h"
 #include "server.h"
-#include "logger.h"
 #include <stdlib.h>
 
 int	server_tell_new_client(struct s_server *server, struct s_client *client,
@@ -61,7 +60,6 @@ int	irc_join(struct s_client *client, char **params, int nparams)
 	while (l)
 	{
 		chan = l->content;
-		LOG(LOGDEBUG, "%s joins channel %s", client->nickname, chan);
 		client->server->add_to_chan(client->server, client, chan);
 		l = l->next;
 	}

@@ -16,7 +16,6 @@
 #include <string.h>
 
 #include "server.h"
-#include "logger.h"
 #include "libft.h"
 
 int			nparams(char **params)
