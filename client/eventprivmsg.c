@@ -1,6 +1,7 @@
 #include "client.h"
 
-int		eventprivmsg(struct s_client *const self, struct s_message const *const m)
+int		eventprivmsg(struct s_client *const self,
+	struct s_message const *const m)
 {
 	char	*from;
 	char	*msg;
