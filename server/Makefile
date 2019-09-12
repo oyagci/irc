@@ -41,6 +41,7 @@ SOURCES		:= \
 	quit.c \
 	get_client.c \
 	del_client.c \
+	update_clients.c \
 	replies/rpl_welcome.c \
 	replies/err_unknowncmd.c \
 	replies/err_nickinuse.c \

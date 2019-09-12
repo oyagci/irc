@@ -72,6 +72,8 @@ struct						s_client
 	char					*username;
 	char					*realname;
 
+	short					should_be_freed;
+
 	struct s_server			*server;
 };
 
@@ -91,8 +93,8 @@ struct						s_server
 	int						(*accept)(struct s_server *const self);
 	int						(*read)(struct s_server *const self);
 	int						(*send)(struct s_server *const self);
-	int						(*exec_cmd)(struct s_client *c,
-								char const *const cmd);
+	int						(*exec_cmd)(struct s_server *const self,
+								struct s_client *c, char const *const cmd);
 	int						(*quit)(struct s_server *self,
 								struct s_client *client,
 								const char *const msg);
@@ -116,6 +118,7 @@ struct						s_server
 								char const *const nickname);
 	void					(*del_client)(struct s_server *self,
 								struct s_client *c);
+	int						(*update_clients)(struct s_server *self);
 };
 
 struct						s_server_msg
@@ -128,8 +131,8 @@ struct						s_server_msg
 int							server_init(struct s_server *server,
 								unsigned int port);
 int							set_fds(struct s_server *server);
-int							execute_command(struct s_client *c,
-								char const *const cmd);
+int							execute_command(struct s_server *self,
+								struct s_client *c, char const *const cmd);
 int							read_clients_command(struct s_server *const self);
 int							server_read_clients_command(
 								struct s_server *const server);
@@ -234,5 +237,6 @@ int							err_nickinuse(char *buf, size_t buflen,
 								struct s_client const *c);
 int							err_erroneusnick(char *buf, size_t buflen,
 							struct s_client const *c);
+int							update_clients(struct s_server *self);
 
 #endif

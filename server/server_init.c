@@ -38,6 +38,7 @@ static int	init_methods(struct s_server *s)
 	s->quit = &quit;
 	s->get_client = &get_client;
 	s->del_client = &del_client;
+	s->update_clients = update_clients;
 	return (0);
 }
 

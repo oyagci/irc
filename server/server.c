@@ -18,7 +18,7 @@
 #include "server.h"
 #include "libft.h"
 
-int			nparams(char **params)
+int								nparams(char **params)
 {
 	int ii;
 
@@ -28,41 +28,37 @@ int			nparams(char **params)
 	return (ii);
 }
 
-static void	set_cmds(struct s_irc_cmds cmds[9])
+static struct s_irc_cmds const	*get_cmd_funcs(void)
 {
-	cmds[0].name = "PASS";
-	cmds[0].f = irc_pass;
-	cmds[1].name = "NICK";
-	cmds[1].f = irc_nick;
-	cmds[2].name = "USER";
-	cmds[2].f = irc_user;
-	cmds[3].name = "JOIN";
-	cmds[3].f = irc_join;
-	cmds[4].name = "PART";
-	cmds[4].f = irc_part;
-	cmds[5].name = "WHO";
-	cmds[5].f = irc_who;
-	cmds[6].name = "PONG";
-	cmds[6].f = irc_pong;
-	cmds[7].name = "QUIT";
-	cmds[7].f = irc_quit;
-	cmds[8].name = "PRIVMSG";
-	cmds[8].f = irc_privmsg;
+	static struct s_irc_cmds const all[] = {
+		{ .name = "PASS", .f = irc_pass },
+		{ .name = "NICK", .f = irc_nick },
+		{ .name = "USER", .f = irc_user },
+		{ .name = "JOIN", .f = irc_join },
+		{ .name = "PART", .f = irc_part },
+		{ .name = "WHO", .f = irc_who },
+		{ .name = "PONG", .f = irc_pong },
+		{ .name = "QUIT", .f = irc_quit },
+		{ .name = "PRIVMSG", .f = irc_privmsg }
+	};
+
+	return (all);
 }
 
-int			execute_command(struct s_client *c, char const *const cmd)
+int								execute_command(
+	struct s_server *self, struct s_client *c, char const *const cmd)
 {
-	struct s_irc_cmds	cmds[9];
-	size_t				ii;
-	struct s_message	*msg;
-	int					err;
+	struct s_irc_cmds const	*cmds;
+	size_t					ii;
+	struct s_message		*msg;
+	int						err;
 
-	set_cmds(cmds);
+	cmds = get_cmd_funcs();
 	if (!(msg = message(cmd)))
 		return (0);
 	err = 0;
 	ii = 0;
-	while (ii < sizeof(cmds) / sizeof(struct s_irc_cmds))
+	while (ii < 9)
 	{
 		if (ft_strequ(cmds[ii].name, msg->cmd->data))
 			err = cmds[ii].f(c, msg->params->param,
@@ -71,10 +67,11 @@ int			execute_command(struct s_client *c, char const *const cmd)
 	}
 	message_del(&msg);
 	err ? 0 : c->server->queuecode(c->server, c, err);
+	self->update_clients(self);
 	return (0);
 }
 
-int			main(int ac, char *av[])
+int								main(int ac, char *av[])
 {
 	struct s_server		server;
 

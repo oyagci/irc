@@ -55,7 +55,7 @@ static void	do_command(struct s_server *self, struct s_client *client)
 			break ;
 		ii += 1;
 	}
-	self->exec_cmd(client, buf);
+	self->exec_cmd(self, client, buf);
 }
 
 int			read_clients_command(struct s_server *const self)
