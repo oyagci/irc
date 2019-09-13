@@ -31,7 +31,8 @@ int		set_fds(struct s_server *server)
 	{
 		client = cur->content;
 		FD_SET(client->fd, &server->readfds);
-		FD_SET(client->fd, &server->writefds);
+		if (client->nmsg > 0)
+			FD_SET(client->fd, &server->writefds);
 		if (client->fd > max_fd)
 			max_fd = client->fd;
 		cur = cur->next;

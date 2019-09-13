@@ -63,6 +63,7 @@ struct						s_client
 	struct timespec			timeout;
 	t_cbuf_handle			cbuf;
 	uint8_t					*raw_buffer;
+	unsigned int			nmsg;
 
 	short					is_connected;
 	short					is_registered;
@@ -99,9 +100,9 @@ struct						s_server
 								struct s_client *client,
 								const char *const msg);
 	int						(*queuecode)(struct s_server *self,
-								struct s_client const *const dest, int code);
+								struct s_client *const dest, int code);
 	int						(*queuenotif)(struct s_server *self,
-								struct s_client const *const dest, char *msg);
+								struct s_client *const dest, char *msg);
 	int						(*rm_from_chan)(char *const nick,
 								struct s_channel *chan);
 	struct s_channel		*(*new_channel)(struct s_server *self,
@@ -184,11 +185,9 @@ int							loop(struct s_server *server);
 
 int							send_queued_replies(struct s_server *const server);
 int							queue_reply(struct s_server *server,
-								struct s_client const *const dest,
-								char *reply);
+								struct s_client *const dest, char *reply);
 int							queue_code_reply(struct s_server *server,
-								struct s_client const *const dest,
-								int reply_code);
+								struct s_client *const dest, int reply_code);
 
 int							add_to_chan(struct s_server *server,
 								struct s_client *client,

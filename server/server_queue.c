@@ -46,6 +46,7 @@ int			send_queued_replies(struct s_server *const server)
 		if (dest && FD_ISSET(dest->fd, &server->writefds))
 		{
 			send(dest->fd, msg->msg, msg->len, 0);
+			dest->nmsg -= 1;
 			prev ? (prev->next = msgelem->next) :
 				(server->msgqueue = msgelem->next);
 			ft_lstdelone(&msgelem, &server_msg_del);
@@ -81,7 +82,7 @@ static char	*server_format_reply(struct s_client const *const c, int reply_code)
 }
 
 int			queue_reply(struct s_server *server,
-				struct s_client const *const dest, char *reply)
+				struct s_client *const dest, char *reply)
 {
 	t_list				*elem;
 	struct s_server_msg	*msg;
@@ -91,6 +92,7 @@ int			queue_reply(struct s_server *server,
 		exit(EXIT_FAILURE);
 		return (-1);
 	}
+	dest->nmsg += 1;
 	ft_strlcpy(msg->dest, dest->nickname, NICK_SIZE);
 	ft_strlcpy(msg->msg, reply, 512);
 	msg->len = ft_strlen(msg->msg);
@@ -101,7 +103,7 @@ int			queue_reply(struct s_server *server,
 }
 
 int			queue_code_reply(struct s_server *server,
-	struct s_client const *const dest, int reply_code)
+	struct s_client *const dest, int reply_code)
 {
 	char				*replystr;
 
