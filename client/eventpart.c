@@ -21,7 +21,7 @@ int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 
 	nick = NULL;
 	chan = NULL;
-	nickname(cmd->prefix->data, &nick);
+	nickname(cmd->prefix.data, &nick);
 	chan = cmd->params->param[0];
 	if (nick && chan)
 	{

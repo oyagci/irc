@@ -32,34 +32,20 @@ int				user(unsigned char const *input, char **buffer)
 	return (ii);
 }
 
-struct s_prefix	*prefix(char const *input)
+int				prefix(struct s_prefix *p, char const *input)
 {
-	struct s_prefix	*p;
 	int				ii;
 
-	p = ft_memalloc(sizeof(*p));
-	if (!p)
-		return (NULL);
 	ii = 0;
 	if (input[0] != '.')
 		while (input[ii] != ' ' && input[ii] != 0)
 			ii++;
-	p->data = ft_strndup((char *)input, ii);
-	p->len = ii;
-	if (!p->data)
+	if (ii < (int)sizeof(p->data))
 	{
-		free(p);
-		return (NULL);
+		ft_strncpy(p->data, input, ii);
+		p->len = ii;
 	}
-	return (p);
-}
-
-void			prefix_del(struct s_prefix **p)
-{
-	if (*p)
-	{
-		free((*p)->data);
-		free(*p);
-		*p = NULL;
-	}
+	if (ii == 0)
+		return (-1);
+	return (0);
 }

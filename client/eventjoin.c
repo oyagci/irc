@@ -21,7 +21,7 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 	char const *const	chan = m->params->param[0];
 
 	nick = NULL;
-	ret = nickname(m->prefix->data, &nick);
+	ret = nickname(m->prefix.data, &nick);
 	if (nick)
 	{
 		if (m->params && m->params->param[0])

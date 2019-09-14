@@ -35,13 +35,12 @@ struct s_message	*message(char const *input)
 	if (input[0] == ':')
 	{
 		input += 1;
-		msg->prefix = prefix(input);
-		if (!msg->prefix || input[msg->prefix->len] != ' ')
+		if (prefix(&msg->prefix, input) < 0 || input[msg->prefix.len] != ' ')
 		{
 			message_del(&msg);
 			return (NULL);
 		}
-		input += msg->prefix->len + 1;
+		input += msg->prefix.len + 1;
 	}
 	if (!(msg->cmd = command(input)))
 		message_del(&msg);
@@ -54,7 +53,6 @@ void				message_del(struct s_message **msg)
 {
 	if (*msg)
 	{
-		prefix_del(&((*msg)->prefix));
 		command_del(&((*msg)->cmd));
 		params_del(&((*msg)->params));
 		crlf_del(&((*msg)->crlf));
