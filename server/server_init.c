@@ -57,13 +57,9 @@ int			server_init(struct s_server *server, unsigned int port)
 	serv_addr.sin_port = htons(port);
 	if (-1 == bind(server->sockfd, (struct sockaddr *)&serv_addr,
 		sizeof(serv_addr)))
-	{
 		exit(EXIT_FAILURE);
-	}
 	if (-1 == listen(server->sockfd, MAX_CONN))
-	{
 		exit(EXIT_FAILURE);
-	}
 	printf("Server started on port %u\n", port);
 	return (0);
 }
