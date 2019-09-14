@@ -24,15 +24,16 @@ int		client_event(struct s_client *const self, char const *const data)
 		{ .s = "375", .f = self->eventmotd },
 	};
 	size_t						ii;
-	struct s_message			*msg;
+	struct s_message			msg;
 
-	if (!(msg = message(data)))
+	ft_memset(&msg, 0, sizeof(msg));
+	if (message(&msg, data) < 0)
 		return (0);
 	ii = 0;
 	while (ii < sizeof(events) / sizeof(*events))
 	{
-		if (ft_strequ(events[ii].s, msg->cmd.data))
-			events[ii].f(self, msg);
+		if (ft_strequ(events[ii].s, msg.cmd.data))
+			events[ii].f(self, &msg);
 		ii += 1;
 	}
 	message_del(&msg);

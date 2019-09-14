@@ -50,19 +50,20 @@ int								execute_command(
 {
 	struct s_irc_cmds const	*cmds;
 	size_t					ii;
-	struct s_message		*msg;
+	struct s_message		msg;
 	int						err;
 
 	cmds = get_cmd_funcs();
-	if (!(msg = message(cmd)))
+	ft_memset(&msg, 0, sizeof(msg));
+	if (message(&msg, cmd) < 0)
 		return (0);
 	err = 0;
 	ii = 0;
 	while (ii < 9)
 	{
-		if (ft_strequ(cmds[ii].name, msg->cmd.data))
-			err = cmds[ii].f(c, msg->params->param,
-				nparams(msg->params->param));
+		if (ft_strequ(cmds[ii].name, msg.cmd.data))
+			err = cmds[ii].f(c, msg.params->param,
+				nparams(msg.params->param));
 		ii++;
 	}
 	message_del(&msg);

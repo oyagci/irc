@@ -53,7 +53,7 @@ struct				s_params
 	size_t	nparam;
 };
 
-struct s_message	*message(char const *input);
+int					message(struct s_message *msg, char const *input);
 int					prefix(struct s_prefix *p, char const *input);
 int					command(struct s_command *const cmd, char const *input);
 struct s_crlf		*crlf(char const *input);
@@ -69,7 +69,7 @@ int					chanstr(char const *inputc, char **buffer);
 int					msgto(char *input, t_list **listbuf);
 
 void				command_del(struct s_command *cmd);
-void				message_del(struct s_message **msg);
+void				message_del(struct s_message *msg);
 void				msgto_del(t_list **lp);
 void				crlf_del(struct s_crlf **p);
 void				channels_del(t_list **chansp);
