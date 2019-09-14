@@ -27,7 +27,7 @@ int		client_who(struct s_client *const self,
 	msg = ft_strnew(513);
 	if (!msg)
 		return (-1);
-	ft_strlcat(msg, "WHO", 513);
+	ft_strlcat(msg, "WHO ", 513);
 	ft_strlcat(msg, self->channel->name, 513);
 	ft_strlcat(msg, CRLF, 513);
 	self->queuemsg(self, msg);
