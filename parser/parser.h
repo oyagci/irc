@@ -26,19 +26,19 @@ struct				s_prefix
 	size_t				len;
 };
 
-struct				s_message
-{
-	struct s_prefix		prefix;
-	struct s_command	*cmd;
-	struct s_params		*params;
-	struct s_crlf		*crlf;
-	size_t				len;
-};
-
 struct				s_command
 {
 	char	*data;
 	size_t	len;
+};
+
+struct				s_message
+{
+	struct s_prefix		prefix;
+	struct s_command	cmd;
+	struct s_params		*params;
+	struct s_crlf		*crlf;
+	size_t				len;
 };
 
 struct				s_crlf
@@ -55,7 +55,7 @@ struct				s_params
 
 struct s_message	*message(char const *input);
 int					prefix(struct s_prefix *p, char const *input);
-struct s_command	*command(char const *input);
+int					command(struct s_command *const cmd, char const *input);
 struct s_crlf		*crlf(char const *input);
 struct s_params		*params(char const *input);
 char				*host(char const *input);
@@ -68,7 +68,7 @@ char				digit(char input);
 int					chanstr(char const *inputc, char **buffer);
 int					msgto(char *input, t_list **listbuf);
 
-void				command_del(struct s_command **cmd);
+void				command_del(struct s_command *cmd);
 void				message_del(struct s_message **msg);
 void				msgto_del(t_list **lp);
 void				crlf_del(struct s_crlf **p);

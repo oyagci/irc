@@ -31,7 +31,7 @@ int		client_event(struct s_client *const self, char const *const data)
 	ii = 0;
 	while (ii < sizeof(events) / sizeof(*events))
 	{
-		if (ft_strequ(events[ii].s, msg->cmd->data))
+		if (ft_strequ(events[ii].s, msg->cmd.data))
 			events[ii].f(self, msg);
 		ii += 1;
 	}

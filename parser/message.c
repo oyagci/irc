@@ -15,15 +15,12 @@
 
 static void			message_cmd(struct s_message *msg, char const *input)
 {
-	if (msg->cmd)
-	{
-		input += msg->cmd->len;
-		msg->params = params(input);
-		if (msg->params)
-			input += msg->params->len;
-		if (!(msg->crlf = crlf(input)))
-			message_del(&msg);
-	}
+	input += msg->cmd.len;
+	msg->params = params(input);
+	if (msg->params)
+		input += msg->params->len;
+	if (!(msg->crlf = crlf(input)))
+		message_del(&msg);
 }
 
 struct s_message	*message(char const *input)
@@ -42,10 +39,10 @@ struct s_message	*message(char const *input)
 		}
 		input += msg->prefix.len + 1;
 	}
-	if (!(msg->cmd = command(input)))
-		message_del(&msg);
-	else
+	if (!command(&msg->cmd, input))
 		message_cmd(msg, input);
+	else
+		message_del(&msg);
 	return (msg);
 }
 

@@ -60,7 +60,7 @@ int								execute_command(
 	ii = 0;
 	while (ii < 9)
 	{
-		if (ft_strequ(cmds[ii].name, msg->cmd->data))
+		if (ft_strequ(cmds[ii].name, msg->cmd.data))
 			err = cmds[ii].f(c, msg->params->param,
 				nparams(msg->params->param));
 		ii++;

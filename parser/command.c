@@ -15,59 +15,52 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static void				get_cmd(struct s_command *buf, char const *input,
-	int i)
+static int				set_cmd(struct s_command *buf, char const *input)
 {
+	int	i;
+
+	i = 0;
 	while (ft_isalpha(input[i]))
 		i += 1;
+	if (i == 0)
+		return (-1);
 	buf->data = ft_strndup((char *)input, i);
 	buf->len = ft_strlen(buf->data);
+	return (0);
 }
 
-static struct s_command	*get_num(struct s_command *buf, char const *input,
-	int i)
+static int				set_num(struct s_command *buf, char const *input)
 {
+	int	i;
+
+	i = 0;
 	while (ft_isdigit(input[i]))
 	{
 		if (i >= 3)
 		{
-			command_del(&buf);
-			return (NULL);
+			command_del(buf);
+			return (-1);
 		}
 		i += 1;
 	}
 	buf->data = ft_strndup((char *)input, i);
 	buf->len = ft_strlen(buf->data);
-	return (buf);
+	return (0);
 }
 
-struct s_command		*command(char const *input)
+int						command(struct s_command *const cmd, char const *input)
 {
-	struct s_command	*cmd;
-	int					i;
-
-	cmd = ft_memalloc(sizeof(*cmd));
-	if (!cmd)
-		return (NULL);
-	i = 0;
-	if (ft_isalpha(input[0]))
-		get_cmd(cmd, input, i);
-	else if (ft_isdigit(input[0]))
-		cmd = get_num(cmd, input, i);
+	if (ft_isalpha(*input))
+		set_cmd(cmd, input);
+	else if (ft_isdigit(*input))
+		set_num(cmd, input);
 	else
-	{
-		free(cmd);
-		cmd = NULL;
-	}
-	return (cmd);
+		return (-1);
+	return (0);
 }
 
-void					command_del(struct s_command **cmd)
+void					command_del(struct s_command *cmd)
 {
-	if (*cmd)
-	{
-		free((*cmd)->data);
-		free(*cmd);
-		*cmd = NULL;
-	}
+	if (cmd)
+		free(cmd->data);
 }
