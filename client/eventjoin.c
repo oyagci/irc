@@ -24,7 +24,7 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 	ret = nickname(m->prefix.data, &nick);
 	if (nick)
 	{
-		if (m->params.param[0] != NULL)
+		if (m->params.nparam >= 1)
 		{
 			self->channels.addnick(&self->channels, nick, chan);
 			if (ft_strnequ(self->nickname, nick, 9))
