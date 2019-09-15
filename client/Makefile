@@ -32,7 +32,8 @@ SOURCES		:= \
 	user.c \
 	leave.c \
 	who.c \
-	join.c
+	join.c \
+	whoreply.c \
 
 HEADERS		:= \
 	client.h \

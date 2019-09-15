@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "client.h"
+#include "reply_codes.h"
 
 int		client_event(struct s_client *const self, char const *const data)
 {
@@ -22,6 +23,7 @@ int		client_event(struct s_client *const self, char const *const data)
 		{ .s = "001", .f = self->rpl_welcome },
 		{ .s = "372", .f = self->eventmotd },
 		{ .s = "375", .f = self->eventmotd },
+		{ .s = SRPL_WHOREPLY, .f = self->rpl_whoreply },
 	};
 	size_t						ii;
 	struct s_message			msg;

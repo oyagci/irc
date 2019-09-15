@@ -116,6 +116,8 @@ struct					s_client
 
 	int					(*rpl_welcome)(struct s_client *const,
 							struct s_message const *const);
+	int					(*rpl_whoreply)(struct s_client *const,
+							struct s_message const *const);
 };
 
 struct					s_tuple_cmds
@@ -174,6 +176,8 @@ int						client_nick(struct s_client *const self,
 int						client_connect(struct s_client *const self,
 							struct s_client_msg const *const cmd);
 int						rpl_welcome(struct s_client *const self,
+							struct s_message const *const msg);
+int						whoreply(struct s_client *const self,
 							struct s_message const *const msg);
 
 int						read_notif(struct s_client *const self);

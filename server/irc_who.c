@@ -28,22 +28,28 @@ int	irc_who_client(struct s_server *server, struct s_client *client,
 	ft_strlcat(msg, "irc.42.fr", 512);
 	ft_strlcat(msg, " ", 512);
 	ft_strlcat(msg, client->nickname, 512);
+	ft_strlcat(msg, "\n", 512);
 	server->queuenotif(server, dest, msg);
 	return (0);
 }
 
+#include <stdio.h>
 int	irc_who(struct s_client *client, struct s_params *p)
 {
 	t_list			*clients;
 	struct s_client	*c;
+	struct s_channel const *chan;
 
-	(void)p;
-	clients = client->server->clients;
-	while (clients)
+	chan = client->server->get_channel(client->server, p->param[0]);
+	if (chan)
 	{
-		c = clients->content;
-		irc_who_client(client->server, c, client);
-		clients = clients->next;
+		clients = chan->clients;
+		while (clients)
+		{
+			c = clients->content;
+			irc_who_client(client->server, c, client);
+			clients = clients->next;
+		}
 	}
 	return (0);
 }

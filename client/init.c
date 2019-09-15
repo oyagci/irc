@@ -21,6 +21,7 @@ void	init_events(struct s_client *self)
 	self->eventpart = &eventpart;
 	self->eventmotd = &eventmotd;
 	self->rpl_welcome = &rpl_welcome;
+	self->rpl_whoreply = &whoreply;
 }
 
 void	init_messages(struct s_client *self)
