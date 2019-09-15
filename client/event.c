@@ -36,6 +36,5 @@ int		client_event(struct s_client *const self, char const *const data)
 			events[ii].f(self, &msg);
 		ii += 1;
 	}
-	message_del(&msg);
 	return (0);
 }

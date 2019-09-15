@@ -13,24 +13,12 @@
 #include "parser.h"
 #include <stdlib.h>
 
-struct s_crlf	*crlf(char const *input)
+int				crlf(char const *input)
 {
-	struct s_crlf	*c;
-
-	c = NULL;
 	if ((input[0] != '\0' && input[0] == 0x0d && input[1] == 0x0a) ||
 		(input[0] == '\n'))
 	{
-		c = ft_memalloc(sizeof(*c));
+		return (0);
 	}
-	return (c);
-}
-
-void			crlf_del(struct s_crlf **c)
-{
-	if (*c)
-	{
-		free(*c);
-		*c = NULL;
-	}
+	return (-1);
 }

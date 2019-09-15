@@ -65,7 +65,6 @@ int								execute_command(
 			err = cmds[ii].f(c, &msg.params);
 		ii++;
 	}
-	message_del(&msg);
 	err ? 0 : c->server->queuecode(c->server, c, err);
 	self->update_clients(self);
 	return (0);

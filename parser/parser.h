@@ -52,15 +52,10 @@ struct			s_message
 	size_t				len;
 };
 
-struct			s_crlf
-{
-	char c;
-};
-
 int				message(struct s_message *msg, char const *input);
 int				prefix(struct s_prefix *p, char const *input);
 int				command(struct s_command *const cmd, char const *input);
-struct s_crlf	*crlf(char const *input);
+int				crlf(char const *input);
 int				params(struct s_params *p, char const *input);
 char			*host(char const *input);
 int				user(unsigned char const *input, char **buffer);
@@ -72,7 +67,6 @@ char			digit(char input);
 int				chanstr(char const *inputc, char **buffer);
 int				msgto(char *input, t_list **listbuf);
 
-void			message_del(struct s_message *msg);
 void			msgto_del(t_list **lp);
 void			crlf_del(struct s_crlf **p);
 void			channels_del(t_list **chansp);
