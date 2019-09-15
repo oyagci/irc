@@ -75,9 +75,8 @@ void	nickremove(t_nicktable *nicks, char *name)
 		if (ft_strnequ(name, nicks->table[i], NICK_SIZE))
 		{
 			free(nicks->table[i]);
-			nicks->table[i] = 0;
 			nicks->size -= 1;
-			ft_memmove(nicks->table + i, nicks->table + i + 1, nicks->size);
+			ft_memmove(nicks->table + i, nicks->table + i + 1, sizeof(char *) * nicks->size);
 		}
 		i += 1;
 	}
