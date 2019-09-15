@@ -16,13 +16,14 @@
 int		eventprivmsg(struct s_client *const self,
 	struct s_message const *const m)
 {
-	char const	*const	from = m->prefix.data;
-	char				*msg;
-	char				*channel;
+	char const	*from;
+	char const	*msg;
+	char const	*channel;
 
 	(void)self;
-	channel = m->params->param[0];
-	msg = m->params->param[1];
+	from = m->prefix.data;
+	channel = m->params.param[0];
+	msg = m->params.param[1];
 	printf("[" BOLDRED "%s" RESET "] " UNDERLINE "%s" RESET ": %s\n",
 			channel, from, msg);
 	return (0);

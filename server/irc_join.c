@@ -44,7 +44,7 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 	return (0);
 }
 
-int	irc_join(struct s_client *client, char **params, int nparams)
+int	irc_join(struct s_client *client, struct s_params *p)
 {
 	t_list	*l;
 	t_list	*chans;
@@ -53,9 +53,9 @@ int	irc_join(struct s_client *client, char **params, int nparams)
 	if (!client->is_registered)
 		return (0);
 	chan = NULL;
-	if (nparams < 1)
+	if (p->nparam < 1)
 		return (ERR_NEEDMOREPARAM);
-	chans = channels(params[0]);
+	chans = channels(p->param[0]);
 	l = chans;
 	while (l)
 	{

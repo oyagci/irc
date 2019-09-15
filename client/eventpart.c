@@ -16,13 +16,11 @@
 
 int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 {
-	char	*nick;
-	char	*chan;
+	char		*nick;
+	char const	*chan;
 
-	nick = NULL;
-	chan = NULL;
 	nickname(cmd->prefix.data, &nick);
-	chan = cmd->params->param[0];
+	chan = cmd->params.param[0];
 	if (nick && chan)
 	{
 		self->channels.rmnick(&self->channels, nick, chan);

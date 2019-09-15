@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include "server.h"
 
-int				irc_part(struct s_client *client, char **params, int nparam)
+int				irc_part(struct s_client *client, struct s_params *p)
 {
 	struct s_server		*s;
 	struct s_channel	*chan;
@@ -22,12 +22,12 @@ int				irc_part(struct s_client *client, char **params, int nparam)
 	if (!client->is_registered)
 		return (0);
 	s = client->server;
-	if (nparam <= 0)
+	if (p->nparam <= 0)
 	{
 		s->queuecode(s, client, ERR_NEEDMOREPARAM);
 		return (0);
 	}
-	chan = s->get_channel(s, params[0]);
+	chan = s->get_channel(s, p->param[0]);
 	if (chan)
 	{
 		ret = s->rm_from_chan(client->nickname, chan);

@@ -59,7 +59,7 @@ int		pinginactive(struct s_server *self)
 		if (client->timeout.tv_sec == 0 &&
 			current.tv_sec >= client->ping.tv_sec)
 		{
-			irc_ping(client, 0, 0);
+			irc_ping(client, 0);
 			clock_gettime(CLOCK_REALTIME, &client->ping);
 			client->ping.tv_sec += 20;
 			set_timeout(client, 10);

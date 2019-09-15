@@ -12,7 +12,7 @@
 
 #include "server.h"
 
-int	irc_pass(struct s_client *c, char **params, int nparams)
+int	irc_pass(struct s_client *c, struct s_params *p)
 {
 	if (c->is_connected)
 	{
@@ -21,12 +21,12 @@ int	irc_pass(struct s_client *c, char **params, int nparams)
 	}
 	if (SERVER_PASS)
 	{
-		if (nparams < 1)
+		if (p->nparam < 1)
 		{
 			c->server->queuecode(c->server, c, ERR_NEEDMOREPARAM);
 			return (ERR_NEEDMOREPARAM);
 		}
-		if (ft_strcmp(params[0], SERVER_PASS))
+		if (ft_strcmp(p->param[0], SERVER_PASS))
 		{
 			c->server->queuecode(c->server, c, ERR_PASSWDMISMATCH);
 			return (ERR_PASSWDMISMATCH);

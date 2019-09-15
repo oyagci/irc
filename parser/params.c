@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-char				*extract_param(char const *input)
+static void			extract_param(char *buf, char const *input)
 {
 	int	i;
 
@@ -25,17 +25,19 @@ char				*extract_param(char const *input)
 		while (input[i] != 0 && (is_nospcrlfcl(input[i]) || input[i] == ':'))
 			i += 1;
 	}
-	return (ft_strndup((char *)input, i));
+	if (i < SPARAM)
+		ft_strncpy(buf, input, i);
 }
 
-char				*extract_trailing(char const *input)
+static void			extract_trailing(char *buf, char const *input)
 {
 	int	i;
 
 	i = 0;
 	while (is_nospcrlfcl(input[i]) || input[i] == ':' || input[i] == ' ')
 		i++;
-	return (ft_strndup(input, i));
+	if (i < SPARAM)
+		ft_strncpy(buf, input, i);
 }
 
 int					last_param(struct s_params *p, char const *input, int i,
@@ -47,7 +49,7 @@ int					last_param(struct s_params *p, char const *input, int i,
 		if (input[i] == ':' || j == 14)
 		{
 			input[i] == ':' ? (i++) : 0;
-			p->param[j] = extract_trailing(input + i);
+			extract_trailing(p->param[j], input + i);
 			p->nparam += 1;
 			i += ft_strlen(p->param[j]);
 		}
@@ -55,45 +57,21 @@ int					last_param(struct s_params *p, char const *input, int i,
 	return (i);
 }
 
-struct s_params		*params(char const *input)
+int					params(struct s_params *p, char const *input)
 {
-	struct s_params	*p;
 	int				i;
-	int				j;
 
-	if (!(p = ft_memalloc(sizeof(struct s_params))))
-		return (NULL);
-	j = 0;
 	i = 0;
-	while (j < 14 && input[i] == ' ' && input[i + 1] != ':')
+	p->nparam = 0;
+	while (p->nparam < 14 && input[i] == ' ' && input[i + 1] != ':')
 	{
 		i += 1;
-		p->param[j] = extract_param(input + i);
-		i += ft_strlen(p->param[j]);
-		j += 1;
+		ft_memset(p->param[p->nparam], 0, SPARAM);
+		extract_param(p->param[p->nparam], input + i);
+		i += ft_strlen(p->param[p->nparam]);
 		p->nparam += 1;
 	}
-	i = last_param(p, input, i, j);
+	i = last_param(p, input, i, p->nparam);
 	p->len = i;
-	return (p);
-}
-
-void				params_del(struct s_params **paramsp)
-{
-	struct s_params	*p;
-	int				i;
-
-	p = *paramsp;
-	i = 0;
-	if (p)
-	{
-		while (i < 15)
-		{
-			if (p->param[i])
-				free(p->param[i]);
-			i++;
-		}
-		free(p);
-		*paramsp = NULL;
-	}
+	return (0);
 }

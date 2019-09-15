@@ -14,10 +14,9 @@
 #include <libft.h>
 #include <unistd.h>
 
-int		irc_quit(struct s_client *c, char **params, int nparams)
+int		irc_quit(struct s_client *c, struct s_params *p)
 {
-	(void)params;
-	(void)nparams;
+	(void)p;
 	c->should_be_freed = 1;
 	return (0);
 }

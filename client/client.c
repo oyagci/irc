@@ -30,9 +30,9 @@ int		rpl_welcome(struct s_client *const self,
 	struct s_message const *const msg)
 {
 	(void)self;
-	if (msg->params->param[0])
+	if (msg->params.param[0])
 	{
-		printf(" * %s\n", msg->params->param[0]);
+		printf(" * %s\n", msg->params.param[0]);
 	}
 	return (0);
 }

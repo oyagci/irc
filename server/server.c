@@ -62,8 +62,7 @@ int								execute_command(
 	while (ii < 9)
 	{
 		if (ft_strequ(cmds[ii].name, msg.cmd.data))
-			err = cmds[ii].f(c, msg.params->param,
-				nparams(msg.params->param));
+			err = cmds[ii].f(c, &msg.params);
 		ii++;
 	}
 	message_del(&msg);

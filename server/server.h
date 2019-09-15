@@ -147,36 +147,24 @@ int							reply_client(struct s_client *c, int retcode);
 /*
 ** Tuple-like structure
 */
-typedef int					(*t_irc_func)(struct s_client *c, char **params,
-								int nparams);
+typedef int					(*t_irc_func)(struct s_client *c, struct s_params *p);
 struct						s_irc_cmds
 {
 	char const				*name;
 	t_irc_func				f;
 };
 
-int							irc_pass(struct s_client *c, char **params,
-								int nparam);
-int							irc_nick(struct s_client *c, char **params,
-								int nparam);
-int							irc_user(struct s_client *c, char **params,
-								int nparam);
-int							irc_oper(struct s_client *c, char **params,
-								int nparam);
-int							irc_join(struct s_client *c, char **params,
-								int nparam);
-int							irc_who(struct s_client *client, char **params,
-								int nparam);
-int							irc_part(struct s_client *client, char **params,
-								int nparam);
-int							irc_privmsg(struct s_client *client, char **params,
-								int nparams);
-int							irc_ping(struct s_client *client, char **params,
-								int nparam);
-int							irc_pong(struct s_client *client, char **params,
-								int nparam);
-int							irc_quit(struct s_client *c, char **params,
-								int nparams);
+int							irc_pass(struct s_client *c, struct s_params *p);
+int							irc_nick(struct s_client *c, struct s_params *p);
+int							irc_user(struct s_client *c, struct s_params *p);
+int							irc_oper(struct s_client *c, struct s_params *p);
+int							irc_join(struct s_client *c, struct s_params *p);
+int							irc_who(struct s_client *c, struct s_params *p);
+int							irc_part(struct s_client *c, struct s_params *p);
+int							irc_privmsg(struct s_client *c, struct s_params *p);
+int							irc_ping(struct s_client *c, struct s_params *p);
+int							irc_pong(struct s_client *c, struct s_params *p);
+int							irc_quit(struct s_client *c, struct s_params *p);
 
 int							set_usermode(struct s_client *c, int mode);
 int							set_realname(struct s_client *c, char *rn);

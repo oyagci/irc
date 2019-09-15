@@ -98,30 +98,30 @@ int				server_send_privmsg(struct s_server *server,
 	return (0);
 }
 
-int				irc_privmsg(struct s_client *client, char **params, int nparams)
+int				irc_privmsg(struct s_client *client, struct s_params *p)
 {
 	t_list	*recipients;
 
 	if (!client->is_registered)
 		return (0);
-	if (nparams < 1)
+	if (p->nparam < 1)
 	{
 		client->server->queuecode(client->server, client, ERR_NORECIPIENT);
 		return (0);
 	}
-	if (nparams < 2)
+	if (p->nparam < 2)
 	{
 		client->server->queuecode(client->server, client, ERR_NOTEXTTOSEND);
 		return (0);
 	}
 	recipients = NULL;
-	msgto(params[0], &recipients);
+	msgto(p->param[0], &recipients);
 	if (recipients == NULL)
 	{
 		client->server->queuecode(client->server, client, ERR_NORECIPIENT);
 		return (1);
 	}
-	server_send_privmsg(client->server, client, recipients, params[1]);
+	server_send_privmsg(client->server, client, recipients, p->param[1]);
 	msgto_del(&recipients);
 	return (0);
 }

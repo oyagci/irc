@@ -18,19 +18,19 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 {
 	char				*nick;
 	int					ret;
-	char const *const	chan = m->params->param[0];
+	char const *const	chan = m->params.param[0];
 
 	nick = NULL;
 	ret = nickname(m->prefix.data, &nick);
 	if (nick)
 	{
-		if (m->params && m->params->param[0])
+		if (m->params.param[0] != NULL)
 		{
 			self->channels.addnick(&self->channels, nick, chan);
 			if (ft_strnequ(self->nickname, nick, 9))
 			{
 				self->channel = self->channels.get(&self->channels,
-					m->params->param[0]);
+					m->params.param[0]);
 			}
 			printf(" * %s joined channel %s\n", nick, chan);
 		}

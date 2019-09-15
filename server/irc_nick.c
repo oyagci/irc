@@ -12,16 +12,16 @@
 
 #include "server.h"
 
-int	irc_nick(struct s_client *c, char **params, int nparams)
+int	irc_nick(struct s_client *c, struct s_params *p)
 {
 	char	*nick;
 
-	if (nparams < 1)
+	if (p->nparam < 1)
 	{
 		c->server->queuecode(c->server, c, ERR_NONICKNAMEGIVEN);
 		return (ERR_NONICKNAMEGIVEN);
 	}
-	nick = params[0];
+	nick = p->param[0];
 	if (ft_strlen(nick) > NICK_SIZE)
 	{
 		c->server->queuecode(c->server, c, ERR_ERRONEUSNICKNAME);

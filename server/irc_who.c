@@ -32,13 +32,12 @@ int	irc_who_client(struct s_server *server, struct s_client *client,
 	return (0);
 }
 
-int	irc_who(struct s_client *client, char **params, int nparam)
+int	irc_who(struct s_client *client, struct s_params *p)
 {
 	t_list			*clients;
 	struct s_client	*c;
 
-	(void)params;
-	(void)nparam;
+	(void)p;
 	clients = client->server->clients;
 	while (clients)
 	{

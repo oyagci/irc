@@ -16,9 +16,8 @@
 static int			message_cmd(struct s_message *msg, char const *input)
 {
 	input += msg->cmd.len;
-	msg->params = params(input);
-	if (msg->params)
-		input += msg->params->len;
+	params(&msg->params, input);
+	input += msg->params.len;
 	if (!(msg->crlf = crlf(input)))
 	{
 		message_del(msg);
@@ -51,7 +50,6 @@ void				message_del(struct s_message *msg)
 	if (msg)
 	{
 		command_del(&msg->cmd);
-		params_del(&msg->params);
 		crlf_del(&msg->crlf);
 	}
 }
