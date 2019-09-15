@@ -49,7 +49,6 @@ void				message_del(struct s_message *msg)
 {
 	if (msg)
 	{
-		command_del(&msg->cmd);
 		crlf_del(&msg->crlf);
 	}
 }

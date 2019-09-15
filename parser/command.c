@@ -22,9 +22,9 @@ static int				set_cmd(struct s_command *buf, char const *input)
 	i = 0;
 	while (ft_isalpha(input[i]))
 		i += 1;
-	if (i == 0)
+	if (i == 0 || i >= SCMD)
 		return (-1);
-	buf->data = ft_strndup((char *)input, i);
+	ft_strncpy(buf->data, input, i);
 	buf->len = ft_strlen(buf->data);
 	return (0);
 }
@@ -37,13 +37,12 @@ static int				set_num(struct s_command *buf, char const *input)
 	while (ft_isdigit(input[i]))
 	{
 		if (i >= 3)
-		{
-			command_del(buf);
 			return (-1);
-		}
 		i += 1;
 	}
-	buf->data = ft_strndup((char *)input, i);
+	if (i >= SCMD)
+		return (-1);
+	ft_strncpy(buf->data, input, i);
 	buf->len = ft_strlen(buf->data);
 	return (0);
 }
@@ -51,16 +50,10 @@ static int				set_num(struct s_command *buf, char const *input)
 int						command(struct s_command *const cmd, char const *input)
 {
 	if (ft_isalpha(*input))
-		set_cmd(cmd, input);
+		return (set_cmd(cmd, input));
 	else if (ft_isdigit(*input))
-		set_num(cmd, input);
+		return (set_num(cmd, input));
 	else
 		return (-1);
 	return (0);
-}
-
-void					command_del(struct s_command *cmd)
-{
-	if (cmd)
-		free(cmd->data);
 }
