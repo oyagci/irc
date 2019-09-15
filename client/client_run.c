@@ -13,15 +13,13 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <cbuf.h>
-#include <errno.h>
-#include <stdlib.h>
 #include "libft.h"
 #include "client.h"
 
 static int	read_input(struct s_client *const self)
 {
 	char				buf[512 + 1];
-	struct s_client_msg	*cmd;
+	struct s_client_msg	cmd;
 	char				*c;
 	int					ret;
 
@@ -37,11 +35,8 @@ static int	read_input(struct s_client *const self)
 				*c = '\0';
 			if (ft_strlen(buf) == 0)
 				return (0);
-			if ((cmd = self->parse_input(self, buf)))
-			{
-				self->exec_cmd(self, cmd);
-				free(cmd);
-			}
+			if (!self->parse_input(self, &cmd, buf))
+				self->exec_cmd(self, &cmd);
 		}
 	}
 	return (ret);

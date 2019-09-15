@@ -96,13 +96,10 @@ void				parse_cmd(struct s_client_msg **buf, char const *input)
 	}
 }
 
-struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
+int					parse_input(struct s_client *const self,
+	struct s_client_msg *msg, char const *input)
 {
-	struct s_client_msg	*msg;
-
-	msg = ft_memalloc(sizeof(*msg));
-	if (!msg)
-		exit(EXIT_FAILURE);
+	ft_memset(msg, 0, sizeof(*msg));
 	msg->cmd = CMD_NONE;
 	if (input[0] == '/')
 		parse_cmd(&msg, input);
@@ -116,8 +113,7 @@ struct s_client_msg	*parse_input(struct s_client *const self, char const *input)
 	else
 	{
 		printf(" - Not in a channel (/join <channel>)\n");
-		free(msg);
-		msg = NULL;
+		return (-1);
 	}
-	return (msg);
+	return (0);
 }
