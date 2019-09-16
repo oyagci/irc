@@ -82,7 +82,7 @@ size_t				set_params(char const *input, struct s_client_msg *buf)
 	return (ii);
 }
 
-void				parse_cmd(struct s_client_msg **buf, char const *input)
+int					parse_cmd(struct s_client_msg **buf, char const *input)
 {
 	input += 1;
 	set_command(&input, *buf);
@@ -91,9 +91,9 @@ void				parse_cmd(struct s_client_msg **buf, char const *input)
 	if (set_params(input, *buf) < (*buf)->nparam)
 	{
 		printf("Not enough parameters given (expected %ld)\n", (*buf)->nparam);
-		free(*buf);
-		*buf = NULL;
+		return (-1);
 	}
+	return (0);
 }
 
 int					parse_input(struct s_client *const self,
@@ -102,7 +102,7 @@ int					parse_input(struct s_client *const self,
 	ft_memset(msg, 0, sizeof(*msg));
 	msg->cmd = CMD_NONE;
 	if (input[0] == '/')
-		parse_cmd(&msg, input);
+		return (parse_cmd(&msg, input));
 	else if (self->channel)
 	{
 		msg->cmd = CMD_MSG;

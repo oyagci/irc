@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 13:05:38 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 13:05:39 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/09/16 12:30:39 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int					channels_addclient(struct s_channels *self,
 int					channels_rmnick(struct s_channels *self,
 						char const *const nick,
 						char const *const channel);
+void				channels_destroy(struct s_channels *ptr);
 
 #endif

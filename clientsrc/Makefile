@@ -34,6 +34,7 @@ SOURCES		:= \
 	who.c \
 	join.c \
 	whoreply.c \
+	channels_destroy.c
 
 HEADERS		:= \
 	client.h \

@@ -6,12 +6,13 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:25 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 13:04:52 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/09/16 12:29:21 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "client.h"
+#include "cbuf.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -98,9 +99,16 @@ int		main(int ac, char *av[])
 	if (ac == 3)
 	{
 		if (argconnect(&client, av[1], av[2]) < 0)
+		{
+			client_destroy(&client);
 			return (EXIT_FAILURE);
+		}
 	}
 	if (client.run(&client) < 0)
+	{
+		client_destroy(&client);
 		return (EXIT_FAILURE);
+	}
+	client_destroy(&client);
 	return (0);
 }

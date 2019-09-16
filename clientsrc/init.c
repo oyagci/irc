@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 13:04:49 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 13:04:52 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/09/16 12:28:37 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,9 @@ int		client_init(struct s_client *const self)
 			ret = -1;
 	}
 	return (ret);
+}
+
+void	client_destroy(struct s_client *client)
+{
+	cbuf_free(client->cbuf);
 }

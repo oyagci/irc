@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 13:05:44 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 13:05:45 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/09/16 12:29:02 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int						eventping(struct s_client *const self,
 							struct s_message const *const msg);
 
 int						client_init(struct s_client *const self);
+void					client_destroy(struct s_client *client);
 int						client_sendmsgs(struct s_client *const self);
 int						client_queuemsg(struct s_client *const self, char *msg);
 int						client_message(struct s_client *const self,
