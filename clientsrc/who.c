@@ -12,6 +12,7 @@
 
 #include "client.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int		client_who(struct s_client *const self,
 	struct s_client_msg const *const cmd)
@@ -19,6 +20,11 @@ int		client_who(struct s_client *const self,
 	char	*msg;
 
 	(void)cmd;
+	if (!self->channel)
+	{
+		printf(" * Not in a channel\n");
+		return (0);
+	}
 	if (!self->servsock)
 	{
 		printf(" * Not connected to a server\n");
@@ -28,7 +34,7 @@ int		client_who(struct s_client *const self,
 	if (!msg)
 		return (-1);
 	ft_strlcat(msg, "WHO ", 513);
-	ft_strlcat(msg, cmd->params[0], 513);
+	ft_strlcat(msg, self->channel->name, 513);
 	ft_strlcat(msg, CRLF, 513);
 	self->queuemsg(self, msg);
 	return (0);
