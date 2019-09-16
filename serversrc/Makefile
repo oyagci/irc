@@ -51,7 +51,7 @@ HEADERS		:= \
 	../reply_codes.h \
 	../parser/parser.h
 OBJS 		:= $(SOURCES:.c=.o)
-OUTDIR		:= ../bin
+OUTDIR		:= ..
 INCLUDES	:= -I./ -I../ -I../libft/includes -I../cbuf/
 LIBS		:= -L../libft -lft -L../cbuf -lcbuf
 
@@ -60,7 +60,6 @@ NAME		:= $(OUTDIR)/server
 all: $(NAME)
 
 $(NAME): ../cbuf/libcbuf.a ../libft/libft.a $(OBJS) $(HEADERS)
-	@mkdir -p $(OUTDIR)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS)
 
 %.o: %.c $(HEADERS)
@@ -71,7 +70,6 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rm -Rf $(OUTDIR)
 
 re: fclean all
 

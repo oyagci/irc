@@ -3,17 +3,17 @@
 all: server client
 
 server:
-	make -C server
+	make -C serversrc
 
 client:
-	make -C client
+	make -C clientsrc
 
 clean:
-	make -C client clean
-	make -C server clean
+	make -C clientsrc clean
+	make -C serversrc clean
 
 fclean: clean
-	make -C server fclean || (exit 0)
-	make -C client fclean || (exit 0)
+	make -C serversrc fclean || (exit 0)
+	make -C clientsrc fclean || (exit 0)
 
 re: fclean all
