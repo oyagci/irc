@@ -66,18 +66,41 @@ int		client_execute_command(struct s_client *const self,
 	return (0);
 }
 
-int		main(void)
+int		argconnect(struct s_client *client, char *hoststr, char *portstr)
+{
+	char				nickname[SNICK];
+	int					ret;
+	struct s_client_msg	msg;
+
+	write(1, "Nickname? ", 10);
+	ret = read(0, nickname, SNICK - 1);
+	if (ret < 0)
+		return (-1);
+	nickname[ret - 1] = 0;
+	msg.cmd = CMD_NICK;
+	msg.nparam = 1;
+	ft_memcpy(msg.params[0], nickname, ret);
+	client->nick(client, &msg);
+	msg.cmd = CMD_CONNECT;
+	msg.nparam = 2;
+	ft_strlcpy(msg.params[0], hoststr, SPARAM);
+	ft_strlcpy(msg.params[1], portstr, SPARAM);
+	return (client->connect(client, &msg));
+}
+
+int		main(int ac, char *av[])
 {
 	struct s_client		client;
 
 	signal(SIGPIPE, SIG_IGN);
 	if (client_init(&client) < 0)
-	{
 		return (EXIT_FAILURE);
+	if (ac == 3)
+	{
+		if (argconnect(&client, av[1], av[2]) < 0)
+			return (EXIT_FAILURE);
 	}
 	if (client.run(&client) < 0)
-	{
 		return (EXIT_FAILURE);
-	}
 	return (0);
 }
