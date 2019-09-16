@@ -20,8 +20,8 @@ void				set_command(char const **inputp, struct s_client_msg *buf)
 	const struct s_client_cmds	cmds[] = {
 		{ "nick", CMD_NICK, 1 }, { "join", CMD_JOIN, 1 },
 		{ "leave", CMD_LEAVE, 1 }, { "msg", CMD_MSG, 2 },
-		{ "quit", CMD_QUIT, 1 }, { "who", CMD_WHO, 0 },
-		{ "connect", CMD_CONNECT, 2 }, { "disconnect", CMD_QUIT, 0 }
+		{ "quit", CMD_QUIT, 1 }, { "who", CMD_WHO, 0 }, { "exit", CMD_STOP, 0 },
+		{ "connect", CMD_CONNECT, 2 }, { "disconnect", CMD_QUIT, 0 },
 	};
 	char const					*input;
 	int							ii;

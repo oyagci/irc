@@ -73,4 +73,5 @@ int		client_init(struct s_client *const self)
 void	client_destroy(struct s_client *client)
 {
 	cbuf_free(client->cbuf);
+	channels_destroy(&client->channels);
 }

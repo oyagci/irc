@@ -38,6 +38,14 @@ int		rpl_welcome(struct s_client *const self,
 	return (0);
 }
 
+int		stop(struct s_client *const self, struct s_client_msg const *const cmd)
+{
+	(void)cmd;
+	printf("Stopping\n");
+	self->is_running = 0;
+	return (0);
+}
+
 int		client_execute_command(struct s_client *const self,
 	struct s_client_msg const *const cmd)
 {
@@ -49,7 +57,7 @@ int		client_execute_command(struct s_client *const self,
 		{ .cmd = CMD_USER, .f = self->user },
 		{ .cmd = CMD_LEAVE, .f = self->leave },
 		{ .cmd = CMD_WHO, .f = self->who },
-		{ .cmd = CMD_QUIT, .f = self->quit },
+		{ .cmd = CMD_QUIT, .f = self->quit }, { .cmd = CMD_STOP, .f = stop }
 	};
 	size_t						ii;
 

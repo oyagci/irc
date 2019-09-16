@@ -40,6 +40,7 @@ enum					e_client_cmd
 	CMD_NICK,
 	CMD_WHO,
 	CMD_USER,
+	CMD_STOP
 };
 
 struct					s_client_cmds
