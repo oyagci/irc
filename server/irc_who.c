@@ -33,12 +33,11 @@ int	irc_who_client(struct s_server *server, struct s_client *client,
 	return (0);
 }
 
-#include <stdio.h>
 int	irc_who(struct s_client *client, struct s_params *p)
 {
-	t_list			*clients;
-	struct s_client	*c;
-	struct s_channel const *chan;
+	t_list					*clients;
+	struct s_client			*c;
+	struct s_channel const	*chan;
 
 	chan = client->server->get_channel(client->server, p->param[0]);
 	if (chan)

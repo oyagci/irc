@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   update_clients.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/16 11:21:14 by oyagci            #+#    #+#             */
+/*   Updated: 2019/09/16 11:21:28 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
-void	remove_from_all_channels(struct s_server *self, struct s_client *const c)
+void	remove_from_all_channels(struct s_server *self,
+	struct s_client *const c)
 {
 	t_list				*l;
 	struct s_channel	*chan;
@@ -15,7 +28,7 @@ void	remove_from_all_channels(struct s_server *self, struct s_client *const c)
 	}
 }
 
-int	update_clients(struct s_server *self)
+int		update_clients(struct s_server *self)
 {
 	t_list			*elem;
 	struct s_client	*c;

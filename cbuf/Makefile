@@ -37,14 +37,14 @@ $(NAME): $(OBJECTS) $(DEPS)
 	@echo "Done $(NAME)!"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p $(OBJDIR)
+	mkdir -p $(OBJDIR)
 	$(CC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
 clean:
-	@$(RM) $(OBJECTS)
-	@$(RM) -R $(OBJDIR)
+	$(RM) $(OBJECTS)
+	$(RM) -R $(OBJDIR)
 
 fclean: clean
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all

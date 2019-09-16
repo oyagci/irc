@@ -147,7 +147,8 @@ int							reply_client(struct s_client *c, int retcode);
 /*
 ** Tuple-like structure
 */
-typedef int					(*t_irc_func)(struct s_client *c, struct s_params *p);
+typedef int					(*t_irc_func)(struct s_client *c,
+								struct s_params *p);
 struct						s_irc_cmds
 {
 	char const				*name;

@@ -36,7 +36,6 @@ int			send_queued_replies(struct s_server *const server)
 	struct s_client		*dest;
 
 	prev = NULL;
-	next = NULL;
 	msgelem = server->msgqueue;
 	while (msgelem)
 	{

@@ -62,7 +62,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rmdir $(OUTDIR)
+	rm -Rf $(OUTDIR)
 
 re: fclean all
 
