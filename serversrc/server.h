@@ -34,27 +34,27 @@
 */
 # define SERVER_PASS			0
 
-struct						s_channel
+struct s_channel
 {
-	char					name[50];
-	char					*topic;
-	int						mode;
-	t_list					*clients;
+	char	name[50];
+	char	*topic;
+	int		mode;
+	t_list	*clients;
 };
 
-struct						s_client_buffer {
-	char					data[CLIENT_BUFFER_SIZE];
-	int						len;
-	short					is_complete;
+struct s_client_buffer {
+	char	data[CLIENT_BUFFER_SIZE];
+	int		len;
+	short	is_complete;
 };
 
-enum						e_umode
+enum e_umode
 {
 	UMODE_WALLOPS = 1 << 2,
 	UMODE_INVISIBLE = 1 << 3,
 };
 
-struct						s_client
+struct s_client
 {
 	int						fd;
 	int						lastret;
@@ -78,67 +78,51 @@ struct						s_client
 	struct s_server			*server;
 };
 
-struct						s_server
+struct s_server
 {
-	short					is_running;
-	fd_set					readfds;
-	fd_set					writefds;
-	int						sockfd;
-	t_list					*channels;
-	t_list					*clients;
-	t_list					*msgqueue;
-	t_nicktable				nicks;
-	int						(*run)(struct s_server *const self);
-	int						(*pinginactive)(struct s_server *self);
-	int						(*set_fds)(struct s_server *const self);
-	int						(*accept)(struct s_server *const self);
-	int						(*read)(struct s_server *const self);
-	int						(*send)(struct s_server *const self);
-	int						(*exec_cmd)(struct s_server *const self,
-								struct s_client *c, char const *const cmd);
-	int						(*quit)(struct s_server *self,
-								struct s_client *client,
-								const char *const msg);
-	int						(*queuecode)(struct s_server *self,
-								struct s_client *const dest, int code);
-	int						(*queuenotif)(struct s_server *self,
-								struct s_client *const dest, char *msg);
-	int						(*rm_from_chan)(char *const nick,
-								struct s_channel *chan);
-	struct s_channel		*(*new_channel)(struct s_server *self,
-								char const *name,
-								int mode);
-	struct s_channel		*(*get_channel)(struct s_server *self,
-								char const *const name);
-	int						(*notifypart)(struct s_server *self,
-								struct s_channel *chan, char const *const nick);
-	int						(*add_to_chan)(struct s_server *server,
-								struct s_client *client,
-								char const *const channame);
-	struct s_client			*(*get_client)(struct s_server *self,
-								char const *const nickname);
-	void					(*del_client)(struct s_server *self,
-								struct s_client *c);
-	int						(*update_clients)(struct s_server *self);
+	short				is_running;
+	fd_set				readfds;
+	fd_set				writefds;
+	int					sockfd;
+	t_list				*channels;
+	t_list				*clients;
+	t_list				*msgqueue;
+	t_nicktable			nicks;
+
+	int					(*run)(struct s_server *const self);
+	int					(*pinginactive)(struct s_server *self);
+	int					(*set_fds)(struct s_server *const self);
+	int					(*accept)(struct s_server *const self);
+	int					(*read)(struct s_server *const self);
+	int					(*send)(struct s_server *const self);
+	int					(*exec_cmd)(struct s_server *const self, struct s_client *c, char const *const cmd);
+	int					(*quit)(struct s_server *self, struct s_client *client, const char *const msg);
+	int					(*queuecode)(struct s_server *self, struct s_client *const dest, int code);
+	int					(*queuenotif)(struct s_server *self, struct s_client *const dest, char *msg);
+	int					(*rm_from_chan)(char *const nick, struct s_channel *chan);
+	struct s_channel	*(*new_channel)(struct s_server *self, char const *name, int mode);
+	struct s_channel	*(*get_channel)(struct s_server *self, char const *const name);
+	int					(*notifypart)(struct s_server *self, struct s_channel *chan, char const *const nick);
+	int					(*add_to_chan)(struct s_server *server, struct s_client *client, char const *const channame);
+	struct s_client		*(*get_client)(struct s_server *self, char const *const nickname);
+	void				(*del_client)(struct s_server *self, struct s_client *c);
+	int					(*update_clients)(struct s_server *self);
 };
 
-struct						s_server_msg
+struct s_server_msg
 {
-	char					dest[NICK_SIZE];
-	char					msg[512];
-	size_t					len;
+	char	dest[NICK_SIZE];
+	char	msg[512];
+	size_t	len;
 };
 
-int							server_init(struct s_server *server,
-								unsigned int port);
-int							set_fds(struct s_server *server);
-int							execute_command(struct s_server *self,
-								struct s_client *c, char const *const cmd);
-int							read_clients_command(struct s_server *const self);
-int							server_read_clients_command(
-								struct s_server *const server);
-int							accept_new_clients(struct s_server *server);
-int							reply_client(struct s_client *c, int retcode);
+int server_init(struct s_server *server, unsigned int port);
+int set_fds(struct s_server *server);
+int execute_command(struct s_server *self, struct s_client *c, char const *const cmd);
+int read_clients_command(struct s_server *const self);
+int server_read_clients_command( struct s_server *const server);
+int accept_new_clients(struct s_server *server);
+int reply_client(struct s_client *c, int retcode);
 
 /*
 ** IRC server commands
@@ -147,84 +131,70 @@ int							reply_client(struct s_client *c, int retcode);
 /*
 ** Tuple-like structure
 */
-typedef int					(*t_irc_func)(struct s_client *c,
-								struct s_params *p);
-struct						s_irc_cmds
+typedef int (*t_irc_func)(struct s_client *c, struct s_params *p);
+struct s_irc_cmds
 {
-	char const				*name;
-	t_irc_func				f;
+	char const	*name;
+	t_irc_func	f;
 };
+int irc_pass(struct s_client *c, struct s_params *p);
+int irc_nick(struct s_client *c, struct s_params *p);
+int irc_user(struct s_client *c, struct s_params *p);
+int irc_oper(struct s_client *c, struct s_params *p);
+int irc_join(struct s_client *c, struct s_params *p);
+int irc_who(struct s_client *c, struct s_params *p);
+int irc_part(struct s_client *c, struct s_params *p);
+int irc_privmsg(struct s_client *c, struct s_params *p);
+int irc_ping(struct s_client *c, struct s_params *p);
+int irc_pong(struct s_client *c, struct s_params *p);
+int irc_quit(struct s_client *c, struct s_params *p);
 
-int							irc_pass(struct s_client *c, struct s_params *p);
-int							irc_nick(struct s_client *c, struct s_params *p);
-int							irc_user(struct s_client *c, struct s_params *p);
-int							irc_oper(struct s_client *c, struct s_params *p);
-int							irc_join(struct s_client *c, struct s_params *p);
-int							irc_who(struct s_client *c, struct s_params *p);
-int							irc_part(struct s_client *c, struct s_params *p);
-int							irc_privmsg(struct s_client *c, struct s_params *p);
-int							irc_ping(struct s_client *c, struct s_params *p);
-int							irc_pong(struct s_client *c, struct s_params *p);
-int							irc_quit(struct s_client *c, struct s_params *p);
+int set_usermode(struct s_client *c, int mode);
+int set_realname(struct s_client *c, char *rn);
 
-int							set_usermode(struct s_client *c, int mode);
-int							set_realname(struct s_client *c, char *rn);
+int loop(struct s_server *server);
 
-int							loop(struct s_server *server);
+int send_queued_replies(struct s_server *const server);
+int queue_reply(struct s_server *server, struct s_client *const dest, char *reply);
+int queue_code_reply(struct s_server *server, struct s_client *const dest, int reply_code);
 
-int							send_queued_replies(struct s_server *const server);
-int							queue_reply(struct s_server *server,
-								struct s_client *const dest, char *reply);
-int							queue_code_reply(struct s_server *server,
-								struct s_client *const dest, int reply_code);
+int add_to_chan(struct s_server *server, struct s_client *client, char const *const channame);
 
-int							add_to_chan(struct s_server *server,
-								struct s_client *client,
-								char const *const channame);
-int							server_tell_new_client(struct s_server *server,
-								struct s_client *client,
-								struct s_channel *chan);
-struct s_channel			*get_channel(struct s_server *server,
-								char const *name);
-struct s_client				*get_client(struct s_server *self,
-								char const *const nickname);
-void						del_client(struct s_server *self,
-								struct s_client *c);
-int							server_send_formated_message_to(
-								struct s_server *server,
-								char const *recipient, char *msg);
-void						server_msg_del(void *msgp, size_t size);
+int server_tell_new_client(struct s_server *server, struct s_client *client, struct s_channel *chan);
 
-int							channel_add_client(struct s_channel *channel,
-								struct s_client *client);
-int							channel_rm_nick(struct s_channel *const channel,
-								char const *const nick);
+struct s_channel *get_channel(struct s_server *server, char const *name);
 
-int							rm_from_chan(char *nick, struct s_channel *chan);
+struct s_client *get_client(struct s_server *self, char const *const nickname);
 
-int							notifypart(struct s_server *s,
-								struct s_channel *chan, char const *const nick);
+void      del_client(struct s_server *self, struct s_client *c);
 
-char						*irc_repcode_itoa(unsigned int n);
-struct s_channel			*new_channel(struct s_server *server,
-								char const *name,
-								int mode);
+int       server_send_formated_message_to( struct s_server *server, char const *recipient, char *msg);
 
-int							pinginactive(struct s_server *self);
-int							quit(struct s_server *self, struct s_client *client,
-								char const *const msg);
+void      server_msg_del(void *msgp, size_t size);
 
-typedef int					(*t_rpl_handle)(char *, size_t,
-									struct s_client const *);
+int       channel_add_client(struct s_channel *channel, struct s_client *client);
 
-int							rpl_welcome(char *buf, size_t buflen,
-								struct s_client const *c);
-int							err_unknowncmd(char *buf, size_t buflen,
-								struct s_client const *c);
-int							err_nickinuse(char *buf, size_t buflen,
-								struct s_client const *c);
-int							err_erroneusnick(char *buf, size_t buflen,
-							struct s_client const *c);
-int							update_clients(struct s_server *self);
+int       channel_rm_nick(struct s_channel *const channel, char const *const nick);
+
+int       rm_from_chan(char *nick, struct s_channel *chan);
+
+int       notifypart(struct s_server *s, struct s_channel *chan, char const *const nick);
+
+struct s_channel *new_channel(struct s_server *server, char const *name, int mode);
+
+int pinginactive(struct s_server *self);
+
+int quit(struct s_server *self, struct s_client *client, char const *const msg);
+
+int update_clients(struct s_server *self);
+
+/*
+ * Replies
+ */
+typedef int (*t_rpl_handle)(char *, size_t, struct s_client const *);
+int rpl_welcome(char *buf, size_t buflen, struct s_client const *c);
+int err_unknowncmd(char *buf, size_t buflen, struct s_client const *c);
+int err_nickinuse(char *buf, size_t buflen, struct s_client const *c);
+int err_erroneusnick(char *buf, size_t buflen, struct s_client const *c);
 
 #endif
