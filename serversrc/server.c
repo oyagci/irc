@@ -32,25 +32,26 @@ int execute_command(struct s_server *self, struct s_client *c,
 		{ .name = "QUIT", .f = irc_quit },
 		{ .name = "PRIVMSG", .f = irc_privmsg }
 	};
-	size_t ii = 0;
-	int err = 0;
 	struct s_message msg;
+	int err = 0;
+	int ret = 0;
 
 	ft_memset(&msg, 0, sizeof(msg));
-	if (message(&msg, cmd) < 0)
-		return (0);
-	ii = 0;
-	while (ii < 9) {
-		if (ft_strequ(cmds[ii].name, msg.cmd.data)) {
-			err = cmds[ii].f(c, &msg.params);
+
+	ret = message(&msg, cmd);
+	if (ret >= 0) {
+		for (size_t ii = 0; ii < sizeof(cmds) / sizeof(*cmds); ii++) {
+			if (ft_strequ(cmds[ii].name, msg.cmd.data)) {
+				err = cmds[ii].f(c, &msg.params);
+			}
 		}
-		ii++;
+		if (!err) {
+			c->server->queuecode(c->server, c, err);
+		}
+		/* FIXME: There must be a better solution */
+		self->update_clients(self);
 	}
-	if (!err) {
-		c->server->queuecode(c->server, c, err);
-	}
-	self->update_clients(self);
-	return (0);
+	return (ret);
 }
 
 int main(int ac, char *av[])
