@@ -98,7 +98,7 @@ struct s_server
 	int					(*exec_cmd)(struct s_server *const self, struct s_client *c, char const *const cmd);
 	int					(*quit)(struct s_server *self, struct s_client *client, const char *const msg);
 	int					(*queuecode)(struct s_server *self, struct s_client *const dest, int code);
-	int					(*queuenotif)(struct s_server *self, struct s_client *const dest, char *msg);
+	int					(*queuenotif)(struct s_server *self, struct s_client *const dest, char const *msg);
 	int					(*rm_from_chan)(char *const nick, struct s_channel *chan);
 	struct s_channel	*(*new_channel)(struct s_server *self, char const *name, int mode);
 	struct s_channel	*(*get_channel)(struct s_server *self, char const *const name);
@@ -126,16 +126,6 @@ int reply_client(struct s_client *c, int retcode);
 /*
 ** IRC server commands
 */
-
-/*
-** Tuple-like structure
-*/
-typedef int (*t_irc_func)(struct s_client *c, struct s_params *p);
-struct s_irc_cmds
-{
-	char const	*name;
-	t_irc_func	f;
-};
 int irc_pass(struct s_client *c, struct s_params *p);
 int irc_nick(struct s_client *c, struct s_params *p);
 int irc_user(struct s_client *c, struct s_params *p);
@@ -154,7 +144,7 @@ int set_realname(struct s_client *c, char *rn);
 int run(struct s_server *);
 
 int send_queued_replies(struct s_server *const server);
-int queue_reply(struct s_server *server, struct s_client *const dest, char *reply);
+int queue_reply(struct s_server *server, struct s_client *const dest, char const *reply);
 int queue_code_reply(struct s_server *server, struct s_client *const dest, int reply_code);
 
 int add_to_chan(struct s_server *server, struct s_client *client, char const *const channame);
@@ -190,7 +180,6 @@ int update_clients(struct s_server *self);
 /*
  * Replies
  */
-typedef int (*t_rpl_handle)(char *, size_t, struct s_client const *);
 int rpl_welcome(char *buf, size_t buflen, struct s_client const *c);
 int err_unknowncmd(char *buf, size_t buflen, struct s_client const *c);
 int err_nickinuse(char *buf, size_t buflen, struct s_client const *c);

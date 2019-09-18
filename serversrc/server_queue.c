@@ -29,26 +29,43 @@ void		server_msg_del(void *msgp, size_t size)
 
 int			send_queued_replies(struct s_server *const server)
 {
-	t_list				*prev;
-	t_list				*next;
-	t_list				*msgelem;
-	struct s_server_msg	*msg;
-	struct s_client		*dest;
+	t_list *prev;
+	t_list *next;
+	t_list *msgelem;
+	struct s_server_msg *msg;
+	struct s_client *dest;
+	int ret = 0;
 
 	prev = NULL;
 	msgelem = server->msgqueue;
-	while (msgelem)
+	while (NULL != msgelem)
 	{
 		next = msgelem->next;
 		msg = msgelem->content;
 		dest = server->get_client(server, msg->dest);
-		if (dest && FD_ISSET(dest->fd, &server->writefds))
+		if (NULL != dest)
 		{
-			send(dest->fd, msg->msg, msg->len, 0);
-			dest->nmsg -= 1;
-			prev ? (prev->next = msgelem->next) :
-				(server->msgqueue = msgelem->next);
-			ft_lstdelone(&msgelem, &server_msg_del);
+			/* FIXME: Send message in multiple chunks if necessary */
+			/* TODO: Error handling */
+			ret = send(dest->fd, msg->msg, msg->len, 0);
+			if (ret == (int)msg->len) {
+				dest->nmsg -= 1;
+
+				if (prev) {
+					prev->next = msgelem->next;
+				}
+				else {
+					server->msgqueue = msgelem->next;
+				}
+				ft_lstdelone(&msgelem, &server_msg_del);
+			}
+			else if (ret > 0) {
+			}
+			else if (ret == 0) {
+			}
+			else if (ret == -1) {
+				perror("send");
+			}
 		}
 		prev = msgelem;
 		msgelem = next;
@@ -56,60 +73,58 @@ int			send_queued_replies(struct s_server *const server)
 	return (0);
 }
 
-static char	*server_format_reply(struct s_client const *const c, int reply_code)
+static void server_format_reply(struct s_client const *const c, int reply_code,
+	char buf[512])
 {
-	t_rpl_handle const	handles[] = { rpl_welcome, err_unknowncmd,
-		err_nickinuse, err_erroneusnick };
-	int const			replies[] = { RPL_WELCOME, ERR_UNKNOWNCOMMAND,
-		ERR_NICKNAMEINUSE, ERR_ERRONEUSNICKNAME };
-	char				*reply;
-	size_t				i;
+	struct {
+		int num;
+		int (*f)(char *, size_t, struct s_client const *);
+	} const handles[] = {
+		{ RPL_WELCOME,          rpl_welcome },
+		{ ERR_UNKNOWNCOMMAND,   err_unknowncmd },
+		{ ERR_NICKNAMEINUSE,    err_nickinuse },
+		{ ERR_ERRONEUSNICKNAME,	err_erroneusnick },
+	};
 
-	reply = NULL;
-	i = 0;
-	if (reply_code > 0)
-	{
-		reply = ft_strnew(512);
-		while (i < sizeof(handles) / sizeof(*handles))
-		{
-			if (replies[i] == reply_code)
-				handles[i](reply, 512, c);
-			i += 1;
+	if (reply_code > 0) {
+		for (size_t i = 0; i < sizeof(handles) / sizeof(*handles); i++) {
+			if (handles[i].num == reply_code) {
+				handles[i].f((char *)buf, 512, c);
+				break;
+			}
 		}
 	}
-	return (reply);
 }
 
-int			queue_reply(struct s_server *server,
-				struct s_client *const dest, char *reply)
+int queue_reply(struct s_server *server, struct s_client *const dest,
+	char const *reply)
 {
-	t_list				*elem;
-	struct s_server_msg	*msg;
+	t_list *elem;
+	struct s_server_msg *msg;
 
-	if (!(msg = ft_memalloc(sizeof(*msg))))
-	{
-		exit(EXIT_FAILURE);
+	msg = ft_memalloc(sizeof(*msg));
+	if (!msg) {
+		perror("malloc");
 		return (-1);
 	}
 	dest->nmsg += 1;
 	ft_strlcpy(msg->dest, dest->nickname, NICK_SIZE);
 	ft_strlcpy(msg->msg, reply, 512);
 	msg->len = ft_strlen(msg->msg);
+
+	/* Add reply to the queue */
 	elem = ft_lstnew(0, 0);
 	elem->content = msg;
 	ft_lstadd(&server->msgqueue, elem);
+
 	return (0);
 }
 
-int			queue_code_reply(struct s_server *server,
-	struct s_client *const dest, int reply_code)
+int queue_code_reply(struct s_server *server, struct s_client *const dest,
+	int reply_code)
 {
-	char				*replystr;
+	char replystr[512];
 
-	replystr = server_format_reply(dest, reply_code);
-	if (!replystr)
-		return (-1);
-	server->queuenotif(server, dest, replystr);
-	free(replystr);
-	return (0);
+	server_format_reply(dest, reply_code, replystr);
+	return (server->queuenotif(server, dest, replystr));
 }

@@ -3,15 +3,18 @@
 int execute_command(struct s_server *self, struct s_client *c,
 	char const *const cmd)
 {
-	struct s_irc_cmds const cmds[] = {
-		{ .name = "PASS", .f = irc_pass },
-		{ .name = "NICK", .f = irc_nick },
-		{ .name = "USER", .f = irc_user },
-		{ .name = "JOIN", .f = irc_join },
-		{ .name = "PART", .f = irc_part },
-		{ .name = "WHO", .f = irc_who },
-		{ .name = "PONG", .f = irc_pong },
-		{ .name = "QUIT", .f = irc_quit },
+	struct {
+		char const	*name;
+		int (*f)(struct s_client *c, struct s_params *p);
+	} const cmds[] = {
+		{ .name = "PASS",    .f = irc_pass },
+		{ .name = "NICK",    .f = irc_nick },
+		{ .name = "USER",    .f = irc_user },
+		{ .name = "JOIN",    .f = irc_join },
+		{ .name = "PART",    .f = irc_part },
+		{ .name = "WHO",     .f = irc_who },
+		{ .name = "PONG",    .f = irc_pong },
+		{ .name = "QUIT",    .f = irc_quit },
 		{ .name = "PRIVMSG", .f = irc_privmsg }
 	};
 	struct s_message msg;
@@ -27,8 +30,8 @@ int execute_command(struct s_server *self, struct s_client *c,
 				err = cmds[ii].f(c, &msg.params);
 			}
 		}
-		if (!err) {
-			c->server->queuecode(c->server, c, err);
+		if (err) {
+			ret = c->server->queuecode(c->server, c, err);
 		}
 		/* FIXME: There must be a better solution */
 		self->update_clients(self);
