@@ -28,6 +28,7 @@ int execute_command(struct s_server *self, struct s_client *c,
 		for (size_t ii = 0; ii < sizeof(cmds) / sizeof(*cmds); ii++) {
 			if (ft_strequ(cmds[ii].name, msg.cmd.data)) {
 				err = cmds[ii].f(c, &msg.params);
+				break;
 			}
 		}
 		if (err) {

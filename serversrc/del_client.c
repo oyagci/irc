@@ -18,7 +18,6 @@ void	client_delete(struct s_client *self)
 {
 	close(self->fd);
 	cbuf_free(self->cbuf);
-	free(self->raw_buffer);
 	free(self->username);
 	free(self->realname);
 	free(self);

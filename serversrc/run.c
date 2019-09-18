@@ -65,6 +65,7 @@ int run(struct s_server *self)
 		self->accept(self);
 		self->read(self);
 		self->send(self);
+		self->update_clients(self);
 	}
 	return (0);
 }

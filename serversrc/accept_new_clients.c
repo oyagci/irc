@@ -52,33 +52,37 @@ int accept_new_clients(struct s_server *server)
 	int ret = 0;
 
 	cli_len = sizeof(cli_addr);
-	confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
-	if (confd >= 0) {
+	/* Test if a new connection happened */
+	if (FD_ISSET(server->sockfd, &server->readfds)) {
 
-		setnosigpipe();
+		confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
+		if (confd >= 0) {
 
-		client = ft_memalloc(sizeof(*client));
-		if (client) {
-			client->fd = confd;
-			client->server = server;
-			client->cbuf = cbuf_init(client->raw_buffer, sizeof(client->raw_buffer));
-			ft_memset(client->nickname, 0, sizeof(client->nickname));
+			setnosigpipe();
 
-			if (!add_client(server, client)) {
-				printf("New client connected\n");
+			client = ft_memalloc(sizeof(*client));
+			if (client) {
+				client->fd = confd;
+				client->server = server;
+				client->cbuf = cbuf_init(client->raw_buffer, sizeof(client->raw_buffer));
+				ft_memset(client->nickname, 0, sizeof(client->nickname));
+
+				if (!add_client(server, client)) {
+					printf("New client connected\n");
+				}
+				else {
+					ret = -1;
+				}
 			}
 			else {
+				perror("malloc");
 				ret = -1;
 			}
 		}
 		else {
-			perror("malloc");
+			perror("accept");
 			ret = -1;
 		}
-	}
-	else {
-		perror("accept");
-		ret = -1;
 	}
 	return (ret);
 }

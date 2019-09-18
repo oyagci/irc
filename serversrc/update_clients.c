@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "server.h"
+#include <unistd.h>
 
 void	remove_from_all_channels(struct s_server *self,
 	struct s_client *const c)
@@ -34,11 +35,12 @@ int		update_clients(struct s_server *self)
 	struct s_client	*c;
 
 	elem = self->clients;
-	while (elem)
-	{
+	while (elem) {
 		c = elem->content;
-		if (c->should_be_freed != 0)
-		{
+		if (c->should_be_disconnected) {
+			close(c->fd);
+		}
+		if (c->should_be_freed || c->should_be_disconnected) {
 			remove_from_all_channels(self, c);
 			nickremove(&c->server->nicks, c->nickname);
 			self->del_client(self, c);

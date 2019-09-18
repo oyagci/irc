@@ -119,7 +119,7 @@ struct s_server_msg
 
 int server_init(struct s_server *server, unsigned int port);
 int execute_command(struct s_server *self, struct s_client *c, char const *const cmd);
-int read_clients_command(struct s_server *const self);
+int read_client_command(struct s_server *const self);
 int server_read_clients_command( struct s_server *const server);
 int accept_new_clients(struct s_server *server);
 int reply_client(struct s_client *c, int retcode);
