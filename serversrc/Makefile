@@ -16,7 +16,6 @@ SOURCES		:= \
 	../parser/nickname.c \
 	../parser/is_nospcrlfcl.c \
 	server.c \
-	set_fds.c \
 	accept_new_clients.c \
 	server_queue.c \
 	read_client_commands.c \

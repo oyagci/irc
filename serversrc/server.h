@@ -117,7 +117,6 @@ struct s_server_msg
 };
 
 int server_init(struct s_server *server, unsigned int port);
-int set_fds(struct s_server *server);
 int execute_command(struct s_server *self, struct s_client *c, char const *const cmd);
 int read_clients_command(struct s_server *const self);
 int server_read_clients_command( struct s_server *const server);
