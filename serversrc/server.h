@@ -152,7 +152,7 @@ int irc_quit(struct s_client *c, struct s_params *p);
 int set_usermode(struct s_client *c, int mode);
 int set_realname(struct s_client *c, char *rn);
 
-int loop(struct s_server *server);
+int run(struct s_server *);
 
 int send_queued_replies(struct s_server *const server);
 int queue_reply(struct s_server *server, struct s_client *const dest, char *reply);

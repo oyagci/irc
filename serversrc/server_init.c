@@ -21,7 +21,7 @@
 
 static void init_methods(struct s_server *s)
 {
-	s->run = &loop;
+	s->run = &run;
 	s->set_fds = &set_fds;
 	s->accept = &accept_new_clients;
 	s->read = &read_clients_command;

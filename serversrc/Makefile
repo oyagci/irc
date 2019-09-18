@@ -33,7 +33,7 @@ SOURCES		:= \
 	irc_pong.c \
 	irc_quit.c \
 	server_channel.c \
-	server_loop.c \
+	run.c \
 	server_init.c \
 	channel.c \
 	notify.c \

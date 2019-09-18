@@ -12,7 +12,7 @@
 
 #include "server.h"
 
-int	loop(struct s_server *self)
+int	run(struct s_server *self)
 {
 	int	max_sd;
 
