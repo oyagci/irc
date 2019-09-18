@@ -62,7 +62,7 @@ struct s_client
 	struct timespec			ping;
 	struct timespec			timeout;
 	t_cbuf_handle			cbuf;
-	uint8_t					*raw_buffer;
+	uint8_t					raw_buffer[2048];
 	unsigned int			nmsg;
 
 	short					is_connected;

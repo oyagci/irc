@@ -20,44 +20,65 @@
 #include <signal.h>
 #include <stdlib.h>
 
-int		setnosigpipe(void)
+static int setnosigpipe(void)
 {
 	signal(SIGPIPE, SIG_IGN);
 	return (0);
 }
 
-void	add_client(struct s_server *self, struct s_client *c)
+static int add_client(struct s_server *self, struct s_client *c)
 {
 	t_list	*elem;
 
+	if (!c) {
+		return (-1);
+	}
+
 	elem = ft_lstnew(NULL, 0);
-	if (!elem)
-		exit(EXIT_FAILURE);
+	if (!elem) {
+		return (-1);
+	}
 	elem->content = c;
 	ft_lstadd(&self->clients, elem);
+	return (0);
 }
 
-int		accept_new_clients(struct s_server *server)
+int accept_new_clients(struct s_server *server)
 {
-	struct s_client			*client;
-	struct sockaddr_in		cli_addr;
-	socklen_t				cli_len;
-	int						confd;
+	struct s_client *client;
+	struct sockaddr_in cli_addr;
+	socklen_t cli_len;
+	int confd;
+	int ret = 0;
 
 	cli_len = sizeof(cli_addr);
-	if (FD_ISSET(server->sockfd, &server->readfds))
-	{
-		confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
+	confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
+	if (confd >= 0) {
+
 		setnosigpipe();
-		if (!(client = ft_memalloc(sizeof(*client))))
-			exit(EXIT_FAILURE);
-		client->fd = confd;
-		client->server = server;
-		ft_memcpy(client->nickname, "", 1);
-		if (!(client->raw_buffer = ft_memalloc(sizeof(char) * 2048)))
-			exit(EXIT_FAILURE);
-		client->cbuf = cbuf_init(client->raw_buffer, 2048);
-		add_client(server, client);
+
+		client = ft_memalloc(sizeof(*client));
+		if (client) {
+			client->fd = confd;
+			client->server = server;
+			client->cbuf = cbuf_init(client->raw_buffer, sizeof(client->raw_buffer));
+			ft_memset(client->nickname, 0, sizeof(client->nickname));
+
+			if (!add_client(server, client)) {
+				printf("New client connected\n");
+			}
+			else {
+				ret = -1;
+			}
+		}
+		else {
+			perror("malloc");
+			ret = -1;
+		}
 	}
-	return (0);
+	else {
+		perror("accept");
+		ret = -1;
+	}
+	return (ret);
 }
