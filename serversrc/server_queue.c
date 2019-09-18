@@ -45,12 +45,10 @@ int			send_queued_replies(struct s_server *const server)
 		dest = server->get_client(server, msg->dest);
 		if (NULL != dest)
 		{
-			/* FIXME: Send message in multiple chunks if necessary */
-			/* TODO: Error handling */
 			ret = send(dest->fd, msg->msg, msg->len, 0);
 			if (ret == (int)msg->len) {
+				/* Remove message from queue */
 				dest->nmsg -= 1;
-
 				if (prev) {
 					prev->next = msgelem->next;
 				}
@@ -60,10 +58,17 @@ int			send_queued_replies(struct s_server *const server)
 				ft_lstdelone(&msgelem, &server_msg_del);
 			}
 			else if (ret > 0) {
+				/* Remove only sent bytes */
+				ft_memcpy(msg->msg, msg->msg + ret, msg->len - ret);
+				msg->msg[ret] = 0;
 			}
 			else if (ret == 0) {
+				/* Mark client as disconnected */
+				/* TODO: HANDLE ACTUAL DISCONNECTION */
+				dest->should_be_disconnected = 1;
 			}
 			else if (ret == -1) {
+				dest->should_be_disconnected = 1;
 				perror("send");
 			}
 		}
