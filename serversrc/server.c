@@ -55,13 +55,16 @@ int execute_command(struct s_server *self, struct s_client *c,
 
 int main(int ac, char *av[])
 {
+	int ret = 0;
 	struct s_server server;
 
 	if (ac < 2) {
 		printf("Usage: %s <port>\n", av[0]);
 		exit(EXIT_FAILURE);
 	}
-	server_init(&server, ft_atoi(av[1]));
-	server.run(&server);
-	return (0);
+	ret = server_init(&server, ft_atoi(av[1]));
+	if (!ret) {
+		ret = server.run(&server);
+	}
+	return (ret);
 }
