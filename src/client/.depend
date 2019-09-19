@@ -1,0 +1,200 @@
+message.o: ../parser/message.c ../../inc/parser/parser.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h
+prefix.o: ../parser/prefix.c ../../inc/parser/parser.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h
+command.o: ../parser/command.c ../../inc/parser/parser.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h
+crlf.o: ../parser/crlf.c ../../inc/parser/parser.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h
+params.o: ../parser/params.c ../../inc/parser/parser.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h
+nickname.o: ../parser/nickname.c ../../inc/parser/parser.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h
+digit.o: ../parser/digit.c
+letter.o: ../parser/letter.c
+special.o: ../parser/special.c
+is_nospcrlfcl.o: ../parser/is_nospcrlfcl.c
+client.o: client.c ../../libs/libft/includes/libft.h \
+ ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/client/client.h \
+ ../../inc/parser/parser.h ../../inc/client/channels.h \
+ ../../libs/cbuf/cbuf.h
+parse_input.o: parse_input.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+channels.o: channels.c ../../inc/client/channels.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h
+channels_rmnick.o: channels_rmnick.c ../../libs/libft/includes/libft.h \
+ ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/client/channels.h
+client_run.o: client_run.c ../../libs/cbuf/cbuf.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/client/client.h \
+ ../../inc/parser/parser.h ../../inc/client/channels.h
+read_notif.o: read_notif.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+quit.o: quit.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+event.o: event.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h \
+ ../../inc/common/reply_codes.h
+eventmotd.o: eventmotd.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+eventjoin.o: eventjoin.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+eventpart.o: eventpart.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+eventping.o: eventping.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+eventprivmsg.o: eventprivmsg.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+messages.o: messages.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+init.o: init.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+connect.o: connect.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+nick.o: nick.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+user.o: user.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+leave.o: leave.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+who.o: who.c ../../inc/client/client.h ../../libs/libft/includes/libft.h \
+ ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+join.o: join.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+whoreply.o: whoreply.c ../../inc/client/client.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+ ../../inc/client/channels.h ../../libs/cbuf/cbuf.h
+channels_destroy.o: channels_destroy.c ../../inc/client/channels.h \
+ ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
+ ../../libs/libft/includes/libft_mem.h \
+ ../../libs/libft/includes/libft_list.h \
+ ../../libs/libft/includes/get_next_line.h \
+ ../../libs/libft/includes/ft_getopt.h
