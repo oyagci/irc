@@ -16,7 +16,7 @@
 # include <string.h>
 # include <libft.h>
 # include <sys/types.h>
-# include "parser/parser.h"
+# include "parser.h"
 # include "channels.h"
 # include <cbuf.h>
 

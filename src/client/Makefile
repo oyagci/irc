@@ -36,26 +36,20 @@ SOURCES		:= \
 	whoreply.c \
 	channels_destroy.c
 
-HEADERS		:= \
-	client.h \
-	channels.h \
-	../parser/parser.h \
-	../reply_codes.h
-
 OBJS 		:= $(SOURCES:.c=.o)
-OUTDIR		:= ..
-INCLUDES	:= -I./ -I../ -I../libft/includes -I../cbuf/
-LIBS		:= -L../libft -lft -L../cbuf -lcbuf
+OUTDIR		:= ../..
+INCLUDES	:= -I../../libs/libft/includes -I../../libs/cbuf/ -I../../inc/common -I../../inc/client -I../../inc/parser
+LIBS		:= -L../../libs/libft -lft -L../../libs/cbuf -lcbuf
 
 NAME		:= $(OUTDIR)/client
 
 all: $(NAME)
 
-$(NAME): ../cbuf/libcbuf.a ../libft/libft.a $(OBJS) $(HEADERS)
+$(NAME): ../../libs/cbuf/libcbuf.a ../../libs/libft/libft.a $(OBJS)
 	@mkdir -p $(OUTDIR)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS)
 
-%.o: %.c $(HEADERS)
+%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< -c -o $@
 
 clean:
@@ -66,9 +60,16 @@ fclean: clean
 
 re: fclean all
 
-../cbuf/libcbuf.a:
+../../libs/cbuf/libcbuf.a:
 	make -C ../cbuf
 
-../libft/libft.a:
+../../libs/libft/libft.a:
 	make -C ../libft
 
+depend: .depend
+
+.depend: $(SOURCES)
+	rm -f ./.depend
+	$(CC) $(CFLAGS) $(INCLUDES) -MM $^ > ./.depend
+
+include .depend
