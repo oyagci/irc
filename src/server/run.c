@@ -64,6 +64,7 @@ int run(struct s_server *self)
 		select(max_sd + 1, &self->readfds, &self->writefds, NULL, NULL);
 		self->accept(self);
 		self->read(self);
+		self->docommands(self);
 		self->send(self);
 		self->update_clients(self);
 	}

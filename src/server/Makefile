@@ -20,6 +20,7 @@ SOURCES		:= \
 	server_queue.c \
 	read_client_command.c \
 	execute_command.c \
+	docommands.c \
 	nick.c \
 	set_usermode.c \
 	irc_join.c \

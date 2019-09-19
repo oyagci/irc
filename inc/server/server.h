@@ -64,6 +64,7 @@ struct s_client
 	t_cbuf_handle			cbuf;
 	uint8_t					raw_buffer[2048];
 	unsigned int			nmsg;
+	unsigned int			ncmds;
 
 	short					is_connected;
 	short					is_registered;
@@ -81,14 +82,14 @@ struct s_client
 
 struct s_server
 {
-	short				is_running;
-	fd_set				readfds;
-	fd_set				writefds;
-	int					sockfd;
-	t_list				*channels;
-	t_list				*clients;
-	t_list				*msgqueue;
-	t_nicktable			nicks;
+	short		is_running;
+	fd_set		readfds;
+	fd_set		writefds;
+	int			sockfd;
+	t_list		*channels;
+	t_list		*clients;
+	t_list		*msgqueue;
+	t_nicktable	nicks;
 
 	int					(*run)(struct s_server *const self);
 	int					(*pinginactive)(struct s_server *self);
@@ -96,6 +97,7 @@ struct s_server
 	int					(*accept)(struct s_server *const self);
 	int					(*read)(struct s_server *const self);
 	int					(*send)(struct s_server *const self);
+	int					(*docommands)(struct s_server *const self);
 	int					(*exec_cmd)(struct s_server *const self, struct s_client *c, char const *const cmd);
 	int					(*quit)(struct s_server *self, struct s_client *client, const char *const msg);
 	int					(*queuecode)(struct s_server *self, struct s_client *const dest, int code);
@@ -123,6 +125,7 @@ int read_client_command(struct s_server *const self);
 int server_read_clients_command( struct s_server *const server);
 int accept_new_clients(struct s_server *server);
 int reply_client(struct s_client *c, int retcode);
+int docommands(struct s_server *const self);
 
 /*
 ** IRC server commands

@@ -25,6 +25,7 @@ static void init_methods(struct s_server *s)
 	s->accept = &accept_new_clients;
 	s->read = &read_client_command;
 	s->send = &send_queued_replies;
+	s->docommands = &docommands;
 	s->exec_cmd = &execute_command;
 	s->queuecode = &queue_code_reply;
 	s->queuenotif = &queue_reply;
