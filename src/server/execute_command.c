@@ -21,8 +21,8 @@ int execute_command(struct s_server *self, struct s_client *c,
 	int err = 0;
 	int ret = 0;
 
+	(void)self;
 	ft_memset(&msg, 0, sizeof(msg));
-
 	ret = message(&msg, cmd);
 	if (ret >= 0) {
 		for (size_t ii = 0; ii < sizeof(cmds) / sizeof(*cmds); ii++) {
@@ -34,8 +34,6 @@ int execute_command(struct s_server *self, struct s_client *c,
 		if (err) {
 			ret = c->server->queuecode(c->server, c, err);
 		}
-		/* FIXME: There must be a better solution */
-		self->update_clients(self);
 	}
 	return (ret);
 }
