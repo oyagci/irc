@@ -19,6 +19,7 @@
 #include <time.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 static int setnosigpipe(void)
 {
@@ -54,7 +55,6 @@ int accept_new_clients(struct s_server *server)
 	cli_len = sizeof(cli_addr);
 	/* Test if a new connection happened */
 	if (FD_ISSET(server->sockfd, &server->readfds)) {
-
 		confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
 		if (confd >= 0) {
 
@@ -71,6 +71,9 @@ int accept_new_clients(struct s_server *server)
 					printf("New client connected\n");
 				}
 				else {
+					fprintf(stderr,
+						"Could not add client to list. Closing connection...\n");
+					close(confd);
 					ret = -1;
 				}
 			}
