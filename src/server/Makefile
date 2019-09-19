@@ -71,10 +71,10 @@ fclean: clean
 re: fclean all
 
 ../../libs/cbuf/libcbuf.a:
-	make -C ../cbuf
+	make -C ../../libs/cbuf
 
 ../../libs/libft/libft.a:
-	make -C ../libft
+	make -C ../../libs/libft
 
 depend: .depend
 
