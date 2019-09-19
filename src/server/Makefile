@@ -47,23 +47,19 @@ SOURCES		:= \
 	replies/err_unknowncmd.c \
 	replies/err_nickinuse.c \
 	replies/err_erroneusnick.c
-HEADERS		:= \
-	server.h \
-	../reply_codes.h \
-	../parser/parser.h
 OBJS 		:= $(SOURCES:.c=.o)
-OUTDIR		:= ..
-INCLUDES	:= -I./ -I../ -I../libft/includes -I../cbuf/
-LIBS		:= -L../libft -lft -L../cbuf -lcbuf
+OUTDIR		:= ../../
+INCLUDES	:= -I./ -I../ -I../../libs/libft/includes -I../../libs/cbuf/ -I../../inc/ -I../../inc/server -I../../inc/common -I../../inc/parser
+LIBS		:= -L../../libs/libft -lft -L../../libs/cbuf -lcbuf
 
 NAME		:= $(OUTDIR)/server
 
 all: $(NAME)
 
-$(NAME): ../cbuf/libcbuf.a ../libft/libft.a $(OBJS) $(HEADERS)
+$(NAME): ../../libs/cbuf/libcbuf.a ../../libs/libft/libft.a $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBS)
 
-%.o: %.c $(HEADERS)
+%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< -c -o $@
 
 clean:
@@ -74,8 +70,16 @@ fclean: clean
 
 re: fclean all
 
-../cbuf/libcbuf.a:
+../../libs/cbuf/libcbuf.a:
 	make -C ../cbuf
 
-../libft/libft.a:
+../../libs/libft/libft.a:
 	make -C ../libft
+
+depend: .depend
+
+.depend: $(SOURCES)
+	rm -f ./.depend
+	$(CC) $(CFLAGS) $(INCLUDES) -MM $^ > ./.depend
+
+include .depend

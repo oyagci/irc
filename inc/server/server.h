@@ -15,7 +15,7 @@
 
 # include <string.h>
 # include <sys/select.h>
-# include "libft/includes/libft.h"
+# include "libft.h"
 # include "parser/parser.h"
 # include "reply_codes.h"
 # include "nick.h"

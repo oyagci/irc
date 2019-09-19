@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 #include "server.h"
-#include "libft/includes/libft.h"
+#include "libft.h"
 
 struct s_channel	*new_channel(struct s_server *server,
 	char const *name, int mode)

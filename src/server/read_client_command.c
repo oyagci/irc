@@ -62,7 +62,6 @@ int			read_client_command(struct s_server *const self)
 	t_list			*cur;
 	struct s_client	*client;
 	int				complete;
-	int				ret = 0;
 
 	cur = self->clients;
 	while (cur)
