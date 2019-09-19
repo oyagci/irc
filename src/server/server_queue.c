@@ -130,6 +130,7 @@ int queue_code_reply(struct s_server *server, struct s_client *const dest,
 {
 	char replystr[512];
 
+	ft_memset(replystr, 0, sizeof(replystr));
 	server_format_reply(dest, reply_code, replystr);
 	return (server->queuenotif(server, dest, replystr));
 }
