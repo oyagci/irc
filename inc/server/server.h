@@ -63,8 +63,8 @@ struct s_client
 	struct timespec			timeout;
 	t_cbuf_handle			cbuf;
 	uint8_t					raw_buffer[2048];
-	unsigned int			nmsg;
-	unsigned int			ncmds;
+	int						nmsg;
+	int						ncmds;
 
 	short					is_connected;
 	short					is_registered;

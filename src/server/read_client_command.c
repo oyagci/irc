@@ -20,7 +20,7 @@
  *
  * Returns the number of '\n' terminated commands
  */
-static ssize_t read_to_buffer(int cfd, t_cbuf_handle cbuf)
+static int read_to_buffer(int cfd, t_cbuf_handle cbuf)
 {
 	int ret;
 	char buf[512];
