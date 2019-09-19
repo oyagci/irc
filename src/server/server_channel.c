@@ -70,20 +70,19 @@ int					add_to_chan(struct s_server *server,
 
 	elem = server->channels;
 	chan = NULL;
-	while (elem)
-	{
+	while (elem) {
 		chan = elem->content;
 		if (ft_strequ(channame, chan->name))
 			break ;
 		chan = NULL;
 		elem = elem->next;
 	}
-	if (!chan)
-	{
+	if (!chan) {
 		chan = server->new_channel(server, channame, 0);
 	}
-	if (!channel_add_client(chan, client))
+	if (!channel_add_client(chan, client)) {
 		server_tell_new_client(server, client, chan);
+	}
 	return (0);
 }
 
@@ -95,15 +94,15 @@ int					rm_from_chan(char *nick, struct s_channel *chan)
 
 	clients = chan->clients;
 	prev = NULL;
-	while (clients)
-	{
+	while (clients) {
 		c = clients->content;
-		if (ft_strequ(c->nickname, nick))
-		{
-			if (prev)
+		if (ft_strequ(c->nickname, nick)) {
+			if (prev) {
 				prev->next = clients->next;
-			else
+			}
+			else {
 				chan->clients = clients->next;
+			}
 			free(clients);
 			return (0);
 		}

@@ -37,11 +37,13 @@ static int set_fds(struct s_server *server)
 		 * Only set file descriptors for writing if a message is about to be
 		 * sent to that specific client
 		 */
-		if (client->nmsg > 0)
+		if (client->nmsg > 0) {
 			FD_SET(client->fd, &server->writefds);
+		}
 
-		if (client->fd > max_fd)
+		if (client->fd > max_fd) {
 			max_fd = client->fd;
+		}
 	}
 	return (max_fd);
 }

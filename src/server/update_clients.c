@@ -16,16 +16,11 @@
 void	remove_from_all_channels(struct s_server *self,
 	struct s_client *const c)
 {
-	t_list				*l;
-	struct s_channel	*chan;
+	for (t_list *l = self->channels; l != NULL; l = l->next) {
+		struct s_channel *chan = l->content;
 
-	l = self->channels;
-	while (l != NULL)
-	{
-		chan = l->content;
 		rm_from_chan(c->nickname, chan);
 		self->notifypart(self, chan, c->nickname);
-		l = l->next;
 	}
 }
 
