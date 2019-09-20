@@ -75,7 +75,7 @@ accept_new_clients.o: accept_new_clients.c \
  ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
  ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
  ../../inc/server/nick.h ../../libs/cbuf/cbuf.h ../log.h
-server_queue.o: server_queue.c ../../libs/libft/includes/libft.h \
+queue.o: queue.c ../../libs/libft/includes/libft.h \
  ../../libs/libft/includes/libft_str.h \
  ../../libs/libft/includes/libft_mem.h \
  ../../libs/libft/includes/libft_list.h \
@@ -219,7 +219,7 @@ run.o: run.c ../../inc/server/server.h ../../libs/libft/includes/libft.h \
  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
  ../../libs/cbuf/cbuf.h ../log.h
-server_init.o: server_init.c ../../inc/server/server.h \
+init.o: init.c ../../inc/server/server.h \
  ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
  ../../libs/libft/includes/libft_mem.h \
  ../../libs/libft/includes/libft_list.h \

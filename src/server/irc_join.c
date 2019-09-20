@@ -46,23 +46,22 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 
 int	irc_join(struct s_client *client, struct s_params *p)
 {
-	t_list	*l;
-	t_list	*chans;
-	char	*chan;
+	t_list	*chans = NULL;
 
-	if (!client->is_registered)
+	if (!client->is_registered) {
 		return (0);
-	chan = NULL;
-	if (p->nparam < 1)
-		return (ERR_NEEDMOREPARAM);
-	chans = channels(p->param[0]);
-	l = chans;
-	while (l)
-	{
-		chan = l->content;
-		client->server->add_to_chan(client->server, client, chan);
-		l = l->next;
 	}
+	if (p->nparam < 1) {
+		return (ERR_NEEDMOREPARAM);
+	}
+
+	chans = channels(p->param[0]);
+	for (t_list *l = chans; l != NULL; l = l->next) {
+		char const *chan = l->content;
+
+		client->server->add_to_chan(client->server, client, chan);
+	}
+
 	channels_del(&chans);
 	return (0);
 }

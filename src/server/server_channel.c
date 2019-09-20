@@ -15,8 +15,7 @@
 #include "server.h"
 #include "libft.h"
 
-struct s_channel	*new_channel(struct s_server *server,
-	char const *name, int mode)
+struct s_channel *create_channel(struct s_server *server, char const *name, int mode)
 {
 	t_list				*elem;
 	struct s_channel	*chan;
@@ -43,50 +42,48 @@ struct s_channel	*new_channel(struct s_server *server,
 	return (chan);
 }
 
-struct s_channel	*get_channel(struct s_server *server,
-	char const *name)
+struct s_channel	*get_channel(struct s_server *server, char const *name)
 {
-	t_list				*elem;
-	struct s_channel	*chan;
+	struct s_channel *chan;
 
-	elem = server->channels;
 	chan = NULL;
-	while (elem)
-	{
-		chan = elem->content;
-		if (ft_strequ(chan->name, name))
+	for (t_list *elem = server->channels; elem != NULL; elem = elem->next) {
+		struct s_channel *cur = elem->content;
+
+		if (ft_strequ(cur->name, name)) {
+			chan = cur;
 			break ;
-		chan = NULL;
-		elem = elem->next;
+		}
 	}
 	return (chan);
 }
 
-int					add_to_chan(struct s_server *server,
-	struct s_client *client, char const *const channame)
+int add_to_chan(struct s_server *server, struct s_client *client,
+	char const *const channame)
 {
-	t_list				*elem;
-	struct s_channel	*chan;
+	struct s_channel *chan = NULL;
 
-	elem = server->channels;
-	chan = NULL;
-	while (elem) {
-		chan = elem->content;
-		if (ft_strequ(channame, chan->name))
+	for (t_list *elem = server->channels; elem != NULL; elem = elem->next) {
+		struct s_channel *cur = elem->content;
+
+		if (ft_strequ(channame, cur->name)) {
+			chan = cur;
 			break ;
-		chan = NULL;
-		elem = elem->next;
+		}
 	}
+
 	if (!chan) {
-		chan = server->new_channel(server, channame, 0);
-	}
-	if (!channel_add_client(chan, client)) {
-		server_tell_new_client(server, client, chan);
+		chan = server->create_channel(server, channame, 0);
+		if (chan) {
+			if (!channel_add_client(chan, client)) {
+				server_tell_new_client(server, client, chan);
+			}
+		}
 	}
 	return (0);
 }
 
-int					rm_from_chan(char *nick, struct s_channel *chan)
+int rm_from_chan(char *nick, struct s_channel *chan)
 {
 	t_list			*clients;
 	t_list			*prev;

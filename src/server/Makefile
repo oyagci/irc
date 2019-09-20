@@ -17,7 +17,7 @@ SOURCES		:= \
 	../parser/is_nospcrlfcl.c \
 	server.c \
 	accept_new_clients.c \
-	server_queue.c \
+	queue.c \
 	read_client_command.c \
 	execute_command.c \
 	docommands.c \
@@ -35,7 +35,7 @@ SOURCES		:= \
 	irc_quit.c \
 	server_channel.c \
 	run.c \
-	server_init.c \
+	init.c \
 	channel.c \
 	notify.c \
 	pinginactive.c \

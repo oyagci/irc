@@ -103,7 +103,7 @@ struct s_server
 	int					(*queuecode)(struct s_server *self, struct s_client *const dest, int code);
 	int					(*queuenotif)(struct s_server *self, struct s_client *const dest, char const *msg);
 	int					(*rm_from_chan)(char *const nick, struct s_channel *chan);
-	struct s_channel	*(*new_channel)(struct s_server *self, char const *name, int mode);
+	struct s_channel	*(*create_channel)(struct s_server *self, char const *name, int mode);
 	struct s_channel	*(*get_channel)(struct s_server *self, char const *const name);
 	int					(*notifypart)(struct s_server *self, struct s_channel *chan, char const *const nick);
 	int					(*add_to_chan)(struct s_server *server, struct s_client *client, char const *const channame);
@@ -173,7 +173,7 @@ int       rm_from_chan(char *nick, struct s_channel *chan);
 
 int       notifypart(struct s_server *s, struct s_channel *chan, char const *const nick);
 
-struct s_channel *new_channel(struct s_server *server, char const *name, int mode);
+struct s_channel *create_channel(struct s_server *server, char const *name, int mode);
 
 int pinginactive(struct s_server *self);
 

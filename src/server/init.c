@@ -33,7 +33,7 @@ static void init_methods(struct s_server *s)
 	s->rm_from_chan = &rm_from_chan;
 	s->get_channel = &get_channel;
 	s->notifypart = &notifypart;
-	s->new_channel = &new_channel;
+	s->create_channel = &create_channel;
 	s->add_to_chan = &add_to_chan;
 	s->pinginactive = &pinginactive;
 	s->quit = &quit;
