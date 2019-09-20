@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "server.h"
+#include "log.h"
 
 /*
  * Set file descriptors for reading on each client
@@ -20,6 +21,7 @@ static int set_fds(struct s_server *server)
 {
 	int max_fd = 0;
 
+	VVERBOSE("Resetting file descriptors");
 	FD_ZERO(&server->readfds);
 	FD_SET(server->sockfd, &server->readfds);
 	FD_ZERO(&server->writefds);
@@ -38,6 +40,7 @@ static int set_fds(struct s_server *server)
 		 * sent to that specific client
 		 */
 		if (client->nmsg > 0) {
+			VVERBOSE("%d is about to be written on", client->fd);
 			FD_SET(client->fd, &server->writefds);
 		}
 
@@ -45,6 +48,7 @@ static int set_fds(struct s_server *server)
 			max_fd = client->fd;
 		}
 	}
+	VVERBOSE("Maximun fd number is %d", max_fd);
 	return (max_fd);
 }
 
@@ -60,6 +64,7 @@ int run(struct s_server *self)
 {
 	int max_sd;
 
+	VERBOSE("Running main loop");
 	self->is_running = 1;
 	while (self->is_running) {
 		max_sd = set_fds(self);

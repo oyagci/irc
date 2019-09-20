@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include "server.h"
 #include <stdio.h>
+#include "log.h"
 
 static void init_methods(struct s_server *s)
 {
@@ -48,6 +49,7 @@ static int startup(struct s_server *server, unsigned int port)
 
 	server->sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (server->sockfd > 0) {
+		VERBOSE("Binding and listening on port %u", port);
 		ft_memset(&serv_addr, 0, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
 		serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -63,7 +65,7 @@ static int startup(struct s_server *server, unsigned int port)
 			ret = -1;
 		}
 		else {
-			printf("Server started on port %u\n", port);
+			INFO("Server started on port %u", port);
 		}
 	}
 	else {
@@ -75,15 +77,17 @@ static int startup(struct s_server *server, unsigned int port)
 
 int server_init(struct s_server *server, unsigned int port)
 {
-	int ret = 0;
+	int ret = -1;
 
 	if (server)
 	{
+		VERBOSE("Initializing server");
 		ft_memset(server, 0, sizeof(*server));
 
 		init_methods(server);
 		nickinit(&server->nicks);
 
+		VERBOSE("Server initialized");
 		ret = startup(server, port);
 	}
 	return (ret);

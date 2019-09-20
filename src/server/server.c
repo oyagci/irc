@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "server.h"
+#include "log.h"
 
 int main(int ac, char *av[])
 {
@@ -20,7 +21,7 @@ int main(int ac, char *av[])
 	struct s_server server;
 
 	if (ac < 2) {
-		printf("Usage: %s <port>\n", av[0]);
+		fprintf(stderr, "Usage: %s <port>\n", av[0]);
 		exit(EXIT_FAILURE);
 	}
 	ret = server_init(&server, ft_atoi(av[1]));

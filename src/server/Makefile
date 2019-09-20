@@ -46,7 +46,8 @@ SOURCES		:= \
 	replies/rpl_welcome.c \
 	replies/err_unknowncmd.c \
 	replies/err_nickinuse.c \
-	replies/err_erroneusnick.c
+	replies/err_erroneusnick.c \
+	../log.c
 OBJS 		:= $(SOURCES:.c=.o)
 OUTDIR		:= ../../
 INCLUDES	:= -I./ -I../ -I../../libs/libft/includes -I../../libs/cbuf/ -I../../inc/ -I../../inc/server -I../../inc/common -I../../inc/parser
