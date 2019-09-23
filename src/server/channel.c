@@ -33,7 +33,7 @@ static int client_in_channel(struct s_client const *client,
 int channel_add_client(struct s_channel *channel, struct s_client *client)
 {
 	t_list *elem = NULL;
-	int ret = -1;
+	int ret = 1;
 
 	if (!client_in_channel(client, channel)) {
 		elem = ft_lstnew(0, 0);
@@ -41,6 +41,9 @@ int channel_add_client(struct s_channel *channel, struct s_client *client)
 			elem->content = client;
 			ft_lstpush(&channel->clients, elem);
 			ret = 0;
+		}
+		else {
+			ret = -1;
 		}
 	}
 	return (ret);
