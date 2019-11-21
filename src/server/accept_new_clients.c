@@ -28,38 +28,29 @@ static int setnosigpipe(void)
 	return (0);
 }
 
-static int		add_client(struct s_server *self, struct s_client *c)
+static int		add_client(struct s_server *self, t_client *c)
 {
-	t_list	*elem;
-
-	elem = ft_lstnew(NULL, 0);
-	if (!elem)
-		return (-1);
-	elem->content = c;
-	ft_lstadd(&self->clients, elem);
-	return (0);
+	if (self->nclients < NCLIENTS)
+	{
+		ft_memcpy(self->clients + self->nclients, c, sizeof(t_client));
+		self->nclients += 1;
+		return (0);
+	}
+	return (-1);
 }
 
-struct s_client	*client_init(struct s_server *s, int fd)
+void	client_init(t_client *client, struct s_server *s, int fd)
 {
-	struct s_client	*client;
-
-	client = ft_memalloc(sizeof(*client));
-	if (!client)
-	{
-		perror("malloc");
-		return (NULL);
-	}
+	ft_memset(client, 0, sizeof(t_client));
 	client->fd = fd;
 	client->server = s;
 	client->cbuf = cbuf_init(client->raw_buffer, sizeof(client->raw_buffer));
 	ft_memset(client->nickname, 0, sizeof(client->nickname));
-	return (client);
 }
 
 int				accept_new_clients(struct s_server *server)
 {
-	struct s_client		*client;
+	struct s_client		client;
 	struct sockaddr_in	cli_addr;
 	socklen_t			cli_len;
 	int					confd;
@@ -74,10 +65,8 @@ int				accept_new_clients(struct s_server *server)
 		return (-1);
 	}
 	setnosigpipe();
-	client = client_init(server, confd);
-	if (!add_client(server, client))
-		INFO("New client connected\n");
-	else
+	client_init(&client, server, confd);
+	if (add_client(server, &client) < 0)
 	{
 		ERROR("Could not add client to list. Closing connection...");
 		close(confd);

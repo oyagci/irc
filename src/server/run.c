@@ -19,25 +19,25 @@
  */
 static int set_fds(struct s_server *server)
 {
-	int				max_fd;
-	t_list			*cur;
-	struct s_client	*client;
+	int			max_fd;
+	t_client	*client;
+	size_t		i;
 
 	max_fd = server->sockfd;
 	FD_ZERO(&server->readfds);
 	FD_SET(server->sockfd, &server->readfds);
 	FD_ZERO(&server->writefds);
 	FD_SET(server->sockfd, &server->writefds);
-	cur = server->clients;
-	while (cur != NULL)
+	i = 0;
+	while (i < server->nclients)
 	{
-		client = cur->content;
+		client = server->clients + i;
 		FD_SET(client->fd, &server->readfds);
 		if (client->nmsg > 0)
 			FD_SET(client->fd, &server->writefds);
 		if (client->fd > max_fd)
 			max_fd = client->fd;
-		cur = cur->next;
+		i += 1;
 	}
 	return (max_fd);
 }

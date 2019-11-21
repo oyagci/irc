@@ -26,6 +26,7 @@
 # define CLIENT_BUFFER_SIZE	COMMAND_LENGTH
 # define MAX_CONN			1024
 # define NICK_SIZE			9
+# define NCLIENTS			10
 
 /*
 ** Connection password
@@ -54,7 +55,7 @@ enum e_umode
 	UMODE_INVISIBLE = 1 << 3,
 };
 
-struct s_client
+typedef struct	s_client
 {
 	int						fd;
 	int						lastret;
@@ -78,7 +79,7 @@ struct s_client
 	short					should_be_disconnected;
 
 	struct s_server			*server;
-};
+}				t_client;
 
 struct s_server
 {
@@ -87,7 +88,10 @@ struct s_server
 	fd_set		writefds;
 	int			sockfd;
 	t_list		*channels;
-	t_list		*clients;
+
+	t_client	clients[NCLIENTS];
+	size_t		nclients;
+
 	t_list		*msgqueue;
 	t_nicktable	nicks;
 

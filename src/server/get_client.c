@@ -12,18 +12,18 @@
 
 #include "server.h"
 
-struct s_client	*get_client(struct s_server *self, char const *const nickname)
+t_client	*get_client(struct s_server *self, char const *const nickname)
 {
-	t_list			*clients;
-	struct s_client	*c;
+	t_client	*c;
+	size_t		i;
 
-	clients = self->clients;
-	while (clients)
+	i = 0;
+	while (i < self->nclients)
 	{
-		c = clients->content;
+		c = self->clients + i;
 		if (ft_strnequ(c->nickname, nickname, NICK_SIZE))
 			return (c);
-		clients = clients->next;
+		i += 1;
 	}
 	return (NULL);
 }

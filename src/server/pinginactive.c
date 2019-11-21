@@ -15,22 +15,22 @@
 
 int		updatetimeout(struct s_server *self)
 {
-	t_list			*clients;
-	struct s_client	*client;
+	t_client		*client;
 	struct timespec	current;
+	size_t			i;
 
 	clock_gettime(CLOCK_REALTIME, &current);
-	clients = self->clients;
-	while (clients)
+	i = 0;
+	while (i < self->nclients)
 	{
-		client = clients->content;
+		client = self->clients + i;
 		if (client->timeout.tv_sec != 0 &&
 			current.tv_sec >= client->timeout.tv_sec)
 		{
 			self->quit(self, client, "Ping timeout exceeded");
 			ft_memset(&client->timeout, 0, sizeof(client->timeout));
 		}
-		clients = clients->next;
+		i += 1;
 	}
 	return (0);
 }
@@ -46,15 +46,15 @@ void	set_timeout(struct s_client *c, unsigned sec)
 
 int		pinginactive(struct s_server *self)
 {
-	t_list			*clients;
-	struct s_client	*client;
+	t_client		*client;
 	struct timespec	current;
+	size_t			i;
 
-	clients = self->clients;
 	updatetimeout(self);
-	while (clients)
+	i = 0;
+	while (i < self->nclients)
 	{
-		client = clients->content;
+		client = self->clients + i;
 		clock_gettime(CLOCK_REALTIME, &current);
 		if (client->timeout.tv_sec == 0 &&
 			current.tv_sec >= client->ping.tv_sec)
@@ -64,7 +64,7 @@ int		pinginactive(struct s_server *self)
 			client->ping.tv_sec += 20;
 			set_timeout(client, 10);
 		}
-		clients = clients->next;
+		i += 1;
 	}
 	return (0);
 }

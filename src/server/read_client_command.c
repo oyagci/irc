@@ -56,24 +56,22 @@ static int read_to_buffer(int cfd, t_cbuf_handle cbuf)
  */
 int			read_client_command(struct s_server *const self)
 {
-	t_list			*next;
-	t_list			*cur;
-	struct s_client	*client;
-	int				complete;
+	int		complete;
+	size_t	i;
+	
 
-	cur = self->clients;
-	while (cur)
+	i = 0;
+	while (i < self->nclients)
 	{
-		next = cur->next;
-		client = cur->content;
-		if (FD_ISSET(client->fd, &self->readfds))
+		if (FD_ISSET(self->clients[i].fd, &self->readfds))
 		{
-			complete = read_to_buffer(client->fd, client->cbuf);
+			complete = read_to_buffer(self->clients[i].fd,
+				self->clients[i].cbuf);
 			if (complete < 0)
-				client->should_be_disconnected = 1;
-			client->ncmds = complete;
+				self->clients[i].should_be_disconnected = 1;
+			self->clients[i].ncmds = complete;
 		}
-		cur = next;
+		i += 1;
 	}
 	return (0);
 }

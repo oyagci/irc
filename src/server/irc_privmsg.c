@@ -15,16 +15,16 @@
 
 struct s_client	*server_get_client(struct s_server *server, char const *nick)
 {
-	t_list			*clients;
 	struct s_client	*client;
+	size_t			i;
 
-	clients = server->clients;
-	while (clients)
+	i = 0;
+	while (i < server->nclients)
 	{
-		client = clients->content;
+		client = server->clients + i;
 		if (ft_strequ(client->nickname, nick))
 			return (client);
-		clients = clients->next;
+		i += 1;
 	}
 	return (NULL);
 }
@@ -32,8 +32,8 @@ struct s_client	*server_get_client(struct s_server *server, char const *nick)
 int				server_send_channel(struct s_server *server,
 	struct s_channel *chan, char *msg)
 {
-	t_list			*client;
-	struct s_client	*recipient;
+	t_list		*client;
+	t_client	*recipient;
 
 	client = chan->clients;
 	while (client)
