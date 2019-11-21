@@ -75,7 +75,6 @@ typedef struct	s_client
 	char					*username;
 	char					*realname;
 
-	short					should_be_freed;
 	short					should_be_disconnected;
 
 	struct s_server			*server;

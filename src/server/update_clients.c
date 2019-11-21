@@ -34,9 +34,8 @@ int		update_clients(struct s_server *self)
 	{
 		c = self->clients + i;
 		if (c->should_be_disconnected)
-			close(c->fd);
-		if (c->should_be_freed || c->should_be_disconnected)
 		{
+			close(c->fd);
 			remove_from_all_channels(self, c);
 			nickremove(&c->server->nicks, c->nickname);
 			self->del_client(self, c);

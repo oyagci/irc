@@ -17,6 +17,6 @@
 int		irc_quit(struct s_client *c, struct s_params *p)
 {
 	(void)p;
-	c->should_be_freed = 1;
+	c->should_be_disconnected = 1;
 	return (0);
 }
