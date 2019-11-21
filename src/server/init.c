@@ -44,35 +44,32 @@ static void init_methods(struct s_server *s)
 
 static int startup(struct s_server *server, unsigned int port)
 {
-	int ret = 0;
-	struct sockaddr_in serv_addr;
+	struct sockaddr_in	serv_addr;
 
+	VERBOSE("Binding and listening on port %u", port);
 	server->sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	if (server->sockfd > 0) {
-		VERBOSE("Binding and listening on port %u", port);
-		ft_memset(&serv_addr, 0, sizeof(serv_addr));
-		serv_addr.sin_family = AF_INET;
-		serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-		serv_addr.sin_port = htons(port);
-
-		if (-1 == bind(server->sockfd, (struct sockaddr *)&serv_addr,
-				sizeof(serv_addr))) {
-			perror("bind");
-			ret = -1;
-		}
-		else if (-1 == listen(server->sockfd, MAX_CONN)) {
-			perror("listen");
-			ret = -1;
-		}
-		else {
-			INFO("Server started on port %u", port);
-		}
-	}
-	else {
+	if (server->sockfd <= 0)
+	{
 		perror("socket");
-		ret = -1;
+		return (-1);
 	}
-	return (ret);
+	ft_memset(&serv_addr, 0, sizeof(serv_addr));
+	serv_addr.sin_family = AF_INET;
+	serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	serv_addr.sin_port = htons(port);
+	if (-1 == bind(server->sockfd, (struct sockaddr *)&serv_addr,
+			sizeof(serv_addr)))
+	{
+		perror("bind");
+		return (-1);
+	}
+	else if (-1 == listen(server->sockfd, MAX_CONN))
+	{
+		perror("listen");
+		return (-1);
+	}
+	INFO("Server started on port %u", port);
+	return (0);
 }
 
 int server_init(struct s_server *server, unsigned int port)
