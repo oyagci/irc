@@ -32,14 +32,9 @@ static int		add_client(struct s_server *self, struct s_client *c)
 {
 	t_list	*elem;
 
-	if (!c) {
-		return (-1);
-	}
-
 	elem = ft_lstnew(NULL, 0);
-	if (!elem) {
+	if (!elem)
 		return (-1);
-	}
 	elem->content = c;
 	ft_lstadd(&self->clients, elem);
 	return (0);
