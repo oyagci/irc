@@ -28,7 +28,7 @@ static int setnosigpipe(void)
 	return (0);
 }
 
-static int add_client(struct s_server *self, struct s_client *c)
+static int		add_client(struct s_server *self, struct s_client *c)
 {
 	t_list	*elem;
 
@@ -45,47 +45,48 @@ static int add_client(struct s_server *self, struct s_client *c)
 	return (0);
 }
 
-int accept_new_clients(struct s_server *server)
+struct s_client	*client_init(struct s_server *s, int fd)
 {
-	struct s_client *client;
-	struct sockaddr_in cli_addr;
-	socklen_t cli_len;
-	int confd;
-	int ret = 0;
+	struct s_client	*client;
+
+	client = ft_memalloc(sizeof(*client));
+	if (!client)
+	{
+		perror("malloc");
+		return (NULL);
+	}
+	client->fd = fd;
+	client->server = s;
+	client->cbuf = cbuf_init(client->raw_buffer, sizeof(client->raw_buffer));
+	ft_memset(client->nickname, 0, sizeof(client->nickname));
+	return (client);
+}
+
+int				accept_new_clients(struct s_server *server)
+{
+	struct s_client		*client;
+	struct sockaddr_in	cli_addr;
+	socklen_t			cli_len;
+	int					confd;
 
 	cli_len = sizeof(cli_addr);
-	/* Test if a new connection happened */
-	if (FD_ISSET(server->sockfd, &server->readfds)) {
-		VERBOSE("New connection");
-		confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
-		if (confd >= 0) {
-
-			setnosigpipe();
-
-			client = ft_memalloc(sizeof(*client));
-			if (client) {
-				client->fd = confd;
-				client->server = server;
-				client->cbuf = cbuf_init(client->raw_buffer, sizeof(client->raw_buffer));
-				ft_memset(client->nickname, 0, sizeof(client->nickname));
-				if (!add_client(server, client)) {
-					INFO("New client connected\n");
-				}
-				else {
-					ERROR("Could not add client to list. Closing connection...");
-					close(confd);
-					ret = -1;
-				}
-			}
-			else {
-				perror("malloc");
-				ret = -1;
-			}
-		}
-		else {
-			perror("accept");
-			ret = -1;
-		}
+	if (!FD_ISSET(server->sockfd, &server->readfds))
+		return (0);
+	confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
+	if (confd < 0)
+	{
+		perror("accept");
+		return (-1);
 	}
-	return (ret);
+	setnosigpipe();
+	client = client_init(server, confd);
+	if (!add_client(server, client))
+		INFO("New client connected\n");
+	else
+	{
+		ERROR("Could not add client to list. Closing connection...");
+		close(confd);
+		return (-1);
+	}
+	return (0);
 }
