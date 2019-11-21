@@ -19,46 +19,33 @@
  */
 static int set_fds(struct s_server *server)
 {
-	int max_fd = 0;
+	int				max_fd;
+	t_list			*cur;
+	struct s_client	*client;
 
-	VVERBOSE("Resetting file descriptors");
+	max_fd = server->sockfd;
 	FD_ZERO(&server->readfds);
 	FD_SET(server->sockfd, &server->readfds);
 	FD_ZERO(&server->writefds);
 	FD_SET(server->sockfd, &server->writefds);
-
-	max_fd = server->sockfd;
-
-	for (t_list *cur = server->clients; cur != NULL; cur = cur->next) {
-
-		struct s_client	*client = cur->content;
-
+	cur = server->clients;
+	while (cur != NULL)
+	{
+		client = cur->content;
 		FD_SET(client->fd, &server->readfds);
-
-		/*
-		 * Only set file descriptors for writing if a message is about to be
-		 * sent to that specific client
-		 */
-		if (client->nmsg > 0) {
-			VVERBOSE("%d is about to be written on", client->fd);
+		if (client->nmsg > 0)
 			FD_SET(client->fd, &server->writefds);
-		}
-
-		if (client->fd > max_fd) {
+		if (client->fd > max_fd)
 			max_fd = client->fd;
-		}
+		cur = cur->next;
 	}
-	VVERBOSE("Maximun fd number is %d", max_fd);
 	return (max_fd);
 }
 
 /*
- * Main loop
- *
- * This function:
- *   - Accepts new clients
- *   - Reads client messages
- *   - Replies to clients
+ * Accept new clients
+ * Read client messages
+ * Replie to clients
  */
 int run(struct s_server *self)
 {
@@ -66,7 +53,8 @@ int run(struct s_server *self)
 
 	VERBOSE("Running main loop");
 	self->is_running = 1;
-	while (self->is_running) {
+	while (self->is_running)
+	{
 		max_sd = set_fds(self);
 		select(max_sd + 1, &self->readfds, &self->writefds, NULL, NULL);
 		self->accept(self);
