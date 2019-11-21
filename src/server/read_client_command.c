@@ -30,22 +30,20 @@ static int read_to_buffer(int cfd, t_cbuf_handle cbuf)
 	ft_memset(buf, 0, 512);
 	complete = 0;
 	ret = recv(cfd, buf, 512, 0);
-	if (ret > 0) {
-		complete = 0;
-
+	if (ret > 0)
+	{
 		ii = 0;
-		while (ii < ret) {
+		while (ii < ret)
+		{
 			cbuf_put(cbuf, buf[ii]);
-			if (buf[ii] == '\n') {
-				complete += 1;
-			}
+			buf[ii] == '\n' ? complete++ : 0;
 			ii += 1;
 		}
 	}
-	else if (ret == 0) {
+	else if (ret == 0)
 		return (-1);
-	}
-	else {
+	else
+	{
 		perror("recv");
 		return (-1);
 	}
@@ -68,15 +66,11 @@ int			read_client_command(struct s_server *const self)
 	{
 		next = cur->next;
 		client = cur->content;
-		if (FD_ISSET(client->fd, &self->readfds)) {
+		if (FD_ISSET(client->fd, &self->readfds))
+		{
 			complete = read_to_buffer(client->fd, client->cbuf);
-			if (complete < 0) {
-				/*
-				 * If no input has been given by the client,
-				 * that means that it's disconnected
-				 */
+			if (complete < 0)
 				client->should_be_disconnected = 1;
-			}
 			client->ncmds = complete;
 		}
 		cur = next;
