@@ -20,13 +20,13 @@ int main(int ac, char *av[])
 	int ret = 0;
 	struct s_server server;
 
-	if (ac < 2) {
+	if (ac < 2)
+	{
 		fprintf(stderr, "Usage: %s <port>\n", av[0]);
 		exit(EXIT_FAILURE);
 	}
 	ret = server_init(&server, ft_atoi(av[1]));
-	if (!ret) {
+	if (!ret)
 		ret = server.run(&server);
-	}
 	return (ret);
 }
