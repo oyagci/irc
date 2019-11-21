@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include "log.h"
 
-static void init_methods(struct s_server *s)
+static void	init_methods(struct s_server *s)
 {
 	s->run = &run;
 	s->accept = &accept_new_clients;
@@ -42,7 +42,7 @@ static void init_methods(struct s_server *s)
 	s->update_clients = update_clients;
 }
 
-static int startup(struct s_server *server, unsigned int port)
+static int	startup(struct s_server *server, unsigned int port)
 {
 	struct sockaddr_in	serv_addr;
 
@@ -72,20 +72,12 @@ static int startup(struct s_server *server, unsigned int port)
 	return (0);
 }
 
-int server_init(struct s_server *server, unsigned int port)
+int			server_init(struct s_server *server, unsigned int port)
 {
-	int ret = -1;
-
-	if (server)
-	{
-		VERBOSE("Initializing server");
-		ft_memset(server, 0, sizeof(*server));
-
-		init_methods(server);
-		nickinit(&server->nicks);
-
-		VERBOSE("Server initialized");
-		ret = startup(server, port);
-	}
-	return (ret);
+	VERBOSE("Initializing server");
+	ft_memset(server, 0, sizeof(*server));
+	init_methods(server);
+	nickinit(&server->nicks);
+	VERBOSE("Server initialized");
+	return (startup(server, port));
 }
