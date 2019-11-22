@@ -71,7 +71,7 @@ static int	register_conn(struct s_client *const self)
 }
 
 static int	do_conn(struct s_client *self, char const *addr,
-	char const *portstr, int portno)
+	char const *portstr)
 {
 	struct addrinfo		*server;
 	struct addrinfo		hints;
@@ -103,7 +103,6 @@ static int	do_conn(struct s_client *self, char const *addr,
 int			client_connect(struct s_client *const self,
 	struct s_client_msg const *const cmd)
 {
-	unsigned short	portno;
 	int				ret;
 
 	if (self->nickname[0] == '\0')
@@ -116,8 +115,7 @@ int			client_connect(struct s_client *const self,
 		printf(" - Sorry, already connected\n");
 		return (-1);
 	}
-	portno = ft_atoi(cmd->params[1]);
-	ret = do_conn(self, cmd->params[0], cmd->params[1], portno);
+	ret = do_conn(self, cmd->params[0], cmd->params[1]);
 	if (ret >= 0)
 		register_conn(self);
 	return (ret);
