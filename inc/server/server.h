@@ -95,12 +95,13 @@ typedef struct	s_server
 	t_nicktable	nicks;
 }				t_server;
 
-struct s_server_msg
+typedef struct	s_server_msg
 {
 	char	dest[NICK_SIZE];
 	char	msg[512];
 	size_t	len;
-};
+	uint8_t	sent;
+}				t_server_msg;
 
 int server_init(struct s_server *server, unsigned int port);
 int execute_command(struct s_server *self, struct s_client *c, char const *const cmd);

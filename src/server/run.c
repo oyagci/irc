@@ -64,7 +64,7 @@ int run(struct s_server *self)
 			; // TODO: Handler error
 		}
 		docommands(self);
-//		send_queued_replies(self);
+		send_queued_replies(self);
 //		update_clients(self);
 	}
 	return (0);
