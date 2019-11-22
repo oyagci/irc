@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 13:16:49 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:53:32 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <unistd.h>
 #include "log.h"
 
-static int setnosigpipe(void)
+static int		setnosigpipe(void)
 {
 	signal(SIGPIPE, SIG_IGN);
 	return (0);
@@ -45,7 +45,7 @@ static int		add_client(struct s_server *self, t_client *c)
 	return (-1);
 }
 
-void	client_init(t_client *client, struct s_server *s, int fd)
+void			client_init(t_client *client, struct s_server *s, int fd)
 {
 	ft_memset(client, 0, sizeof(t_client));
 	client->fd = fd;
