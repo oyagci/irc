@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:37 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:41 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:52:33 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		send_queued_replie(t_client *dest, t_server_msg *msg)
 
 int			send_queued_replies(struct s_server *const server)
 {
-	t_list 			*msgelem;
+	t_list			*msgelem;
 	t_server_msg	*msg;
 	t_client		*dest;
 
@@ -93,14 +93,14 @@ int			send_queued_replies(struct s_server *const server)
 	return (0);
 }
 
-static void server_format_reply(t_client const *const c, int reply_code,
+static void	server_format_reply(t_client const *const c, int reply_code,
 	char buf[512])
 {
 	t_tuple_reply const	handles[] = {
 		{ RPL_WELCOME, rpl_welcome },
 		{ ERR_UNKNOWNCOMMAND, err_unknowncmd },
 		{ ERR_NICKNAMEINUSE, err_nickinuse },
-		{ ERR_ERRONEUSNICKNAME,	err_erroneusnick },
+		{ ERR_ERRONEUSNICKNAME, err_erroneusnick },
 	};
 	size_t				i;
 
@@ -112,14 +112,14 @@ static void server_format_reply(t_client const *const c, int reply_code,
 			if (handles[i].num == reply_code)
 			{
 				handles[i].f((char *)buf, 512, c);
-				break;
+				break ;
 			}
 			i += 1;
 		}
 	}
 }
 
-int queue_reply(struct s_server *server, struct s_client *const dest,
+int			queue_reply(t_server *server, t_client *const dest,
 	char const *reply)
 {
 	t_list				*elem;
@@ -141,7 +141,7 @@ int queue_reply(struct s_server *server, struct s_client *const dest,
 	return (0);
 }
 
-int queue_code_reply(struct s_server *server, struct s_client *const dest,
+int			queue_code_reply(t_server *server, t_client *const dest,
 	int reply_code)
 {
 	char replystr[512];
