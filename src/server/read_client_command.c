@@ -51,7 +51,7 @@ static int read_to_buffer(int cfd, t_cbuf_handle cbuf)
 }
 
 /*
- * Read and execute commands read from client input
+ * Read commands read from client input
  * Returns -1 on error or the number of commands read.
  */
 int			read_client_command(struct s_server *const self)
@@ -59,17 +59,17 @@ int			read_client_command(struct s_server *const self)
 	int		complete;
 	size_t	i;
 	
-
 	i = 0;
 	while (i < self->nclients)
 	{
-		if (FD_ISSET(self->clients[i].fd, &self->readfds))
+		if (self->clients[i].fd != 0
+			&& FD_ISSET(self->clients[i].fd, &self->readfds))
 		{
 			complete = read_to_buffer(self->clients[i].fd,
 				self->clients[i].cbuf);
+			self->clients[i].ncmds = complete;
 			if (complete < 0)
 				self->clients[i].should_be_disconnected = 1;
-			self->clients[i].ncmds = complete;
 		}
 		i += 1;
 	}

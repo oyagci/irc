@@ -57,11 +57,15 @@ int run(struct s_server *self)
 	{
 		max_sd = set_fds(self);
 		select(max_sd + 1, &self->readfds, &self->writefds, NULL, NULL);
-		accept_new_clients(self);
-		read_client_command(self);
-		docommands(self);
-		send_queued_replies(self);
-		update_clients(self);
+		if (accept_new_clients(self) < 0) {
+			; // TODO: Handle error
+		}
+		if (read_client_command(self) < 0) {
+			; // TODO: Handler error
+		}
+//		docommands(self);
+//		send_queued_replies(self);
+//		update_clients(self);
 	}
 	return (0);
 }

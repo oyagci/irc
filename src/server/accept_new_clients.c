@@ -30,6 +30,18 @@ static int setnosigpipe(void)
 
 static int		add_client(struct s_server *self, t_client *c)
 {
+	size_t	i;
+
+	i = 0;
+	while (i < self->nclients)
+	{
+		if (self->clients[i].fd == 0)
+		{
+			ft_memcpy(self->clients + self->nclients, c, sizeof(t_client));
+			return (0);
+		}
+		i += 1;
+	}
 	if (self->nclients < NCLIENTS)
 	{
 		ft_memcpy(self->clients + self->nclients, c, sizeof(t_client));
@@ -50,7 +62,7 @@ void	client_init(t_client *client, struct s_server *s, int fd)
 
 int				accept_new_clients(struct s_server *server)
 {
-	struct s_client		client;
+	t_client			client;
 	struct sockaddr_in	cli_addr;
 	socklen_t			cli_len;
 	int					confd;
@@ -70,7 +82,7 @@ int				accept_new_clients(struct s_server *server)
 	{
 		ERROR("Could not add client to list. Closing connection...");
 		close(confd);
-		return (-1);
+		return (0);
 	}
 	return (0);
 }
