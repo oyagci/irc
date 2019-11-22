@@ -85,6 +85,8 @@ int			send_queued_replies(struct s_server *const server)
 		dest = get_client(server, msg->dest);
 		if (dest)
 			send_queued_replie(dest, msg);
+		else
+			msg->sent = 1;
 		msgelem = msgelem->next;
 	}
 	delete_sent_replies(&server->msgqueue);
