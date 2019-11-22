@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 10:08:24 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:41 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:44:54 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include "server.h"
 #include "log.h"
 
-int main(int ac, char *av[])
+int	main(int ac, char *av[])
 {
-	int ret = 0;
-	struct s_server server;
+	int			ret;
+	t_server	server;
 
+	ret = 0;
 	if (ac < 2)
 	{
 		fprintf(stderr, "Usage: %s <port>\n", av[0]);
