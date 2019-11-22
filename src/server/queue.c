@@ -97,18 +97,24 @@ static void server_format_reply(t_client const *const c, int reply_code,
 	char buf[512])
 {
 	t_tuple_reply const	handles[] = {
-		{ RPL_WELCOME,          rpl_welcome },
-		{ ERR_UNKNOWNCOMMAND,   err_unknowncmd },
-		{ ERR_NICKNAMEINUSE,    err_nickinuse },
+		{ RPL_WELCOME, rpl_welcome },
+		{ ERR_UNKNOWNCOMMAND, err_unknowncmd },
+		{ ERR_NICKNAMEINUSE, err_nickinuse },
 		{ ERR_ERRONEUSNICKNAME,	err_erroneusnick },
 	};
+	size_t				i;
 
-	if (reply_code > 0) {
-		for (size_t i = 0; i < sizeof(handles) / sizeof(*handles); i++) {
-			if (handles[i].num == reply_code) {
+	if (reply_code > 0)
+	{
+		i = 0;
+		while (i < sizeof(handles) / sizeof(*handles))
+		{
+			if (handles[i].num == reply_code)
+			{
 				handles[i].f((char *)buf, 512, c);
 				break;
 			}
+			i += 1;
 		}
 	}
 }
