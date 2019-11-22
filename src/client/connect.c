@@ -80,20 +80,20 @@ static int	do_conn(struct s_client *self, char const *addr,
 
 	server = NULL;
 	ret = -1;
-	printf(" - Connecting to %s:%d\n", addr, portno);
 	ft_bzero(&hints, sizeof(hints));
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
+	ft_putendl(" - Connecting");
 	if ((gaierr = getaddrinfo(addr, portstr, &hints, &server)) != 0)
-		printf("getaddrinfo\n");
+		ft_putendl_fd("getaddrinfo", 2);
 	else if (-1 == (self->servsock = socket(server->ai_family,
 				server->ai_socktype, server->ai_protocol)))
-		printf("Could not create socket\n");
+		ft_putendl(" - Could not create socket");
 	else if (connect(self->servsock, server->ai_addr, server->ai_addrlen) < 0)
-		printf(" - Could not connect to %s:%d\n", addr, portno);
+		ft_putendl(" - Could not connect");
 	else
 	{
-		printf(" - Connected to %s\n", addr);
+		ft_putendl(" - Connecteds");
 		ret = 0;
 	}
 	freeaddrinfo(server);
