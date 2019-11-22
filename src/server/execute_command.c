@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_command.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 12:51:51 by oyagci            #+#    #+#             */
+/*   Updated: 2019/11/22 12:51:51 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "server.h"
 
 int execute_command(t_server *self, t_client *c, char const *const cmd)
 {
 	t_tuple_cmds const	cmds[] = {
-		{ "PASS", irc_pass }, { "NICK", irc_nick }, { "USER", irc_user },
-		{ "JOIN", irc_join }, { "PART", irc_part }, { "WHO", irc_who },
-		{ "PONG", irc_pong }, { "QUIT", irc_quit }, { "PRIVMSG", irc_privmsg }
+		{ "NICK", irc_nick }, { "USER", irc_user }, { "JOIN", irc_join },
+		{ "PART", irc_part }, { "WHO", irc_who }, { "QUIT", irc_quit },
+		{ "PRIVMSG", irc_privmsg }
 	};
 	struct s_message	msg;
 	int					err;

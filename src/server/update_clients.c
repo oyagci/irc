@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 11:21:14 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/16 11:21:28 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:14:18 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ int		update_clients(struct s_server *self)
 	while (i < self->nclients)
 	{
 		c = self->clients + i;
-		if (c->should_be_disconnected)
+		if (c->fd != 0 && c->should_be_disconnected)
 		{
 			close(c->fd);
 			remove_from_all_channels(self, c);
 			nickremove(&c->server->nicks, c->nickname);
 			del_client(self, c);
+			c->should_be_disconnected = 0;
 		}
 		i += 1;
 	}

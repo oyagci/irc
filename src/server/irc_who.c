@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 12:49:47 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int	irc_who_client(struct s_server *server, struct s_client *client,
 
 	ft_memset(msg, 0, 512);
 	ft_strlcat(msg, SRPL_WHOREPLY, 512);
-	ft_strlcat(msg, " ", 512);
-	ft_strlcat(msg, client->username, 512);
 	ft_strlcat(msg, " ", 512);
 	ft_strlcat(msg, "todo.42.fr", 512);
 	ft_strlcat(msg, " ", 512);

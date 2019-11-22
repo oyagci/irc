@@ -22,23 +22,18 @@ SOURCES		:= \
 	execute_command.c \
 	docommands.c \
 	nick.c \
-	set_usermode.c \
 	irc_join.c \
 	irc_nick.c \
 	irc_part.c \
-	irc_pass.c \
 	irc_privmsg.c \
 	irc_user.c \
 	irc_who.c \
-	irc_ping.c \
-	irc_pong.c \
 	irc_quit.c \
 	server_channel.c \
 	run.c \
 	init.c \
 	channel.c \
 	notify.c \
-	pinginactive.c \
 	quit.c \
 	get_client.c \
 	del_client.c \

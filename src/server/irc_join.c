@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 12:49:26 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 			exit(EXIT_FAILURE);
 		ft_strlcat(msg, ":", 513);
 		ft_strlcat(msg, client->nickname, 513);
-		if (client->username)
-		{
-			ft_strlcat(msg, "!", 513);
-			ft_strlcat(msg, client->username, 513);
-		}
 		ft_strlcat(msg, "@irc.42.fr JOIN ", 513);
 		ft_strlcat(msg, chan->name, 513);
 		ft_strlcat(msg, CRLF, 513);

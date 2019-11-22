@@ -1,318 +1,306 @@
 message.o: ../parser/message.c ../../inc/parser/parser.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h
 prefix.o: ../parser/prefix.c ../../inc/parser/parser.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h
 command.o: ../parser/command.c ../../inc/parser/parser.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h
 crlf.o: ../parser/crlf.c ../../inc/parser/parser.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h
 params.o: ../parser/params.c ../../inc/parser/parser.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h
 channels.o: ../parser/channels.c \
- ../../libs/cbuf/../libft/includes/libft.h \
- ../../libs/cbuf/../libft/includes/libft_str.h \
- ../../libs/cbuf/../libft/includes/libft_mem.h \
- ../../libs/cbuf/../libft/includes/libft_list.h \
- ../../libs/cbuf/../libft/includes/get_next_line.h \
- ../../libs/cbuf/../libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../libs/libft/includes/libft.h
+  ../../libs/cbuf/../libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../libs/libft/includes/libft.h
 digit.o: ../parser/digit.c
 letter.o: ../parser/letter.c
 special.o: ../parser/special.c
 msgto.o: ../parser/msgto.c ../../libs/cbuf/../libft/includes/libft.h \
- ../../libs/cbuf/../libft/includes/libft_str.h \
- ../../libs/cbuf/../libft/includes/libft_mem.h \
- ../../libs/cbuf/../libft/includes/libft_list.h \
- ../../libs/cbuf/../libft/includes/get_next_line.h \
- ../../libs/cbuf/../libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../libs/libft/includes/libft.h
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../libs/libft/includes/libft.h
 chanstr.o: ../parser/chanstr.c ../../libs/cbuf/../libft/includes/libft.h \
- ../../libs/cbuf/../libft/includes/libft_str.h \
- ../../libs/cbuf/../libft/includes/libft_mem.h \
- ../../libs/cbuf/../libft/includes/libft_list.h \
- ../../libs/cbuf/../libft/includes/get_next_line.h \
- ../../libs/cbuf/../libft/includes/ft_getopt.h
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h
 nickname.o: ../parser/nickname.c ../../inc/parser/parser.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h
 is_nospcrlfcl.o: ../parser/is_nospcrlfcl.c
 server.o: server.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h ../log.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h ../log.h
 accept_new_clients.o: accept_new_clients.c \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
- ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
- ../../inc/server/nick.h ../../libs/cbuf/cbuf.h ../log.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
+  ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
+  ../../inc/server/nick.h ../../libs/cbuf/cbuf.h ../log.h
 queue.o: queue.c ../../libs/libft/includes/libft.h \
- ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
- ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
- ../../inc/server/nick.h ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
+  ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
+  ../../inc/server/nick.h ../../libs/cbuf/cbuf.h
 read_client_command.o: read_client_command.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 execute_command.o: execute_command.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 docommands.o: docommands.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 nick.o: nick.c ../../inc/server/nick.h ../../libs/libft/includes/libft.h \
- ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
- ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
- ../../inc/server/nick.h ../../libs/cbuf/cbuf.h
-set_usermode.o: set_usermode.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
+  ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
+  ../../libs/cbuf/cbuf.h
 irc_join.o: irc_join.c ../../libs/libft/includes/libft.h \
- ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
- ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
- ../../inc/server/nick.h ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
+  ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
+  ../../inc/server/nick.h ../../libs/cbuf/cbuf.h
 irc_nick.o: irc_nick.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 irc_part.o: irc_part.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
-irc_pass.o: irc_pass.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 irc_privmsg.o: irc_privmsg.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 irc_user.o: irc_user.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 irc_who.o: irc_who.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
-irc_ping.o: irc_ping.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
-irc_pong.o: irc_pong.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 irc_quit.o: irc_quit.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 server_channel.o: server_channel.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 run.o: run.c ../../inc/server/server.h ../../libs/libft/includes/libft.h \
- ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h ../log.h
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h ../log.h
 init.o: init.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h ../log.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h ../log.h
 channel.o: channel.c ../../libs/libft/includes/libft.h \
- ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
- ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
- ../../inc/server/nick.h ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
+  ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
+  ../../inc/server/nick.h ../../libs/cbuf/cbuf.h
 notify.o: notify.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
-pinginactive.o: pinginactive.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 quit.o: quit.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 get_client.o: get_client.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 del_client.o: del_client.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 update_clients.o: update_clients.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 rpl_welcome.o: replies/rpl_welcome.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 err_unknowncmd.o: replies/err_unknowncmd.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 err_nickinuse.o: replies/err_nickinuse.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 err_erroneusnick.o: replies/err_erroneusnick.c ../../inc/server/server.h \
- ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
- ../../libs/libft/includes/libft_mem.h \
- ../../libs/libft/includes/libft_list.h \
- ../../libs/libft/includes/get_next_line.h \
- ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
- ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h
+  ../../libs/libft/includes/libft.h \
+  ../../libs/libft/includes/libft_str.h \
+  ../../libs/libft/includes/libft_mem.h \
+  ../../libs/libft/includes/libft_list.h \
+  ../../libs/libft/includes/get_next_line.h \
+  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
+  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
+  ../../libs/cbuf/cbuf.h
 log.o: ../log.c ../log.h
