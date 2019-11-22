@@ -6,18 +6,14 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:37 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 13:18:23 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:48:39 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 #include "log.h"
 
-/*
- * Set file descriptors for reading on each client
- * Also set file descriptors for writing on clients with messages queued
- */
-static int set_fds(struct s_server *server)
+static int	set_fds(struct s_server *server)
 {
 	int			max_fd;
 	t_client	*client;
@@ -45,12 +41,7 @@ static int set_fds(struct s_server *server)
 	return (max_fd);
 }
 
-/*
- * Accept new clients
- * Read client messages
- * Replie to clients
- */
-int run(struct s_server *self)
+int			run(struct s_server *self)
 {
 	int max_sd;
 
@@ -60,10 +51,12 @@ int run(struct s_server *self)
 	{
 		max_sd = set_fds(self);
 		select(max_sd + 1, &self->readfds, &self->writefds, NULL, NULL);
-		if (accept_new_clients(self) < 0) {
+		if (accept_new_clients(self) < 0)
+		{
 			; // TODO: Handle error
 		}
-		if (read_client_command(self) < 0) {
+		if (read_client_command(self) < 0)
+		{
 			; // TODO: Handler error
 		}
 		docommands(self);
