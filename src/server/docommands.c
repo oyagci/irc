@@ -28,18 +28,21 @@ int docommands(struct s_server *self)
 	size_t		i;
 
 	i = 0;
-	while (i < self->nclients)
+	while (i < NCLIENTS)
 	{
 		c = self->clients + i;
-		while (c->ncmds > 0)
+		if (c->fd > 0)
 		{
-			if (docommand(self, c) < 0)
+			while (c->ncmds > 0)
 			{
-				fprintf(stderr, "%s:%d: Could not execute command\n",
-					__FUNCTION__, __LINE__);
-				/* TODO: Handle error */
+				if (docommand(self, c) < 0)
+				{
+					fprintf(stderr, "%s:%d: Could not execute command\n",
+						__FUNCTION__, __LINE__);
+					/* TODO: Handle error */
+				}
+				c->ncmds -= 1;
 			}
-			c->ncmds -= 1;
 		}
 		i += 1;
 	}

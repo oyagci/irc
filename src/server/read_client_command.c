@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:16:58 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			read_client_command(struct s_server *const self)
 	size_t	i;
 	
 	i = 0;
-	while (i < self->nclients)
+	while (i < NCLIENTS)
 	{
 		if (self->clients[i].fd != 0
 			&& FD_ISSET(self->clients[i].fd, &self->readfds))

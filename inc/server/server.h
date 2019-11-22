@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 13:51:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 12:48:51 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:16:05 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct	s_server
 	t_list		*channels;
 
 	t_client	clients[NCLIENTS];
-	size_t		nclients;
 
 	t_list		*msgqueue;
 	t_nicktable	nicks;

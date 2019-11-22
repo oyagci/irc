@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 11:21:14 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 13:14:18 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:18:48 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		update_clients(struct s_server *self)
 	size_t		i;
 
 	i = 0;
-	while (i < self->nclients)
+	while (i < NCLIENTS)
 	{
 		c = self->clients + i;
 		if (c->fd != 0 && c->should_be_disconnected)

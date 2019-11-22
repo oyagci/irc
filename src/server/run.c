@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:37 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:41 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:18:23 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,17 @@ static int set_fds(struct s_server *server)
 	FD_ZERO(&server->writefds);
 	FD_SET(server->sockfd, &server->writefds);
 	i = 0;
-	while (i < server->nclients)
+	while (i < NCLIENTS)
 	{
 		client = server->clients + i;
-		FD_SET(client->fd, &server->readfds);
-		if (client->nmsg > 0)
-			FD_SET(client->fd, &server->writefds);
-		if (client->fd > max_fd)
-			max_fd = client->fd;
+		if (client->fd > 0)
+		{
+			FD_SET(client->fd, &server->readfds);
+			if (client->nmsg > 0)
+				FD_SET(client->fd, &server->writefds);
+			if (client->fd > max_fd)
+				max_fd = client->fd;
+		}
 		i += 1;
 	}
 	return (max_fd);

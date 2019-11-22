@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:16:49 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,14 @@ static int		add_client(struct s_server *self, t_client *c)
 	size_t	i;
 
 	i = 0;
-	while (i < self->nclients)
+	while (i < NCLIENTS)
 	{
 		if (self->clients[i].fd == 0)
 		{
-			ft_memcpy(self->clients + self->nclients, c, sizeof(t_client));
+			ft_memcpy(self->clients + i, c, sizeof(t_client));
 			return (0);
 		}
 		i += 1;
-	}
-	if (self->nclients < NCLIENTS)
-	{
-		ft_memcpy(self->clients + self->nclients, c, sizeof(t_client));
-		self->nclients += 1;
-		return (0);
 	}
 	return (-1);
 }

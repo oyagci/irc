@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:17:58 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ struct s_client	*server_get_client(struct s_server *server, char const *nick)
 	size_t			i;
 
 	i = 0;
-	while (i < server->nclients)
+	while (i < NCLIENTS)
 	{
 		client = server->clients + i;
-		if (ft_strequ(client->nickname, nick))
+		if (client->fd > 0 && ft_strequ(client->nickname, nick))
 			return (client);
 		i += 1;
 	}
