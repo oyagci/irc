@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:37 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:41 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:35:07 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,32 +58,29 @@ struct s_channel	*get_channel(struct s_server *server, char const *name)
 	return (chan);
 }
 
-int add_to_chan(struct s_server *server, struct s_client *client,
-	char const *const channame)
+int add_to_chan(t_server *server, t_client *client, char const *const channame)
 {
 	struct s_channel *chan = NULL;
 
-	for (t_list *elem = server->channels; elem != NULL; elem = elem->next) {
+	for (t_list *elem = server->channels; elem != NULL; elem = elem->next)
+	{
 		struct s_channel *cur = elem->content;
 
-		if (ft_strequ(channame, cur->name)) {
+		if (ft_strequ(channame, cur->name))
+		{
 			chan = cur;
 			break ;
 		}
 	}
 
-	if (!chan) {
+	if (!chan)
 		chan = create_channel(server, channame, 0);
-		if (chan) {
-			if (!channel_add_client(chan, client)) {
-				server_tell_new_client(server, client, chan);
-			}
-		}
-	}
+	if (!channel_add_client(chan, client))
+		server_tell_new_client(server, client, chan);
 	return (0);
 }
 
-int rm_from_chan(char *nick, struct s_channel *chan)
+int rm_from_chan(char *nick, t_channel *chan)
 {
 	t_list			*clients;
 	t_list			*prev;

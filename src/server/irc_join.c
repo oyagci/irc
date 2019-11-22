@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 12:49:26 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:35:32 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 #include "server.h"
 #include <stdlib.h>
 
-int	server_tell_new_client(struct s_server *server, struct s_client *client,
-	struct s_channel *chan)
+int	server_tell_new_client(t_server *server, t_client *client, t_channel *chan)
 {
-	t_list			*elem;
-	char			*msg;
-	struct s_client	*recipient;
+	t_list		*elem;
+	char		*msg;
+	t_client	*recipient;
 
 	elem = chan->clients;
 	while (elem)
@@ -39,7 +38,7 @@ int	server_tell_new_client(struct s_server *server, struct s_client *client,
 	return (0);
 }
 
-int	irc_join(struct s_client *client, struct s_params *p)
+int	irc_join(t_client *client, struct s_params *p)
 {
 	t_list	*chans = NULL;
 
