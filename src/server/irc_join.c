@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 13:37:11 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:49:54 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ int	server_tell_new_client(t_server *server, t_client *client, t_channel *chan)
 
 int	irc_join(t_client *client, struct s_params *p)
 {
-	t_list	*chans = NULL;
+	t_list	*chans;
 	t_list	*l;
 	char	*chan;
 
+	chans = NULL;
 	if (!client->is_registered)
 		return (0);
 	if (p->nparam < 1)
