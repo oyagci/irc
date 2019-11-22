@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   docommands.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/22 13:56:59 by oyagci            #+#    #+#             */
+/*   Updated: 2019/11/22 13:57:10 by oyagci           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include "server.h"
 
-static int docommand(struct s_server *self, struct s_client *client)
+static int	docommand(struct s_server *self, struct s_client *client)
 {
 	char			buf[512];
 	unsigned char	data;
@@ -22,7 +34,7 @@ static int docommand(struct s_server *self, struct s_client *client)
 	return (execute_command(self, client, buf));
 }
 
-int docommands(struct s_server *self)
+int			docommands(struct s_server *self)
 {
 	t_client	*c;
 	size_t		i;
@@ -39,7 +51,9 @@ int docommands(struct s_server *self)
 				{
 					fprintf(stderr, "%s:%d: Could not execute command\n",
 						__FUNCTION__, __LINE__);
-					/* TODO: Handle error */
+					/*
+					** TODO: Handle error
+					*/
 				}
 				c->ncmds -= 1;
 			}

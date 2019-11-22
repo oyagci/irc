@@ -6,13 +6,13 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 12:51:51 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 12:51:51 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:56:24 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-int execute_command(t_server *self, t_client *c, char const *const cmd)
+int	execute_command(t_server *self, t_client *c, char const *const cmd)
 {
 	t_tuple_cmds const	cmds[] = {
 		{ "NICK", irc_nick }, { "USER", irc_user }, { "JOIN", irc_join },
@@ -35,7 +35,7 @@ int execute_command(t_server *self, t_client *c, char const *const cmd)
 			if (ft_strequ(cmds[ii].name, msg.cmd.data))
 			{
 				err = cmds[ii].f(c, &msg.params);
-				break;
+				break ;
 			}
 			ii++;
 		}
