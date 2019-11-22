@@ -16,19 +16,19 @@ int	irc_pass(struct s_client *c, struct s_params *p)
 {
 	if (c->is_connected)
 	{
-		c->server->queuecode(c->server, c, ERR_ALREADYREGISTRED);
+		queue_code_reply(c->server, c, ERR_ALREADYREGISTRED);
 		return (ERR_ALREADYREGISTRED);
 	}
 	if (SERVER_PASS)
 	{
 		if (p->nparam < 1)
 		{
-			c->server->queuecode(c->server, c, ERR_NEEDMOREPARAM);
+			queue_code_reply(c->server, c, ERR_NEEDMOREPARAM);
 			return (ERR_NEEDMOREPARAM);
 		}
 		if (ft_strcmp(p->param[0], SERVER_PASS))
 		{
-			c->server->queuecode(c->server, c, ERR_PASSWDMISMATCH);
+			queue_code_reply(c->server, c, ERR_PASSWDMISMATCH);
 			return (ERR_PASSWDMISMATCH);
 		}
 	}

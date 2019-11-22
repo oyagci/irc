@@ -59,7 +59,7 @@ int	irc_join(struct s_client *client, struct s_params *p)
 	for (t_list *l = chans; l != NULL; l = l->next) {
 		char const *chan = l->content;
 
-		client->server->add_to_chan(client->server, client, chan);
+		add_to_chan(client->server, client, chan);
 	}
 
 	channels_del(&chans);

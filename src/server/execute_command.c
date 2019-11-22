@@ -32,7 +32,7 @@ int execute_command(struct s_server *self, struct s_client *c,
 			}
 		}
 		if (err) {
-			ret = c->server->queuecode(c->server, c, err);
+			ret = queue_code_reply(c->server, c, err);
 		}
 	}
 	return (ret);

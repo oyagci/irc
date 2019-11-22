@@ -73,7 +73,7 @@ int add_to_chan(struct s_server *server, struct s_client *client,
 	}
 
 	if (!chan) {
-		chan = server->create_channel(server, channame, 0);
+		chan = create_channel(server, channame, 0);
 		if (chan) {
 			if (!channel_add_client(chan, client)) {
 				server_tell_new_client(server, client, chan);

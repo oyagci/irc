@@ -27,6 +27,6 @@ int main(int ac, char *av[])
 	}
 	ret = server_init(&server, ft_atoi(av[1]));
 	if (!ret)
-		ret = server.run(&server);
+		ret = run(&server);
 	return (ret);
 }

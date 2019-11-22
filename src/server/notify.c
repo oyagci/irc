@@ -31,7 +31,7 @@ int			notifypart(struct s_server *s, struct s_channel *chan,
 	while (elem)
 	{
 		c = elem->content;
-		s->queuenotif(s, c, notif);
+		queue_reply(s, c, notif);
 		elem = elem->next;
 	}
 	return (0);

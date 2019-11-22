@@ -29,7 +29,7 @@ int	irc_who_client(struct s_server *server, struct s_client *client,
 	ft_strlcat(msg, " ", 512);
 	ft_strlcat(msg, client->nickname, 512);
 	ft_strlcat(msg, "\n", 512);
-	server->queuenotif(server, dest, msg);
+	queue_reply(server, dest, msg);
 	return (0);
 }
 
@@ -39,7 +39,7 @@ int	irc_who(struct s_client *client, struct s_params *p)
 	struct s_client			*c;
 	struct s_channel const	*chan;
 
-	chan = client->server->get_channel(client->server, p->param[0]);
+	chan = get_channel(client->server, p->param[0]);
 	if (chan)
 	{
 		clients = chan->clients;

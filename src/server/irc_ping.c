@@ -23,6 +23,6 @@ int		irc_ping(struct s_client *client, struct s_params *p)
 	s = client->server;
 	ft_strlcat(pingmsg, "PING", 512);
 	ft_strlcat(pingmsg, CRLF, 512);
-	s->queuenotif(s, client, pingmsg);
+	queue_reply(s, client, pingmsg);
 	return (0);
 }

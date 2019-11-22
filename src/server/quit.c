@@ -23,6 +23,6 @@ int			quit(struct s_server *self, struct s_client *client,
 	ft_strlcat(notif, "QUIT", 512);
 	ft_strlcat(notif, " :", 512);
 	ft_strlcat(notif, msg, 512);
-	self->queuenotif(self, client, notif);
+	queue_reply(self, client, notif);
 	return (0);
 }

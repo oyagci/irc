@@ -27,7 +27,7 @@ int		updatetimeout(struct s_server *self)
 		if (client->timeout.tv_sec != 0 &&
 			current.tv_sec >= client->timeout.tv_sec)
 		{
-			self->quit(self, client, "Ping timeout exceeded");
+			quit(self, client, "Ping timeout exceeded");
 			ft_memset(&client->timeout, 0, sizeof(client->timeout));
 		}
 		i += 1;

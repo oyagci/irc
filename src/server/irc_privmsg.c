@@ -39,7 +39,7 @@ int				server_send_channel(struct s_server *server,
 	while (client)
 	{
 		recipient = client->content;
-		server->queuenotif(server, recipient, msg);
+		queue_reply(server, recipient, msg);
 		client = client->next;
 	}
 	return (0);
@@ -53,7 +53,7 @@ int				server_send_formated_message_to(struct s_server *server,
 
 	if (*name == '#' || *name == '&' || *name == '!')
 	{
-		chan = server->get_channel(server, name);
+		chan = get_channel(server, name);
 		if (chan)
 			server_send_channel(server, chan, msg);
 		else
@@ -64,7 +64,7 @@ int				server_send_formated_message_to(struct s_server *server,
 	else
 	{
 		if ((client = server_get_client(server, name)))
-			server->queuenotif(server, client, msg);
+			queue_reply(server, client, msg);
 		return (ERR_NOSUCHNICK);
 	}
 	return (0);
@@ -106,19 +106,19 @@ int				irc_privmsg(struct s_client *client, struct s_params *p)
 		return (0);
 	if (p->nparam < 1)
 	{
-		client->server->queuecode(client->server, client, ERR_NORECIPIENT);
+		queue_code_reply(client->server, client, ERR_NORECIPIENT);
 		return (0);
 	}
 	if (p->nparam < 2)
 	{
-		client->server->queuecode(client->server, client, ERR_NOTEXTTOSEND);
+		queue_code_reply(client->server, client, ERR_NOTEXTTOSEND);
 		return (0);
 	}
 	recipients = NULL;
 	msgto(p->param[0], &recipients);
 	if (recipients == NULL)
 	{
-		client->server->queuecode(client->server, client, ERR_NORECIPIENT);
+		queue_code_reply(client->server, client, ERR_NORECIPIENT);
 		return (1);
 	}
 	server_send_privmsg(client->server, client, recipients, p->param[1]);

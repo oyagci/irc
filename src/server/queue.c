@@ -42,7 +42,7 @@ int			send_queued_replies(struct s_server *const server)
 	{
 		next = msgelem->next;
 		msg = msgelem->content;
-		dest = server->get_client(server, msg->dest);
+		dest = get_client(server, msg->dest);
 		if (NULL != dest)
 		{
 			ret = send(dest->fd, msg->msg, msg->len, 0);
@@ -132,5 +132,5 @@ int queue_code_reply(struct s_server *server, struct s_client *const dest,
 
 	ft_memset(replystr, 0, sizeof(replystr));
 	server_format_reply(dest, reply_code, replystr);
-	return (server->queuenotif(server, dest, replystr));
+	return (queue_reply(server, dest, replystr));
 }

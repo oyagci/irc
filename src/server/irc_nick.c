@@ -18,18 +18,18 @@ int	irc_nick(struct s_client *c, struct s_params *p)
 
 	if (p->nparam < 1)
 	{
-		c->server->queuecode(c->server, c, ERR_NONICKNAMEGIVEN);
+		queue_code_reply(c->server, c, ERR_NONICKNAMEGIVEN);
 		return (ERR_NONICKNAMEGIVEN);
 	}
 	nick = p->param[0];
 	if (ft_strlen(nick) > NICK_SIZE)
 	{
-		c->server->queuecode(c->server, c, ERR_ERRONEUSNICKNAME);
+		queue_code_reply(c->server, c, ERR_ERRONEUSNICKNAME);
 		return (ERR_ERRONEUSNICKNAME);
 	}
 	if (!nickadd(&c->server->nicks, nick))
 	{
-		c->server->queuecode(c->server, c, ERR_NICKNAMEINUSE);
+		queue_code_reply(c->server, c, ERR_NICKNAMEINUSE);
 		return (ERR_NICKNAMEINUSE);
 	}
 	ft_strncpy(c->nickname, nick, NICK_SIZE);

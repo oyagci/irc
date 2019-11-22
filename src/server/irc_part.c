@@ -24,19 +24,19 @@ int				irc_part(struct s_client *client, struct s_params *p)
 	s = client->server;
 	if (p->nparam <= 0)
 	{
-		s->queuecode(s, client, ERR_NEEDMOREPARAM);
+		queue_code_reply(s, client, ERR_NEEDMOREPARAM);
 		return (0);
 	}
-	chan = s->get_channel(s, p->param[0]);
+	chan = get_channel(s, p->param[0]);
 	if (chan)
 	{
-		ret = s->rm_from_chan(client->nickname, chan);
+		ret = rm_from_chan(client->nickname, chan);
 		if (ret == ERR_NOTONCHANNEL)
-			s->queuecode(s, client, ERR_NOSUCHCHANNEL);
+			queue_code_reply(s, client, ERR_NOSUCHCHANNEL);
 		else
-			s->notifypart(s, chan, client->nickname);
+			notifypart(s, chan, client->nickname);
 	}
 	else
-		s->queuecode(s, client, ERR_NOSUCHCHANNEL);
+		queue_code_reply(s, client, ERR_NOSUCHCHANNEL);
 	return (0);
 }

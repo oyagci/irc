@@ -19,7 +19,7 @@ static int docommand(struct s_server *self, struct s_client *client)
 			break ;
 		ii += 1;
 	}
-	return (self->exec_cmd(self, client, buf));
+	return (execute_command(self, client, buf));
 }
 
 int docommands(struct s_server *self)

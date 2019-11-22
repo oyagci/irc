@@ -20,7 +20,7 @@ void	remove_from_all_channels(struct s_server *self,
 		struct s_channel *chan = l->content;
 
 		rm_from_chan(c->nickname, chan);
-		self->notifypart(self, chan, c->nickname);
+		notifypart(self, chan, c->nickname);
 	}
 }
 
@@ -38,7 +38,7 @@ int		update_clients(struct s_server *self)
 			close(c->fd);
 			remove_from_all_channels(self, c);
 			nickremove(&c->server->nicks, c->nickname);
-			self->del_client(self, c);
+			del_client(self, c);
 		}
 		i += 1;
 	}

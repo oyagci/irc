@@ -18,7 +18,7 @@ int	irc_user(struct s_client *c, struct s_params *p)
 		return (0);
 	if (p->nparam < 4)
 	{
-		c->server->queuecode(c->server, c, ERR_NEEDMOREPARAM);
+		queue_code_reply(c->server, c, ERR_NEEDMOREPARAM);
 		return (ERR_NEEDMOREPARAM);
 	}
 	if (c->is_registered)
@@ -26,7 +26,7 @@ int	irc_user(struct s_client *c, struct s_params *p)
 	c->username = ft_strdup(p->param[0]);
 	set_usermode(c, ft_atoi(p->param[1]));
 	set_realname(c, p->param[3]);
-	c->server->queuecode(c->server, c, RPL_WELCOME);
+	queue_code_reply(c->server, c, RPL_WELCOME);
 	c->is_registered = 1;
 	return (0);
 }

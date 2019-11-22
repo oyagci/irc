@@ -93,26 +93,6 @@ struct s_server
 
 	t_list		*msgqueue;
 	t_nicktable	nicks;
-
-	int					(*run)(struct s_server *const self);
-	int					(*pinginactive)(struct s_server *self);
-	int					(*set_fds)(struct s_server *const self);
-	int					(*accept)(struct s_server *const self);
-	int					(*read)(struct s_server *const self);
-	int					(*send)(struct s_server *const self);
-	int					(*docommands)(struct s_server *const self);
-	int					(*exec_cmd)(struct s_server *const self, struct s_client *c, char const *const cmd);
-	int					(*quit)(struct s_server *self, struct s_client *client, const char *const msg);
-	int					(*queuecode)(struct s_server *self, struct s_client *const dest, int code);
-	int					(*queuenotif)(struct s_server *self, struct s_client *const dest, char const *msg);
-	int					(*rm_from_chan)(char *const nick, struct s_channel *chan);
-	struct s_channel	*(*create_channel)(struct s_server *self, char const *name, int mode);
-	struct s_channel	*(*get_channel)(struct s_server *self, char const *const name);
-	int					(*notifypart)(struct s_server *self, struct s_channel *chan, char const *const nick);
-	int					(*add_to_chan)(struct s_server *server, struct s_client *client, char const *const channame);
-	struct s_client		*(*get_client)(struct s_server *self, char const *const nickname);
-	void				(*del_client)(struct s_server *self, struct s_client *c);
-	int					(*update_clients)(struct s_server *self);
 };
 
 struct s_server_msg
