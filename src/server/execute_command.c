@@ -3,18 +3,15 @@
 int execute_command(t_server *self, t_client *c, char const *const cmd)
 {
 	t_tuple_cmds const	cmds[] = {
-		{ .name = "PASS", .f = irc_pass }, { .name = "NICK", .f = irc_nick },
-		{ .name = "USER", .f = irc_user }, { .name = "JOIN", .f = irc_join },
-		{ .name = "PART", .f = irc_part }, { .name = "WHO", .f = irc_who },
-		{ .name = "PONG", .f = irc_pong }, { .name = "QUIT", .f = irc_quit },
-		{ .name = "PRIVMSG", .f = irc_privmsg }
+		{ "PASS", irc_pass }, { "NICK", irc_nick }, { "USER", irc_user },
+		{ "JOIN", irc_join }, { "PART", irc_part }, { "WHO", irc_who },
+		{ "PONG", irc_pong }, { "QUIT", irc_quit }, { "PRIVMSG", irc_privmsg }
 	};
 	struct s_message	msg;
 	int					err;
 	int					ret;
 	size_t				ii;
 
-	(void)self;
 	ft_memset(&msg, 0, sizeof(msg));
 	err = 0;
 	ret = message(&msg, cmd);
@@ -31,7 +28,7 @@ int execute_command(t_server *self, t_client *c, char const *const cmd)
 			ii++;
 		}
 		if (err)
-			ret = queue_code_reply(c->server, c, err);
+			ret = queue_code_reply(self, c, err);
 	}
 	return (ret);
 }
