@@ -5,7 +5,7 @@ static int docommand(struct s_server *self, struct s_client *client)
 {
 	char			buf[512];
 	unsigned char	data;
-	int ii = 0;
+	int				ii;
 
 	data = 0;
 	ft_memset(buf, 0, 512);

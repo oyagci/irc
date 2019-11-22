@@ -80,7 +80,7 @@ typedef struct	s_client
 	struct s_server			*server;
 }				t_client;
 
-struct s_server
+typedef struct	s_server
 {
 	short		is_running;
 	fd_set		readfds;
@@ -93,7 +93,7 @@ struct s_server
 
 	t_list		*msgqueue;
 	t_nicktable	nicks;
-};
+}				t_server;
 
 struct s_server_msg
 {
@@ -169,5 +169,10 @@ int rpl_welcome(char *buf, size_t buflen, struct s_client const *c);
 int err_unknowncmd(char *buf, size_t buflen, struct s_client const *c);
 int err_nickinuse(char *buf, size_t buflen, struct s_client const *c);
 int err_erroneusnick(char *buf, size_t buflen, struct s_client const *c);
+
+typedef struct	s_tuple_cmds {
+	char const	*name;
+	int			(*f)(t_client *c, struct s_params *p);
+}				t_tuple_cmds;
 
 #endif
