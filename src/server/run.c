@@ -65,7 +65,7 @@ int run(struct s_server *self)
 		}
 		docommands(self);
 		send_queued_replies(self);
-//		update_clients(self);
+		update_clients(self);
 	}
 	return (0);
 }

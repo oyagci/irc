@@ -13,14 +13,18 @@
 #include "server.h"
 #include <unistd.h>
 
-void	remove_from_all_channels(struct s_server *self,
-	struct s_client *const c)
+void	remove_from_all_channels(t_server *self, t_client *const c)
 {
-	for (t_list *l = self->channels; l != NULL; l = l->next) {
-		struct s_channel *chan = l->content;
+	t_list				*l;
+	struct s_channel	*chan;
 
+	l = self->channels;
+	while (l != NULL)
+	{
+		chan = l->content;
 		rm_from_chan(c->nickname, chan);
 		notifypart(self, chan, c->nickname);
+		l = l->next;
 	}
 }
 
