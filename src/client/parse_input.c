@@ -15,6 +15,11 @@
 #include "libft.h"
 #include <stdlib.h>
 
+size_t				max(size_t a, size_t b)
+{
+	return (a > b ? a : b);
+}
+
 void				set_command(char const **inputp, struct s_client_msg *buf)
 {
 	const struct s_client_cmds	cmds[] = {
@@ -34,7 +39,7 @@ void				set_command(char const **inputp, struct s_client_msg *buf)
 	jj = 0;
 	while (jj < sizeof(cmds) / sizeof(*cmds))
 	{
-		if (ft_strnequ(input, cmds[jj].str, ii - 1))
+		if (ft_strnequ(input, cmds[jj].str, max(ft_strlen(cmds[jj].str), ii - 1)))
 		{
 			*inputp += ii;
 			buf->cmd = cmds[jj].cmd;
