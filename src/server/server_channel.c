@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:37 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 13:35:07 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/22 13:44:01 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "server.h"
 #include "libft.h"
 
-struct s_channel *create_channel(struct s_server *server, char const *name, int mode)
+t_channel	*create_channel(struct s_server *server, char const *name, int mode)
 {
-	t_list				*elem;
-	struct s_channel	*chan;
+	t_list		*elem;
+	t_channel	*chan;
 
 	elem = server->channels;
 	while (elem)
@@ -42,37 +42,46 @@ struct s_channel *create_channel(struct s_server *server, char const *name, int 
 	return (chan);
 }
 
-struct s_channel	*get_channel(struct s_server *server, char const *name)
+t_channel	*get_channel(struct s_server *server, char const *name)
 {
-	struct s_channel *chan;
+	t_list		*elem;
+	t_channel	*chan;
+	t_channel	*cur;
 
 	chan = NULL;
-	for (t_list *elem = server->channels; elem != NULL; elem = elem->next) {
-		struct s_channel *cur = elem->content;
-
-		if (ft_strequ(cur->name, name)) {
+	elem = server->channels;
+	while (elem)
+	{
+		cur = elem->content;
+		if (ft_strequ(cur->name, name))
+		{
 			chan = cur;
 			break ;
 		}
+		elem = elem->next;
 	}
 	return (chan);
 }
 
-int add_to_chan(t_server *server, t_client *client, char const *const channame)
+int			add_to_chan(t_server *server, t_client *client,
+	char const *const channame)
 {
-	struct s_channel *chan = NULL;
+	t_list		*elem;
+	t_channel	*chan;
+	t_channel	*cur;
 
-	for (t_list *elem = server->channels; elem != NULL; elem = elem->next)
+	chan = NULL;
+	elem = server->channels;
+	while (elem)
 	{
-		struct s_channel *cur = elem->content;
-
+		cur = elem->content;
 		if (ft_strequ(channame, cur->name))
 		{
 			chan = cur;
 			break ;
 		}
+		elem = elem->next;
 	}
-
 	if (!chan)
 		chan = create_channel(server, channame, 0);
 	if (!channel_add_client(chan, client))
@@ -80,7 +89,7 @@ int add_to_chan(t_server *server, t_client *client, char const *const channame)
 	return (0);
 }
 
-int rm_from_chan(char *nick, t_channel *chan)
+int			rm_from_chan(char *nick, t_channel *chan)
 {
 	t_list			*clients;
 	t_list			*prev;
@@ -88,15 +97,15 @@ int rm_from_chan(char *nick, t_channel *chan)
 
 	clients = chan->clients;
 	prev = NULL;
-	while (clients) {
+	while (clients)
+	{
 		c = clients->content;
-		if (ft_strequ(c->nickname, nick)) {
-			if (prev) {
+		if (ft_strequ(c->nickname, nick))
+		{
+			if (prev)
 				prev->next = clients->next;
-			}
-			else {
+			else
 				chan->clients = clients->next;
-			}
 			free(clients);
 			return (0);
 		}
