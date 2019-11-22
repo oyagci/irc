@@ -116,11 +116,12 @@ static void server_format_reply(t_client const *const c, int reply_code,
 int queue_reply(struct s_server *server, struct s_client *const dest,
 	char const *reply)
 {
-	t_list *elem;
-	struct s_server_msg *msg;
+	t_list				*elem;
+	struct s_server_msg	*msg;
 
 	msg = ft_memalloc(sizeof(*msg));
-	if (!msg) {
+	if (!msg)
+	{
 		perror("malloc");
 		return (-1);
 	}
@@ -128,12 +129,9 @@ int queue_reply(struct s_server *server, struct s_client *const dest,
 	ft_strlcpy(msg->dest, dest->nickname, NICK_SIZE);
 	ft_strlcpy(msg->msg, reply, 512);
 	msg->len = ft_strlen(msg->msg);
-
-	/* Add reply to the queue */
 	elem = ft_lstnew(0, 0);
 	elem->content = msg;
-	ft_lstadd(&server->msgqueue, elem);
-
+	ft_lstpush(&server->msgqueue, elem);
 	return (0);
 }
 
