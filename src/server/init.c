@@ -20,29 +20,6 @@
 #include <stdio.h>
 #include "log.h"
 
-static void	init_methods(struct s_server *s)
-{
-	(void)s;
-//	s->run = &run;
-//	s->accept = &accept_new_clients;
-//	s->read = &read_client_command;
-//	s->send = &send_queued_replies;
-//	s->docommands = &docommands;
-//	s->exec_cmd = &execute_command;
-//	s->queuecode = &queue_code_reply;
-//	s->queuenotif = &queue_reply;
-//	s->rm_from_chan = &rm_from_chan;
-//	s->get_channel = &get_channel;
-//	s->notifypart = &notifypart;
-//	s->create_channel = &create_channel;
-//	s->add_to_chan = &add_to_chan;
-//	s->pinginactive = &pinginactive;
-//	s->quit = &quit;
-//	s->get_client = &get_client;
-//	s->del_client = &del_client;
-//	s->update_clients = update_clients;
-}
-
 static int	startup(struct s_server *server, unsigned int port)
 {
 	struct sockaddr_in	serv_addr;
@@ -77,7 +54,6 @@ int			server_init(struct s_server *server, unsigned int port)
 {
 	VERBOSE("Initializing server");
 	ft_memset(server, 0, sizeof(*server));
-	init_methods(server);
 	nickinit(&server->nicks);
 	VERBOSE("Server initialized");
 	return (startup(server, port));
