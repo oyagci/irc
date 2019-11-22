@@ -93,13 +93,10 @@ int			send_queued_replies(struct s_server *const server)
 	return (0);
 }
 
-static void server_format_reply(struct s_client const *const c, int reply_code,
+static void server_format_reply(t_client const *const c, int reply_code,
 	char buf[512])
 {
-	struct {
-		int num;
-		int (*f)(char *, size_t, struct s_client const *);
-	} const handles[] = {
+	t_tuple_reply const	handles[] = {
 		{ RPL_WELCOME,          rpl_welcome },
 		{ ERR_UNKNOWNCOMMAND,   err_unknowncmd },
 		{ ERR_NICKNAMEINUSE,    err_nickinuse },

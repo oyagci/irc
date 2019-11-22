@@ -176,4 +176,9 @@ typedef struct	s_tuple_cmds {
 	int			(*f)(t_client *c, struct s_params *p);
 }				t_tuple_cmds;
 
+typedef struct	s_tuple_reply {
+	int	num;
+	int	(*f)(char *, size_t, t_client const *);
+}				t_tuple_reply;
+
 #endif
