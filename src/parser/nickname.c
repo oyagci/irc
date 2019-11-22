@@ -11,6 +11,12 @@
 /* ************************************************************************** */
 
 #include "parser.h"
+#include <stdio.h>
+
+int			is_valid_char(char c)
+{
+	return (letter(c) || special(c) || digit(c) || c == '-');
+}
 
 int			nickname(char const *input, char **buf)
 {
@@ -20,10 +26,12 @@ int			nickname(char const *input, char **buf)
 	if (letter(*input) || special(*input))
 	{
 		ii += 1;
-		while (input[ii] &&
-			(letter(input[ii]) || special(input[ii]) || digit(input[ii]) ||
-				input[ii] == '-'))
+		while (input[ii] && is_valid_char(input[ii]))
 			ii += 1;
+		if (input[ii] != ' ' && input[ii] != '\0') {
+			printf("'%c'\n", input[ii]);
+			return (0);
+		}
 	}
 	if (ii < 9 && ii > 0)
 	{

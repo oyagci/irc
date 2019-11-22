@@ -21,8 +21,8 @@ int	irc_nick(struct s_client *c, struct s_params *p)
 		queue_code_reply(c->server, c, ERR_NONICKNAMEGIVEN);
 		return (ERR_NONICKNAMEGIVEN);
 	}
-	nick = p->param[0];
-	if (ft_strlen(nick) > NICK_SIZE)
+	nickname(p->param[0], &nick);
+	if (!nickname(p->param[0], &nick) || ft_strlen(nick) > NICK_SIZE)
 	{
 		queue_code_reply(c->server, c, ERR_ERRONEUSNICKNAME);
 		return (ERR_ERRONEUSNICKNAME);
