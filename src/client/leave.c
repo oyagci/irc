@@ -23,13 +23,13 @@ int		client_leave(struct s_client *const self,
 		printf(" - Not connected to a server\n");
 		return (0);
 	}
-	msg = ft_strnew(513);
+	msg = ft_strnew(512);
 	if (!msg)
 		return (-1);
-	ft_strlcat(msg, "PART", 513);
-	ft_strlcat(msg, " ", 513);
-	ft_strlcat(msg, cmd->params[0], 513);
-	ft_strlcat(msg, CRLF, 513);
+	ft_strlcat(msg, "PART", 512);
+	ft_strlcat(msg, " ", 512);
+	ft_strlcat(msg, cmd->params[0], 512);
+	ft_strlcat(msg, CRLF, 512);
 	self->channel = 0;
 	printf(" - Leaving channel %s\n", cmd->params[0]);
 	return (self->queuemsg(self, msg));

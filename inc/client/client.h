@@ -56,14 +56,14 @@ struct					s_cmd_params
 	short				nparam;
 };
 
-struct					s_client_msg
+typedef struct			s_client_msg
 {
 	enum e_client_cmd	cmd;
 	char				params[NPARAM][SPARAM];
 	size_t				nparam;
-};
+}						t_client_msg;
 
-struct					s_client
+typedef struct			s_client
 {
 	short				is_running;
 	short				is_registered;
@@ -119,7 +119,7 @@ struct					s_client
 							struct s_message const *const);
 	int					(*rpl_whoreply)(struct s_client *const,
 							struct s_message const *const);
-};
+}						t_client;
 
 struct					s_tuple_cmds
 {
