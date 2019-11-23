@@ -93,7 +93,7 @@ static int	do_conn(struct s_client *self, char const *addr,
 		ft_putendl(" - Could not connect");
 	else
 	{
-		ft_putendl(" - Connecteds");
+		ft_putendl(" - Connected");
 		ret = 0;
 	}
 	freeaddrinfo(server);
