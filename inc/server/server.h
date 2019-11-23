@@ -107,8 +107,7 @@ int				irc_ping(struct s_client *c, struct s_params *p);
 int				irc_pong(struct s_client *c, struct s_params *p);
 int				irc_quit(struct s_client *c, struct s_params *p);
 
-int				set_usermode(struct s_client *c, int mode);
-int				set_realname(struct s_client *c, char *rn);
+int				validate_nickname(char const *input, char **buf);
 
 int				run(struct s_server *);
 int				send_queued_replies(struct s_server *const server);

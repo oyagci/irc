@@ -28,10 +28,6 @@ int			nickname(char const *input, char **buf)
 		ii += 1;
 		while (input[ii] && is_valid_char(input[ii]))
 			ii += 1;
-		if (input[ii] != ' ' && input[ii] != '\0') {
-			printf("'%c'\n", input[ii]);
-			return (0);
-		}
 	}
 	if (ii < 9 && ii > 0)
 	{

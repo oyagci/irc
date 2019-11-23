@@ -42,6 +42,7 @@ SOURCES		:= \
 	replies/err_unknowncmd.c \
 	replies/err_nickinuse.c \
 	replies/err_erroneusnick.c \
+	validate_nickname.c \
 	../log.c
 OBJS 		:= $(SOURCES:.c=.o)
 OUTDIR		:= ../../
