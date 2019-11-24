@@ -44,8 +44,6 @@ static int	read_input(struct s_client *const self)
 
 int			client_run(struct s_client *const self)
 {
-	struct timeval		t;
-
 	self->is_running = 1;
 	while (self->is_running)
 	{
@@ -54,9 +52,7 @@ int			client_run(struct s_client *const self)
 		FD_SET(STDIN_FILENO, &self->readfds);
 		FD_ZERO(&self->writefds);
 		FD_SET(self->servsock, &self->writefds);
-		t.tv_sec = 0;
-		t.tv_usec = 10000;
-		if (select(self->servsock + 1, &self->readfds, NULL, NULL, &t) < 0)
+		if (select(self->servsock + 1, &self->readfds, NULL, NULL, NULL) < 0)
 			return (-1);
 		if (read_notif(self) < 0 || read_input(self) < 0)
 			return (-1);
