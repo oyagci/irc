@@ -19,6 +19,7 @@ void	client_delete(struct s_client *self)
 	close(self->fd);
 	self->fd = 0;
 	cbuf_free(self->cbuf);
+	cbuf_free(self->reply);
 }
 
 void	del_client(struct s_server *self, t_client *c)

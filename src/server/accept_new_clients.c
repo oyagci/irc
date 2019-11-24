@@ -47,6 +47,7 @@ static int		add_new_client(t_server *server, int fd)
 	client->fd = fd;
 	client->server = server;
 	client->cbuf = cbuf_init(client->raw_buffer, sizeof(client->raw_buffer));
+	client->reply = cbuf_init(client->replybuf, sizeof(client->replybuf));
 	return (0);
 }
 

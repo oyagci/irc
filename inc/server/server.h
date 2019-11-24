@@ -57,8 +57,8 @@ typedef struct	s_client
 
 	short			should_be_disconnected;
 
-	t_cbuf_handle	msg;
-	uint8_t			msgbuf[2048];
+	t_cbuf_handle	reply;
+	uint8_t			replybuf[2048];
 
 	struct s_server	*server;
 }				t_client;
@@ -76,14 +76,6 @@ typedef struct	s_server
 	t_list		*msgqueue;
 	t_nicktable	nicks;
 }				t_server;
-
-typedef struct	s_server_msg
-{
-	char	dest[NICK_SIZE];
-	char	msg[512];
-	size_t	len;
-	uint8_t	sent;
-}				t_server_msg;
 
 int				server_init(struct s_server *server, unsigned int port);
 int				execute_command(struct s_server *self, struct s_client *c,
