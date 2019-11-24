@@ -42,8 +42,8 @@ SOURCES		:= \
 	replies/err_unknowncmd.c \
 	replies/err_nickinuse.c \
 	replies/err_erroneusnick.c \
-	validate_nickname.c \
-	../log.c
+	validate_nickname.c
+
 OBJS 		:= $(SOURCES:.c=.o)
 OUTDIR		:= ../../
 INCLUDES	:= -I./ -I../ -I../../libs/libft/includes -I../../libs/cbuf/ -I../../inc/ -I../../inc/server -I../../inc/common -I../../inc/parser

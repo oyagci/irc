@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "server.h"
 
 static int	docommand(struct s_server *self, struct s_client *client)
@@ -47,14 +46,7 @@ int			docommands(struct s_server *self)
 		{
 			while (c->ncmds > 0)
 			{
-				if (docommand(self, c) < 0)
-				{
-					fprintf(stderr, "%s:%d: Could not execute command\n",
-						__FUNCTION__, __LINE__);
-					/*
-					** TODO: Handle error
-					*/
-				}
+				docommand(self, c);
 				c->ncmds -= 1;
 			}
 		}

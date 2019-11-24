@@ -22,12 +22,12 @@ int		client_who(struct s_client *const self,
 	(void)cmd;
 	if (!self->channel)
 	{
-		printf(" * Not in a channel\n");
+		ft_putendl(" * Not in a channel");
 		return (0);
 	}
 	if (!self->servsock)
 	{
-		printf(" * Not connected to a server\n");
+		ft_putendl(" * Not connected to a server");
 		return (0);
 	}
 	msg = ft_strnew(513);

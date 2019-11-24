@@ -12,7 +12,6 @@
 
 #include "server.h"
 #include <sys/socket.h>
-#include <stdio.h>
 
 static int	read_to_buffer(int cfd, t_cbuf_handle cbuf)
 {

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "server.h"
-#include "log.h"
 
 static int	set_fds(struct s_server *server)
 {
@@ -45,7 +44,6 @@ int			run(struct s_server *self)
 {
 	int max_sd;
 
-	VERBOSE("Running main loop");
 	self->is_running = 1;
 	while (self->is_running)
 	{

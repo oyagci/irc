@@ -15,11 +15,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "log.h"
 
 static int		get_client_slot(t_server *self)
 {
@@ -62,13 +60,9 @@ int				accept_new_clients(struct s_server *server)
 		return (0);
 	confd = accept(server->sockfd, (struct sockaddr *)&cli_addr, &cli_len);
 	if (confd < 0)
-	{
-		perror("accept");
 		return (-1);
-	}
 	if (add_new_client(server, confd) < 0)
 	{
-		ERROR("Could not add client to list. Closing connection...");
 		close(confd);
 		return (0);
 	}

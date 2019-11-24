@@ -22,9 +22,10 @@ int	whoreply(struct s_client *const self,
 	i = 0;
 	while (i < msg->params.nparam)
 	{
-		printf("%s ", msg->params.param[i]);
+		ft_putstr((char*)msg->params.param[i]);
+		ft_putchar(' ');
 		i += 1;
 	}
-	printf("\n");
+	ft_putchar('\n');
 	return (0);
 }

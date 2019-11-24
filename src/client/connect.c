@@ -107,12 +107,12 @@ int			client_connect(struct s_client *const self,
 
 	if (self->nickname[0] == '\0')
 	{
-		printf(" - Please set your nickname first\n");
+		ft_putendl(" - Please set your nickname first");
 		return (-1);
 	}
 	if (self->servsock > 0)
 	{
-		printf(" - Sorry, already connected\n");
+		ft_putendl(" - Sorry, already connected");
 		return (-1);
 	}
 	ret = do_conn(self, cmd->params[0], cmd->params[1]);

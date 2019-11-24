@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "server.h"
-#include <stdio.h>
 
 int	irc_nick(struct s_client *c, struct s_params *p)
 {

@@ -10,11 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include "server.h"
-#include "log.h"
 
 int	setnosigpipe(void)
 {
@@ -30,8 +28,8 @@ int	main(int ac, char *av[])
 	ret = 0;
 	if (ac < 2)
 	{
-		fprintf(stderr, "Usage: %s <port>\n", av[0]);
-		exit(EXIT_FAILURE);
+		ft_putendl_fd("Usage: ./server <port>", 2);
+		return (1);
 	}
 	ret = server_init(&server, ft_atoi(av[1]));
 	setnosigpipe();

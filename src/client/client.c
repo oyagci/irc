@@ -33,7 +33,8 @@ int		rpl_welcome(struct s_client *const self,
 	(void)self;
 	if (msg->params.param[0])
 	{
-		printf(" * %s\n", msg->params.param[0]);
+		ft_putstr(" * ");
+		ft_putendl((char*)msg->params.param[0]);
 	}
 	return (0);
 }
@@ -41,7 +42,7 @@ int		rpl_welcome(struct s_client *const self,
 int		stop(struct s_client *const self, struct s_client_msg const *const cmd)
 {
 	(void)cmd;
-	printf("Stopping\n");
+	ft_putendl("Stopping\n");
 	self->is_running = 0;
 	return (0);
 }

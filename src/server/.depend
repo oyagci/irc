@@ -66,7 +66,7 @@ server.o: server.c ../../inc/server/server.h \
  ../../libs/libft/includes/get_next_line.h \
  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h ../log.h
+ ../../libs/cbuf/cbuf.h
 accept_new_clients.o: accept_new_clients.c \
  ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
  ../../libs/libft/includes/libft_mem.h \
@@ -74,7 +74,7 @@ accept_new_clients.o: accept_new_clients.c \
  ../../libs/libft/includes/get_next_line.h \
  ../../libs/libft/includes/ft_getopt.h ../../inc/server/server.h \
  ../../inc/parser/parser.h ../../inc/common/reply_codes.h \
- ../../inc/server/nick.h ../../libs/cbuf/cbuf.h ../log.h
+ ../../inc/server/nick.h ../../libs/cbuf/cbuf.h
 queue.o: queue.c ../../libs/libft/includes/libft.h \
  ../../libs/libft/includes/libft_str.h \
  ../../libs/libft/includes/libft_mem.h \
@@ -186,7 +186,7 @@ run.o: run.c ../../inc/server/server.h ../../libs/libft/includes/libft.h \
  ../../libs/libft/includes/get_next_line.h \
  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h ../log.h
+ ../../libs/cbuf/cbuf.h
 init.o: init.c ../../inc/server/server.h \
  ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
  ../../libs/libft/includes/libft_mem.h \
@@ -194,7 +194,7 @@ init.o: init.c ../../inc/server/server.h \
  ../../libs/libft/includes/get_next_line.h \
  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h ../log.h
+ ../../libs/cbuf/cbuf.h
 channel.o: channel.c ../../libs/libft/includes/libft.h \
  ../../libs/libft/includes/libft_str.h \
  ../../libs/libft/includes/libft_mem.h \
@@ -274,11 +274,10 @@ err_erroneusnick.o: replies/err_erroneusnick.c ../../inc/server/server.h \
  ../../libs/libft/includes/get_next_line.h \
  ../../libs/libft/includes/ft_getopt.h ../../inc/parser/parser.h \
  ../../inc/common/reply_codes.h ../../inc/server/nick.h \
- ../../libs/cbuf/cbuf.h ../log.h
+ ../../libs/cbuf/cbuf.h
 validate_nickname.o: validate_nickname.c ../../inc/parser/parser.h \
  ../../libs/libft/includes/libft.h ../../libs/libft/includes/libft_str.h \
  ../../libs/libft/includes/libft_mem.h \
  ../../libs/libft/includes/libft_list.h \
  ../../libs/libft/includes/get_next_line.h \
  ../../libs/libft/includes/ft_getopt.h
-log.o: ../log.c ../log.h

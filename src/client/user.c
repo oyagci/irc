@@ -20,7 +20,7 @@ int		client_user(struct s_client *const self,
 
 	if (!self->servsock)
 	{
-		printf(" * Not connected to a server\n");
+		ft_putendl(" * Not connected to a server");
 		return (0);
 	}
 	msg = ft_strnew(513);

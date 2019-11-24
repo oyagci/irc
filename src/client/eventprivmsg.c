@@ -24,7 +24,14 @@ int		eventprivmsg(struct s_client *const self,
 	from = m->prefix.data;
 	channel = m->params.param[0];
 	msg = m->params.param[1];
-	printf("[" BOLDRED "%s" RESET "] " UNDERLINE "%s" RESET ": %s\n",
-			channel, from, msg);
+	ft_putstr("[");
+	ft_putstr(BOLDRED);
+	ft_putstr((char*)channel);
+	ft_putstr("] ");
+	ft_putstr(UNDERLINE);
+	ft_putstr((char*)from);
+	ft_putstr(RESET);
+	ft_putstr(": ");
+	ft_putendl((char*)msg);
 	return (0);
 }

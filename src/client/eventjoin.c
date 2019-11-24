@@ -46,7 +46,10 @@ int		eventjoin(struct s_client *const self, struct s_message const *const m)
 				self->channel = self->channels.get(&self->channels,
 					m->params.param[0]);
 			}
-			printf(" * %s joined channel %s\n", nick, chan);
+			ft_putstr(" * ");
+			ft_putstr(nick);
+			ft_putstr(" joined channel ");
+			ft_putendl((char*)chan);
 		}
 		free(nick);
 	}

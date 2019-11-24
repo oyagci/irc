@@ -20,7 +20,7 @@ int		client_leave(struct s_client *const self,
 
 	if (!self->servsock)
 	{
-		printf(" - Not connected to a server\n");
+		ft_putendl(" - Not connected to a server");
 		return (0);
 	}
 	msg = ft_strnew(512);
@@ -31,6 +31,7 @@ int		client_leave(struct s_client *const self,
 	ft_strlcat(msg, cmd->params[0], 512);
 	ft_strlcat(msg, CRLF, 512);
 	self->channel = 0;
-	printf(" - Leaving channel %s\n", cmd->params[0]);
+	ft_putstr(" - Leaving channel ");
+	ft_putendl((char*)cmd->params[0]);
 	return (self->queuemsg(self, msg));
 }

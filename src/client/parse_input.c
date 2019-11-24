@@ -95,7 +95,9 @@ int					parse_cmd(struct s_client_msg **buf, char const *input)
 		input++;
 	if (set_params(input, *buf) < (*buf)->nparam)
 	{
-		printf("Not enough parameters given (expected %ld)\n", (*buf)->nparam);
+		ft_putstr("Not enough parameters given (expected");
+		ft_putnbr((*buf)->nparam);
+		ft_putendl(")");
 		return (-1);
 	}
 	return (0);
@@ -117,7 +119,7 @@ int					parse_input(struct s_client *const self,
 	}
 	else
 	{
-		printf(" - Not in a channel (/join <channel>)\n");
+		ft_putendl(" - Not in a channel (/join <channel>)");
 		return (-1);
 	}
 	return (0);

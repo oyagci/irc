@@ -24,7 +24,10 @@ int	eventpart(struct s_client *const self, struct s_message const *const cmd)
 	if (nick && chan)
 	{
 		self->channels.rmnick(&self->channels, nick, chan);
-		printf(" * %s has left %s\n", nick, chan);
+		ft_putstr(" * ");
+		ft_putstr(nick);
+		ft_putstr(" has left ");
+		ft_putendl((char*)chan);
 		free(nick);
 	}
 	return (0);

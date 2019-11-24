@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include <stdio.h>
 
 int			is_valid_char(char c)
 {

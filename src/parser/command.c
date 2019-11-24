@@ -13,7 +13,6 @@
 #include "parser.h"
 #include <libft.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 static int				set_cmd(struct s_command *buf, char const *input)
 {
