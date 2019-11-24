@@ -12,8 +12,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 #include "server.h"
 #include "log.h"
+
+int	setnosigpipe(void)
+{
+	signal(SIGPIPE, SIG_IGN);
+	return (0);
+}
 
 int	main(int ac, char *av[])
 {
@@ -27,6 +34,7 @@ int	main(int ac, char *av[])
 		exit(EXIT_FAILURE);
 	}
 	ret = server_init(&server, ft_atoi(av[1]));
+	setnosigpipe();
 	if (!ret)
 		ret = run(&server);
 	return (ret);

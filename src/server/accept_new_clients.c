@@ -17,16 +17,9 @@
 #include <arpa/inet.h>
 #include <stdio.h>
 #include <time.h>
-#include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "log.h"
-
-static int		setnosigpipe(void)
-{
-	signal(SIGPIPE, SIG_IGN);
-	return (0);
-}
 
 static int		get_client_slot(t_server *self)
 {
@@ -57,18 +50,8 @@ static int		add_new_client(t_server *server, int fd)
 	return (0);
 }
 
-void			client_init(t_client *client, struct s_server *s, int fd)
-{
-	ft_memset(client, 0, sizeof(t_client));
-	client->fd = fd;
-	client->server = s;
-	client->cbuf = cbuf_init(client->raw_buffer, sizeof(client->raw_buffer));
-	ft_memset(client->nickname, 0, sizeof(client->nickname));
-}
-
 int				accept_new_clients(struct s_server *server)
 {
-	t_client			client;
 	struct sockaddr_in	cli_addr;
 	socklen_t			cli_len;
 	int					confd;
@@ -82,8 +65,6 @@ int				accept_new_clients(struct s_server *server)
 		perror("accept");
 		return (-1);
 	}
-	setnosigpipe();
-	client_init(&client, server, confd);
 	if (add_new_client(server, confd) < 0)
 	{
 		ERROR("Could not add client to list. Closing connection...");
