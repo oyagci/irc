@@ -5,7 +5,7 @@ static int	is_valid_char(char c)
 	return (letter(c) || special(c) || digit(c) || c == '-');
 }
 
-int			validate_nickname(char const *input, char **buf)
+int			validate_nickname(char const *input)
 {
 	int	ii;
 
@@ -19,9 +19,6 @@ int			validate_nickname(char const *input, char **buf)
 			return (0);
 	}
 	if (ii < 9 && ii > 0)
-	{
-		*buf = ft_strndup(input, ii);
 		return (ii);
-	}
 	return (0);
 }

@@ -11,26 +11,25 @@
 /* ************************************************************************** */
 
 #include "server.h"
+#include <stdio.h>
 
 int	irc_nick(struct s_client *c, struct s_params *p)
 {
-	char	*nick;
-
 	if (p->nparam < 1)
 	{
 		queue_code_reply(c->server, c, ERR_NONICKNAMEGIVEN);
 		return (ERR_NONICKNAMEGIVEN);
 	}
-	if (!validate_nickname(p->param[0], &nick) || ft_strlen(nick) > NICK_SIZE)
+	if (!validate_nickname(p->param[0]))
 	{
 		queue_code_reply(c->server, c, ERR_ERRONEUSNICKNAME);
 		return (ERR_ERRONEUSNICKNAME);
 	}
-	if (!nickadd(&c->server->nicks, nick))
+	if (!nickadd(&c->server->nicks, p->param[0]))
 	{
 		queue_code_reply(c->server, c, ERR_NICKNAMEINUSE);
 		return (ERR_NICKNAMEINUSE);
 	}
-	ft_strncpy(c->nickname, nick, NICK_SIZE);
+	ft_strncpy(c->nickname, p->param[0], NICK_SIZE);
 	return (0);
 }
