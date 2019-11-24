@@ -20,7 +20,7 @@ int		nickavail(t_nicktable *nicks, char const *nick)
 	size_t	i;
 
 	i = 0;
-	while (i < nicks->size)
+	while (i < 10)
 	{
 		if (ft_strequ(nicks->table[i], nick))
 			return (0);
@@ -29,40 +29,37 @@ int		nickavail(t_nicktable *nicks, char const *nick)
 	return (1);
 }
 
+static int	get_empty_nick(t_nicktable *nicks)
+{
+	int	id;
+
+	id = 0;
+	while (id < 10)
+	{
+		if (nicks->table[id][0] == 0)
+			return (id);
+		id += 1;
+	}
+	return (-1);
+}
+
 int		nickadd(t_nicktable *nicks, char const *nick)
 {
-	char	**ntable;
+	int	id;
 
 	if (!nickavail(nicks, nick))
 		return (0);
-	if (nicks->size == nicks->capacity)
-	{
-		if (!(ntable = malloc(sizeof(char *) * (nicks->capacity + 10))))
-			exit(EXIT_FAILURE);
-		ft_memcpy(ntable, nicks->table, sizeof(char *) * nicks->capacity);
-		free(nicks->table);
-		nicks->table = ntable;
-		nicks->capacity += 10;
-	}
-	nicks->table[nicks->size] = ft_strdup(nick);
-	nicks->size += 1;
+	id = get_empty_nick(nicks);
+	if (id < 0)
+		return (0);
+	ft_strlcat(nicks->table[id], nick, 10);
 	return (1);
 }
 
 int		nickinit(t_nicktable *nicks)
 {
-	int	ret;
-
-	ret = 0;
-	nicks->size = 0;
-	nicks->capacity = 10;
-	nicks->table = ft_memalloc(sizeof(*nicks->table) * nicks->capacity);
-	if (!nicks->table)
-	{
-		ret = -1;
-		exit(EXIT_FAILURE);
-	}
-	return (ret);
+	ft_memset(nicks, 0, sizeof(*nicks));
+	return (0);
 }
 
 void	nickremove(t_nicktable *nicks, char *name)
@@ -70,14 +67,12 @@ void	nickremove(t_nicktable *nicks, char *name)
 	size_t	i;
 
 	i = 0;
-	while (i < nicks->size)
+	while (i < 10)
 	{
 		if (ft_strnequ(name, nicks->table[i], NICK_SIZE))
 		{
-			free(nicks->table[i]);
-			nicks->size -= 1;
-			ft_memmove(nicks->table + i, nicks->table + i + 1,
-				sizeof(char *) * nicks->size);
+			ft_memset(nicks->table[i], 0, 10);
+			break ;
 		}
 		i += 1;
 	}

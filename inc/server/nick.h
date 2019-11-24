@@ -16,9 +16,7 @@
 # include <stddef.h>
 
 typedef struct	s_nicktable {
-	char	**table;
-	size_t	size;
-	size_t	capacity;
+	char	table[10][10];
 }				t_nicktable;
 
 int				nickinit(t_nicktable *nicks);
