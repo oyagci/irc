@@ -24,7 +24,7 @@ void		send_queued_replie(t_client *dest)
 	uint8_t	buf[512];
 
 	i = 0;
-	while (cbuf_get(dest->reply, &buf[i]) && i < 512)
+	while (!cbuf_get(dest->reply, &buf[i]) && i < 512)
 		i += 1;
 	ret = send(dest->fd, buf, i, 0);
 	if (ret == (int)i)
