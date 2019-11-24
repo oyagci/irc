@@ -45,7 +45,6 @@ typedef struct	s_client_buffer {
 typedef struct	s_client
 {
 	int				fd;
-	t_client_buffer	buffer;
 	t_cbuf_handle	cbuf;
 	uint8_t			raw_buffer[2048];
 	int				nmsg;
@@ -57,6 +56,9 @@ typedef struct	s_client
 	char			nickname[NICK_SIZE + 1];
 
 	short			should_be_disconnected;
+
+	t_cbuf_handle	msg;
+	uint8_t			msgbuf[2048];
 
 	struct s_server	*server;
 }				t_client;
