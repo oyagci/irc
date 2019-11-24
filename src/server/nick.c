@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include "server.h"
 
-int		nickavail(t_nicktable *nicks, char const *nick)
+int			nickavail(t_nicktable *nicks, char const *nick)
 {
 	size_t	i;
 
@@ -43,7 +43,7 @@ static int	get_empty_nick(t_nicktable *nicks)
 	return (-1);
 }
 
-int		nickadd(t_nicktable *nicks, char const *nick)
+int			nickadd(t_nicktable *nicks, char const *nick)
 {
 	int	id;
 
@@ -62,7 +62,7 @@ int		nickinit(t_nicktable *nicks)
 	return (0);
 }
 
-void	nickremove(t_nicktable *nicks, char *name)
+void		nickremove(t_nicktable *nicks, char *name)
 {
 	size_t	i;
 
