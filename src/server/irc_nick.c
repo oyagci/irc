@@ -30,6 +30,8 @@ int	irc_nick(struct s_client *c, struct s_params *p)
 		queue_code_reply(c->server, c, ERR_NICKNAMEINUSE);
 		return (ERR_NICKNAMEINUSE);
 	}
+	if (*c->nickname != 0)
+		nickremove(&c->server->nicks, c->nickname);
 	ft_strncpy(c->nickname, p->param[0], NICK_SIZE);
 	return (0);
 }
