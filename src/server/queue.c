@@ -18,78 +18,33 @@
 #include <stdlib.h>
 #include <cbuf.h>
 
-void		server_msg_del(void *msgp, size_t size)
+void		send_queued_replie(t_client *dest)
 {
-	struct s_server_msg *msg;
+	int		ret;
+	size_t	i;
+	uint8_t	buf[512];
 
-	(void)size;
-	msg = msgp;
-	free(msg);
-}
-
-void		delete_sent_replies(t_list **msgs)
-{
-	t_list			*l;
-	t_list			*prev;
-	t_list			*next;
-	t_server_msg	*msg;
-
-	prev = NULL;
-	l = *msgs;
-	while (l)
-	{
-		next = l->next;
-		msg = l->content;
-		if (msg->sent)
-		{
-			if (prev)
-				prev->next = next;
-			else
-				*msgs = (*msgs)->next;
-			ft_lstdelone(&l, server_msg_del);
-		}
-		prev = l;
-		l = next;
-	}
-}
-
-void		send_queued_replie(t_client *dest, t_server_msg *msg)
-{
-	int	ret;
-
-	ret = send(dest->fd, msg->msg, msg->len, 0);
-	if (ret == (int)msg->len)
-	{
+	i = 0;
+	while (cbuf_get(dest->reply, &buf[i]) && i < 512)
+		i += 1;
+	ret = send(dest->fd, buf, i, 0);
+	if (ret == (int)i)
 		dest->nmsg -= 1;
-		msg->sent = 1;
-	}
-	else if (ret > 0)
-	{
-		ft_memcpy(msg->msg, msg->msg + ret, msg->len - ret);
-		msg->msg[ret] = 0;
-	}
 	else if (ret <= 0)
 		dest->should_be_disconnected = 1;
 }
 
 int			send_queued_replies(struct s_server *const server)
 {
-	t_list			*msgelem;
-	t_server_msg	*msg;
-	t_client		*dest;
+	size_t	i;
 
-	msgelem = server->msgqueue;
-	while (NULL != msgelem)
+	i = 0;
+	while (i < NCLIENTS)
 	{
-		msg = msgelem->content;
-		dest = get_client(server, msg->dest);
-		if (dest)
-			send_queued_replie(dest, msg);
-		else
-			msg->sent = 1;
-		msgelem = msgelem->next;
+		if (server->clients[i].fd != 0)
+			send_queued_replie(&server->clients[i]);
+		i += 1;
 	}
-	delete_sent_replies(&server->msgqueue);
 	return (0);
 }
 
@@ -122,22 +77,16 @@ static void	server_format_reply(t_client const *const c, int reply_code,
 int			queue_reply(t_server *server, t_client *const dest,
 	char const *reply)
 {
-	t_list				*elem;
-	struct s_server_msg	*msg;
+	size_t	i;
 
-	msg = ft_memalloc(sizeof(*msg));
-	if (!msg)
+	(void)server;
+	i = 0;
+	while (reply[i] != 0)
 	{
-		perror("malloc");
-		return (-1);
+		cbuf_put(dest->reply, reply[i]);
+		i += 1;
 	}
 	dest->nmsg += 1;
-	ft_strlcpy(msg->dest, dest->nickname, NICK_SIZE);
-	ft_strlcpy(msg->msg, reply, 512);
-	msg->len = ft_strlen(msg->msg);
-	elem = ft_lstnew(0, 0);
-	elem->content = msg;
-	ft_lstpush(&server->msgqueue, elem);
 	return (0);
 }
 
