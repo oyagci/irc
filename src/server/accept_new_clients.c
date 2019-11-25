@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 13:53:32 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/25 11:33:28 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int		add_new_client(t_server *server, int fd)
 	slot = get_client_slot(server);
 	if (slot < 0)
 		return (-1);
+	ft_memset(server->clients+ slot, 0, sizeof(*client));
 	client = server->clients + slot;
 	client->fd = fd;
 	client->server = server;
