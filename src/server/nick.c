@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 14:27:36 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 14:27:40 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/25 12:35:16 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			nickadd(t_nicktable *nicks, char const *nick)
 	return (1);
 }
 
-int		nickinit(t_nicktable *nicks)
+int			nickinit(t_nicktable *nicks)
 {
 	ft_memset(nicks, 0, sizeof(*nicks));
 	return (0);
