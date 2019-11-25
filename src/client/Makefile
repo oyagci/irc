@@ -34,7 +34,8 @@ SOURCES		:= \
 	who.c \
 	join.c \
 	whoreply.c \
-	channels_destroy.c
+	channels_destroy.c \
+	max.c
 
 OBJS 		:= $(SOURCES:.c=.o)
 OUTDIR		:= ../..

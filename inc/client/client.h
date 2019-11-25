@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 13:05:44 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/16 12:29:02 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/25 12:20:07 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,5 +183,6 @@ int						whoreply(struct s_client *const self,
 							struct s_message const *const msg);
 
 int						read_notif(struct s_client *const self);
+size_t					max(size_t a, size_t b);
 
 #endif

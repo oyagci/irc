@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 13:04:49 by oyagci            #+#    #+#             */
-/*   Updated: 2019/09/09 13:04:52 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/25 12:21:03 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,12 @@
 #include "libft.h"
 #include <stdlib.h>
 
-size_t				max(size_t a, size_t b)
-{
-	return (a > b ? a : b);
-}
-
-void				set_command(char const **inputp, struct s_client_msg *buf)
+void	set_command(char const **inputp, struct s_client_msg *buf)
 {
 	const struct s_client_cmds	cmds[] = {
-		{ "nick", CMD_NICK, 1 }, { "join", CMD_JOIN, 1 },
+		{ "nick", CMD_NICK, 1 }, { "join", CMD_JOIN, 1 }, { "who", CMD_WHO, 0 },
 		{ "leave", CMD_LEAVE, 1 }, { "msg", CMD_MSG, 2 },
-		{ "quit", CMD_QUIT, 1 }, { "who", CMD_WHO, 0 },
-		{ "connect", CMD_CONNECT, 2 }
+		{ "quit", CMD_QUIT, 1 }, { "connect", CMD_CONNECT, 2 }
 	};
 	char const					*input;
 	int							ii;
@@ -39,7 +33,8 @@ void				set_command(char const **inputp, struct s_client_msg *buf)
 	jj = 0;
 	while (jj < sizeof(cmds) / sizeof(*cmds))
 	{
-		if (ft_strnequ(input, cmds[jj].str, max(ft_strlen(cmds[jj].str), ii - 1)))
+		if (ft_strnequ(input, cmds[jj].str,
+				max(ft_strlen(cmds[jj].str), ii - 1)))
 		{
 			*inputp += ii;
 			buf->cmd = cmds[jj].cmd;
@@ -49,7 +44,7 @@ void				set_command(char const **inputp, struct s_client_msg *buf)
 	}
 }
 
-void				set_param(char *buf, char const *input,
+void	set_param(char *buf, char const *input,
 	size_t start, size_t end)
 {
 	char	tmp[255];
@@ -59,7 +54,7 @@ void				set_param(char *buf, char const *input,
 	ft_strlcpy(buf, tmp, 255);
 }
 
-size_t				set_params(char const *input, struct s_client_msg *buf)
+size_t	set_params(char const *input, struct s_client_msg *buf)
 {
 	int		start;
 	int		end;
@@ -87,7 +82,7 @@ size_t				set_params(char const *input, struct s_client_msg *buf)
 	return (ii);
 }
 
-int					parse_cmd(struct s_client_msg **buf, char const *input)
+int		parse_cmd(struct s_client_msg **buf, char const *input)
 {
 	input += 1;
 	set_command(&input, *buf);
@@ -103,7 +98,7 @@ int					parse_cmd(struct s_client_msg **buf, char const *input)
 	return (0);
 }
 
-int					parse_input(struct s_client *const self,
+int		parse_input(struct s_client *const self,
 	struct s_client_msg *msg, char const *input)
 {
 	ft_memset(msg, 0, sizeof(*msg));
