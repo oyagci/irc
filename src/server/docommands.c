@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 13:56:59 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 13:57:10 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/25 12:11:52 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int			docommands(struct s_server *self)
 				docommand(self, c);
 				c->ncmds -= 1;
 			}
+			cbuf_reset(c->cbuf);
 		}
 		i += 1;
 	}
