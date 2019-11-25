@@ -6,7 +6,7 @@
 /*   By: oyagci <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/05 13:51:41 by oyagci            #+#    #+#             */
-/*   Updated: 2019/11/22 13:16:05 by oyagci           ###   ########.fr       */
+/*   Updated: 2019/11/25 12:14:07 by oyagci           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int				server_init(struct s_server *server, unsigned int port);
 int				execute_command(struct s_server *self, struct s_client *c,
 					char const *const cmd);
 int				read_client_command(struct s_server *const self);
-int				server_read_clients_command( struct s_server *const server);
+int				server_read_clients_command(struct s_server *const server);
 int				accept_new_clients(struct s_server *server);
 int				reply_client(struct s_client *c, int retcode);
 int				docommands(struct s_server *const self);
@@ -103,7 +103,7 @@ int				irc_quit(struct s_client *c, struct s_params *p);
 
 int				validate_nickname(char const *input);
 
-int				run(struct s_server *);
+int				run(struct s_server *s);
 int				send_queued_replies(struct s_server *const server);
 int				queue_reply(t_server *server, t_client *const dest,
 					char const *reply);
@@ -115,7 +115,7 @@ int				server_tell_new_client(t_server *server, t_client *client,
 					t_channel *chan);
 t_channel		*get_channel(struct s_server *server, char const *name);
 t_client		*get_client(struct s_server *self, char const *const nickname);
-void     		del_client(struct s_server *self, struct s_client *c);
+void			del_client(struct s_server *self, struct s_client *c);
 int				server_send_formated_message_to(t_server *server,
 					char const *recipient, char *msg);
 void			server_msg_del(void *msgp, size_t size);
@@ -129,8 +129,8 @@ int				quit(t_server *self, t_client *client, char const *const msg);
 int				update_clients(t_server *self);
 
 /*
- * Replies
- */
+** Replies
+*/
 int				rpl_welcome(char *buf, size_t buflen, t_client const *c);
 int				err_unknowncmd(char *buf, size_t buflen, t_client const *c);
 int				err_nickinuse(char *buf, size_t buflen, t_client const *c);
